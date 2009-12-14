@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.1.123 i586) [Netscape]">
+   <META NAME="Author" CONTENT="Anthony R. Cassandra">
+   <META NAME="Keywords" CONTENT="POMDP, Markov, Planning, decision theory">
+   <TITLE>pomdp-solve Value Function Specification Page</TITLE>
+<HEADER>
+</HEADER>
+</HEAD>
+<BODY TEXT="#F0F0F0" BGCOLOR="#003300" LINK="#F8D900" VLINK="#CCCCCC" ALINK="#00FF00">
+
+<P>
+<A HREF="http://www.cs.brown.edu/research/ai/pomdp/index.html">
+<IMG SRC="images/brown-pomdp.gif">
+</A>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<A HREF="index.html">
+<IMG SRC="images/pomdp-solve.gif">
+</A>
+
+<CENTER>
+<H1>Input/Ouput Value Function Format</H1>
+</CENTER>
+
+This page describes the file format for a value function (a set of
+alpha vectors) used in the 'pomdp-solve' program.
+
+A set of vectors is the representation use for the value function and
+each vector has an action associated with it.  The format specified
+here is what is output from the 'pomdp-solve' program and what will be
+necessary for input to the 'pomdp-solve' program with the
+'-terminal_values' command line option.
+
+The format is simply:
+<P>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V1 &nbsp;V2 &nbsp;V3 &nbsp;... &nbsp;VN
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V1 &nbsp;V2 &nbsp;V3 &nbsp;... &nbsp;VN
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etc &nbsp;...
+
+<P>
+Where A is an action number and the V1 through VN are real values
+representing the components of a particular vector that has the
+associated action.  Note that the length of the lists needs to be
+equal to the number of states in the POMDP.
+
+<P>
+<CENTER> <EM>Warning! The parser for this type of file is very brittle
+and doesn't handle ill-formed files very well.</EM></CENTER>
+
+<P>
+<CENTER><IMG SRC="images/oak-a-stripe.gif"></CENTER>
+<P><I>Last updated: 02/05/99</I>
+
+</BODY>
+</HTML>
+

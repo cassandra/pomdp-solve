@@ -1,0 +1,25 @@
+Notes on setting up dmalloc on AMD64:
+
+Before building and installing, make sure that settings.dist has this:
+
+  #define ALLOW_ALLOC_ZERO_SIZE 1
+
+After untaring and installing in /usr/local64:
+
+  function dmalloc { eval `command /usr/local64/bin/dmalloc -b $*`; }
+
+Add to global.h, mdp/mdp-common.h:
+
+  #define USE_DMALLOC
+
+Add -L/usr/local/lib -ldmalloc to Makefile and mdp/Makefile in:
+
+  pomdp_solve_LDADD and pomdp_tools_LDADD
+
+Enaable options:
+
+  dmalloc -l logfile -i 100 low
+
+eval `command /usr/local64/bin/dmalloc -b -l logfile -i 100 low`
+
+Then run code and look in logfile.

@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.1.123 i586) [Netscape]">
+   <META NAME="Author" CONTENT="Anthony R. Cassandra">
+   <META NAME="Keywords" CONTENT="POMDP, Markov, Planning, decision theory">
+   <TITLE>pomdp-solve Policy Graph Specification Page</TITLE>
+<HEADER>
+</HEADER>
+</HEAD>
+<BODY TEXT="#F0F0F0" BGCOLOR="#003300" LINK="#F8D900" VLINK="#CCCCCC" ALINK="#00FF00">
+
+<P>
+<A HREF="http://www.cs.brown.edu/research/ai/pomdp/index.html">
+<IMG SRC="images/brown-pomdp.gif">
+</A>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<A HREF="index.html">
+<IMG SRC="images/pomdp-solve.gif">
+</A>
+
+<CENTER>
+<H1>Output Policy Graph Format</H1>
+</CENTER>
+
+This page describes the file format for a policy graph file output by
+the 'pomdp-solve' program.
+
+<P>
+Each line of the file represents one node of the policy graph and its
+contents are:
+<P>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N  &nbsp;&nbsp;A
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z1 &nbsp;Z2 &nbsp;Z3 &nbsp;...
+<P>
+Here 'N' is a node ID giving the node a unique name.  The 'A' is the
+action number defined for this node; it is an integer refering to the
+the POMDP file actions.  These are followed by a list of node IDs, one
+for each observation.  Thus the list will have a length equal to the
+number of observations in the POMDP.  This list specifies the
+transitions in the policy graph.  The n'th number in the list will be
+the index of the node that follows this one when the observation
+received is 'n'.
+
+<P>
+<CENTER><IMG SRC="images/oak-a-stripe.gif"></CENTER>
+<P>
+<A HREF="http://www.brown.edu">
+<IMG SRC="images/brown-mini.gif" ALIGN=LEFT>
+</A>
+<I>Last updated: 02/05/99</I>
+
+</BODY>
+</HTML>
+

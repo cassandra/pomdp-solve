@@ -1,0 +1,85 @@
+NOTES on LASPACK
+
+by Anthony R. Cassandra
+
+The program arc-example.c and corresponding simple Makefile are meant
+to be a simple example of using the code.
+
+----------------------------------------------------------------------
+
+the laspack/examples subdirectories are test routines which needed the
+following environment variables to be set in order to compile.
+
+setenv CC gcc
+setenv CFLAGS "-I../../.."
+setenv LDFLAGS "-L../.. -L../../../xc "
+
+Then the laspack/check routine needed the laspack/mlstest/mlstest
+executable in the laspack/check directory to ruin the solver tests.
+
+11/7/98
+
+The data type 'Matrix' conflicts with my own library, so I am going to
+see how easy it is to change the name.  Here the the places that seem
+to be affected.
+
+matrix.c:29:void M_Constr(Matrix *M, char *Name, size_t RowDim, size_t ClmDim,
+matrix.c:73:void M_Destr(Matrix *M)
+matrix.c:108:void M_SetName(Matrix *M, char *Name)
+matrix.c:121:char *M_GetName(Matrix *M)
+matrix.c:130:size_t M_GetRowDim(Matrix *M)
+matrix.c:142:size_t M_GetClmDim(Matrix *M)
+matrix.c:154:ElOrderType M_GetElOrder(Matrix *M)
+matrix.c:167:void M_SetLen(Matrix *M, size_t RoC, size_t Len)
+matrix.c:210:size_t M_GetLen(Matrix *M, size_t RoC)
+matrix.c:229:void M_SetEntry(Matrix *M, size_t RoC, size_t Entry, size_t Pos, Real Val)
+matrix.c:244:size_t M_GetPos(Matrix *M, size_t RoC, size_t Entry)
+matrix.c:263:Real M_GetVal(Matrix *M, size_t RoC, size_t Entry)
+matrix.c:282:void M_AddVal(Matrix *M, size_t RoC, size_t Entry, Real Val)
+matrix.c:295:Real M_GetEl(Matrix *M, size_t Row, size_t Clm)
+matrix.c:333:void M_SortEl(Matrix *M)
+matrix.c:366:void M_Lock(Matrix *M)
+matrix.c:373:void M_Unlock(Matrix *M)
+matrix.h:37:} Matrix;
+matrix.h:39:void M_Constr(Matrix *M, char *Name, size_t RowDim, size_t ClmDim,
+matrix.h:41:void M_Destr(Matrix *M);
+matrix.h:42:void M_SetName(Matrix *M, char *Name);
+matrix.h:43:char *M_GetName(Matrix *M);
+matrix.h:44:size_t M_GetRowDim(Matrix *M);
+matrix.h:45:size_t M_GetClmDim(Matrix *M);
+matrix.h:46:ElOrderType M_GetElOrder(Matrix *M);
+matrix.h:47:void M_SetLen(Matrix *M, size_t RoC, size_t Len);
+matrix.h:48:size_t M_GetLen(Matrix *M, size_t RoC);
+matrix.h:49:void M_SetEntry(Matrix *M, size_t RoC, size_t Entry, size_t Pos, Real Val);
+matrix.h:50:size_t M_GetPos(Matrix *M, size_t RoC, size_t Entry);
+matrix.h:51:Real M_GetVal(Matrix *M, size_t RoC, size_t Entry);
+matrix.h:52:void M_AddVal(Matrix *M, size_t RoC, size_t Entry, Real Val);
+matrix.h:66:Real M_GetEl(Matrix *M, size_t Row, size_t Clm);
+matrix.h:68:void M_SortEl(Matrix *M);
+matrix.h:70:void M_Lock(Matrix *M);
+matrix.h:71:void M_Unlock(Matrix *M);
+mlsolv.c:27:            Matrix *R, Matrix *P, int Level, int Gamma,
+mlsolv.c:65:	    Matrix *R, Matrix *P, int MaxIter, int Gamma,
+mlsolv.c:104:	    Matrix *R, Matrix *P, int Gamma,
+mlsolv.c:141:		   Matrix *R, Matrix *P, int MaxIter, int NoMGIter, int Gamma,
+mlsolv.c:205:            Matrix *R, Matrix *P, int Level, 
+mlsolv.c:236:		   Matrix *R, Matrix *P, int MaxIter,
+mlsolv.h:26:	    Matrix *R, Matrix *P, int Level, int Gamma,
+mlsolv.h:32:	    Matrix *R, Matrix *P, int MaxIter, int Gamma,
+mlsolv.h:38:	    Matrix *R, Matrix *P, int Gamma,
+mlsolv.h:44:	    Matrix *R, Matrix *P, int MaxIter, int NoMGIter, int Gamma,
+mlsolv.h:50:            Matrix *R, Matrix *P, int Level,
+mlsolv.h:56:	    Matrix *R, Matrix *P, int MaxIter,
+operats.c:515:Matrix *Mul_SM(double S, Matrix *M)
+operats.c:518:    Matrix *MRes;
+operats.c:525:        MRes = (Matrix *)malloc(sizeof(Matrix));
+operats.c:641:Vector *Mul_MV(Matrix *M, Vector *V)
+operats.c:1219:Matrix *Transp_M(Matrix *M)
+operats.c:1222:    Matrix *MRes;
+operats.c:1229:        MRes = (Matrix *)malloc(sizeof(Matrix));
+operats.h:36:Matrix *Mul_SM(double S, Matrix *M);
+operats.h:39:Vector *Mul_MV(Matrix *M, Vector *V);
+operats.h:42:Matrix *Transp_M(Matrix *M);
+
+I will first try a macro in the matrix.h file.
+

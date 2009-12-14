@@ -1,0 +1,142 @@
+<version value="1.0"/>
+
+<executable value="pomdp-tools"/>
+
+<description>
+  This program collects miscellaneous tools to help with pomdp-solve
+  input/output manipulation and interpretation. You select the
+  appropriate tool using the '-tool' option.
+</description>
+
+<param name="tool">
+  <class value="enum"/>
+  <valid value=" update_beliefs compare_alphas map_beliefs pg_isomorphism purge_alphas sort_alphas pg_eval pg_relink belief_alpha_compare none"/>
+  <default value="none"/>
+  <summary value="Select which pomdp tool to use."/>
+  <description>
+    This program collects miscellaneous tools to help with pomdp-solve
+    input/output manipulation and interpretation.  As such, you need to
+    seelct which of these tools you need to use. 
+  </description>
+</param>
+
+<param name="pomdp">
+  <type value="string"/>
+  <summary value="Select which pomdp modle file to use."/>
+  <description>
+    For some of the tools it needs the POMDP model file.
+  </description>
+</param>
+
+<param name="pg1">
+  <type value="string"/>
+  <summary value="Sets the filename for the first input policy graph."/>
+  <depends param="tools" value="pg_isomorphism"/>
+  <description>
+    Some pomdp tools require one or more policy graph files to do
+    their work. When it does, this is the name of the 'first' such
+    policy graph, where 'first' will be defined in a tool-specific
+    manner. 
+  </description>
+</param>
+
+<param name="pg2">
+  <type value="string"/>
+  <summary value="Sets the filename for the second input policy graph."/>
+  <depends param="tools" value="pg_isomorphism"/>
+  <description>
+    Some pomdp tools require one or more policy graph files to do
+    their work. When it does, this is the name of the 'second' such
+    policy graph, where 'second' will be defined in a tool-specific
+    manner. 
+  </description>
+</param>
+
+<param name="alpha1">
+  <type value="string"/>
+  <summary value="Sets the filename for the first input alpha file."/>
+  <depends param="tools" value="purge_alphas map_beliefs compare_alphas sort_alphas"/>
+  <description>
+    Some pomdp tools require one or more 'alpha' files to do
+    their work. When it does, this is the name of the 'first' such
+    file, where 'first' will be defined in a tool-specific
+    manner.  An 'alpha' file is the pomdp-solve representation of the
+    value function over belief space.
+  </description>
+</param>
+
+<param name="alpha2">
+  <type value="string"/>
+  <summary value="Sets the filename for the second input alpha file."/>
+  <depends param="tools" value="compare_alphas"/>
+  <description>
+    Some pomdp tools require one or more 'alpha' files to do
+    their work. When it does, this is the name of the 'second' such
+    file, where 'second' will be defined in a tool-specific
+    manner.  An 'alpha' file is the pomdp-solve representation of the
+    value function over belief space.
+  </description>
+</param>
+
+
+<param name="belief">
+  <type value="string"/>
+  <summary value="Sets the filename for the first belief input file."/>
+  <depends param="tools" value="map_beliefs "/>
+  <description>
+    Some pomdp tools require one or more belief state list files to do
+    their work. When it does, this is the name of the 'first' such
+    file, where 'first' will be defined in a tool-specific
+    manner.  
+  </description>
+</param>
+
+<param name="epsilon">
+  <type value="double"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="General precision level setting."/>
+  <description>
+    This is the main precision setting parameter which will effect the
+    preciseness fo the tools when employing numerical comparisons on
+    floating point numbers.
+  </description>
+</param>
+
+<param name="states">
+  <type value="int"/>
+  <valid value="1:any"/>
+  <depends param="tools" value="purge_alphas map_beliefs compare_alphas sort_alphas"/>
+  <summary value="Set the number of states in the model."/>
+  <description>
+    Tells the tool how many states are in the POMDP model for which we
+    are aplying the tool.  This saves from having to consult the
+    original POMDP file, since many of the tool operations need know
+    only this piece of information.
+  </description>
+</param>
+
+<param name="obs">
+  <type value="int"/>
+  <valid value="1:any"/>
+  <depends param="tools" value="pg_isomorphism"/>
+  <summary value="Set the number of states in the model."/>
+  <description>
+    Tells the tool how many states are in the POMDP model for which we
+    are aplying the tool.  This saves from having to consult the
+    original POMDP file, since many of the tool operations need know
+    only this piece of information.
+  </description>
+</param>
+
+<param name="o">
+  <type value="string"/>
+  <units value="filename"/>
+  <default value="toolsoln"/>
+  <varname value="result_filename"/>
+  <summary value="Define the prefix name for the program solution files."/>
+  <description>
+    Determines the file to which the output result should go.  The
+    exact nature of the output is tool specific.
+  </description>
+</param>

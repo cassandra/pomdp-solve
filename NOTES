@@ -1,0 +1,243 @@
+Looking at using autoconf.
+
+Need the file configure.ac as the input file to creating the configure
+script.
+
+The 'autoscan' program will generate a preliminary configure.ac.
+
+  # autoscan
+
+This produced:
+
+  o configure.scan (preliminary version of configure.ac)
+  o autoscan.log (errors, things I need to take care of.
+
+The 'ifnames' program wil find al preprocessor vars using in #if,
+#ifdef, etc. statements.
+
+  $ ifnames *.[ch] > ifnames.log
+
+I also need a Makefile.am for the automake program.
+
+5/13/2003
+
+The GNU building system enforces specific documentation.  I am adding:
+
+  ChangeLog
+
+'libtool' is another thing I will need.
+'autoheader'
+'automake'
+
+A 'bootstrap' script is also helpful for running all the right tools
+in the correct order.
+
+Following the GNU build conventions, I wil restructure the code directories
+
+Here are the things that autoconf defined:
+
+-DPACKAGE_NAME=\"pomdp-solve\" 
+-DPACKAGE_TARNAME=\"pomdp-solve\" 
+-DPACKAGE_VERSION=\"5.0\" 
+-DPACKAGE_STRING=\"pomdp-solve\ 5.0\" 
+-DPACKAGE_BUGREPORT=\"arc@cassandra.org\" 
+-DPACKAGE=\"pomdp-solve\" 
+-DVERSION=\"5.0\" 
+-DYYTEXT_POINTER=1 
+-DHAVE_LIBM=1 
+-DSTDC_HEADERS=1 
+-DHAVE_SYS_TYPES_H=1 
+-DHAVE_SYS_STAT_H=1 
+-DHAVE_STDLIB_H=1 
+-DHAVE_STRING_H=1 
+-DHAVE_MEMORY_H=1 
+-DHAVE_STRINGS_H=1 
+-DHAVE_INTTYPES_H=1 
+-DHAVE_STDINT_H=1 
+-DHAVE_UNISTD_H=1 
+-DHAVE_FLOAT_H=1 
+-DHAVE_LIMITS_H=1 
+-DHAVE_STDDEF_H=1 
+-DHAVE_STDLIB_H=1 
+-DHAVE_STRING_H=1 
+-DHAVE_SYS_TIME_H=1 
+-DHAVE_UNISTD_H=1 
+-DTIME_WITH_SYS_TIME=1 
+-DHAVE_STDLIB_H=1 
+-DHAVE_MALLOC=1 
+-DHAVE_STDLIB_H=1 
+-DHAVE_REALLOC=1 
+-DRETSIGTYPE=void 
+-DHAVE_VPRINTF=1 
+-DHAVE_BZERO=1 
+-DHAVE_FLOOR=1 
+-DHAVE_GETTIMEOFDAY=1 
+-DHAVE_MEMSET=1 
+-DHAVE_POW=1 
+-DHAVE_SQRT=1 
+-DHAVE_STRSTR=1
+
+** Thu Dec 18 16:26:30 CST 2003 **
+
+Steps to starting from scratch:
+
+config/bootstap
+./configure
+make
+make dist
+
+** Tue Mar 16 18:10:02 CST 2004 **
+
+I did a 'cvs tag' for pomdp-solve-5-1 as I am going to try to make a
+few changes, possibly with parallelization.
+
+Adding a utility program to check for policy graph subgraph
+isomorphisms.
+
+Test cases:
+
+  ./pg-isomorphism -obs 3 \
+    -pg1 ../testing/test01.01.pg \
+    -pg2 ../testing/test01.02.pg
+
+  ./pg-isomorphism -obs 9 \
+    -pg1 ../testing/test02.01.pg \
+    -pg2 ../testing/test02.02.pg
+
+** Sun Apr 18 11:46:58 CDT 2004 **
+
+As I am looking into a cycling behavior for one of Brian Stankiewicz's
+domains, I was confused about why the final alpha lists were not
+lexicographically sorted.
+
+Solved this: The sorting was being done after the -save_all stuff, but
+before the final solution so only the last alpha list would be output
+sorted.
+
+** Sun Apr 18 15:41:16 CDT 2004 **
+
+I created a utility to compare alpha vector files:
+'compare-alpha-lists'. Testing it now:
+
+  cd src/testing
+
+  ../compare-alpha-lists -states 3 -epsilon 1e-9 -alpha1 test1.alpha -alpha2 test2.alpha -o test.out
+
+Working with some large deterministic domains using the finite grid
+method, I am finding that the solutions have much redundancy.  Trying
+to formulate a way to reduce the redundancy:
+
+Definitions:
+
+  B = a set of points in n-dimensional space
+
+  A = a set of functions, which map points in an n-dimensional space
+      into real numbers.
+
+  b = a point from the set B
+
+  a = a function from the set A
+
+Construct the following simple, bi-partite graph:
+
+  Define one vertex v_b for each b in B (partition 1) and one vertex
+  v_a for each a in A (partition 2).
+
+  Define an edge between v_b and v_a if
+
+    a(b) >= a'(b) for all a' in A
+
+  That is, there is an edge between v_b and v_a if the function 'a'
+  yields the maximal value when applied to b (though this maximal
+  value may not be unique.)
+
+  Goal: Find the subset of the graph (remove edges), such that
+  deg(v_b) >= 1 for all v_b and that deg(v_a) = 0 for as many v_a
+  vertices as possible. i.e., minimize the number of v_a vertices
+  needed to ensure each v_b still has at least one edge into partition
+  2.
+
+Now the trick is to map this problem into an existing, known problem
+and use an existing solution, or else determine that no algorithm
+exists and derive one.
+
+Leads on possible related problems/algorithms?
+
+  o Minimum edge coloring of a bipartite graph???
+  o Chordal Bipartite Graphs???
+  o Perfect elimination bipartite graphs???
+
+** Thu Sep 30 21:28:14 CDT 2004 **
+
+Need to really rethink my automatic generation of command-line/config
+file stuff python script.  I do *not* want it that tightly integrated
+into the pomdp-solve code.  It should serve as an outer layer that can
+be completely bypassed if needed.
+
+Here are the files that are part of the new config scheme and which
+need to be isolated:
+
+  pomdp-solve-options.[ch]
+  program-options.c
+  config-file.c
+  associative-array.c
+
+Hmm....maybe not...I'm torn on this issue.
+
+** Sun Oct 31 19:01:03 CST 2004 **
+
+
+./pomdp-solve -pomdp ~/proj/pomdp/param/tiger.aaai.POMDP -o test
+
+./pomdp-tools -pomdp ~/proj/pomdp/param/tiger.aaai.POMDP -tool pg_eval -pg1 test.pg
+
+
+TAGGED:
+
+  cvs tag v_5_2_1
+
+Generate options:
+
+  ./scripts/generate-options/gen-program-opts.py pomdp-tools-options.xml
+
+
+  ./scripts/generate-options/gen-program-opts.py pomdp-solve-options.xml
+
+Relinking policy graphs:
+
+./pomdp-solve -pomdp ~/proj/pomdp/param/tiger.aaai.POMDP -o test -horizon 5 -save_penultimate
+./pomdp-tools -tool pg_relink -pomdp ~/proj/pomdp/param/tiger.aaai.POMDP -alpha1 test.alpha -pg1 test.pg -alpha2 test.prev.alpha -o relink.pg 
+./pomdp-tools -tool compare_alphas -states 2 -alpha1 test.prev.alpha -alpha2 test.alpha -o compare.alpha 
+
+
+./pomdp-solve \
+    -pomdp tiger.aaai.POMDP \
+    -o test \
+    -horizon 30 \
+    -save_penultimate
+./pomdp-tools \
+    -tool pg_relink \
+    -pomdp tiger.aaai.POMDP \
+    -alpha1 test.alpha \
+    -pg1 test.pg \
+    -alpha2 test.prev.alpha \
+    -o relink.pg 
+./pomdp-tools \
+    -tool compare_alphas \
+    -states 2 \
+    -alpha1 test.prev.alpha \
+    -alpha2 test.alpha \
+    -o compare.alpha 
+
+TAGGED:
+
+  cvs tag v_5_2_2
+
+** Thu May  5 15:17:13 CDT 2005 **
+
+Brian Stankiewicz wants a scaled down version of POMDP tools that will
+read in a POMDP file and an alpha file, and takes in observations.
+
+I'll completely copy the pomdp-solve stuff, then wittle it down to the
+minimum.  This will live in proj/pomdp-driver
+

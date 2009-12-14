@@ -1,0 +1,663 @@
+Last modified: 10/9/2004
+
+Problems to add to repository:
+  Zhang's maze (same as 35 state below?)
+  Hauskrecht's maze20 (if not already there)
+  35 state Zhanag and Zhang maze
+  tag domain from pineau 2003
+
+----------------------
+BUGS
+----------------------
+
+o (reported by Pradeep Varakantham at USC) Occasionally, lp-solve is
+  returning belief state solutions with negative components.  It
+  claims that all variables must be non-negative, so this is curious:
+
+  I can go one of these ways:
+    1) detect negative components, and treat it as "no solution found";
+       or
+    2) add explict non-negativity constraints to the LP; or
+    3) try to figure out why lp-solve is generating these solutions if
+       it claims that all variables must be positive.
+
+  Option #1 is the easiest (code-wise), but I am still thinking about
+  how I can justify this.
+
+o The total time computation conversion to hours and minutes is
+  wrong.  e.g.,
+
+    User time = 43 hrs., 0 mins, 648051.29 secs. (= 802851.29 secs)
+    System time = 1 hrs., 51 mins, 58.19 secs. (= 6718.19 secs)
+    Total execution time = 44 hrs., 52 mins, 648049.48 secs. (= 809569.48 secs)
+
+o From data on the tiger problem it seems that there is some gross
+  inefficiency in the two-pass algorithm.  It does orders of
+  magnitudes worse that it used to on a slower computer.
+
+----------------------
+Testing/Debugging Tasks:
+----------------------
+
+o See if there are any good code coverage analyzers that I could use.
+
+o Run some timing experiments and profile the code to see where the
+  inefficiencies are.  I noticed that NormalIp tok 2X as long as witness
+  and TwoPass took more than 7 times longer.  This isn't even in the
+  ballpark of what I previously had.
+
+o The auto-test.c module is a mess.  Needs better organization, more
+  tests and documentation.
+
+o For auto-test.c, after all is said and done, see if everything works
+  for COSTS.  Some of the code in auto-test.c requires rewards so
+  would have to be adjusted.  But for all other code, things should
+  work without a problem.  Divide this into unit tests.  Somehow
+  automatically generate test stubs for everythong an dbegin to fill
+  them out: i.e., set up the testing framework.  See if JUnit has a C
+  equivalent.
+
+o I need to give some thought about how to go about automatically
+  testing signal-handler.[ch] and also how to automate the
+  cmd-line.[ch] testing. Furthermore, I have to use defined variables
+  in the Makefile to disable the system specific stuff.
+
+o Go through #included libraries and remove all references that are
+  not actually needed.
+
+o See if making YYSTACK_ALLOC and such use dmalloc is feasible.
+
+----------------------
+Porting Tasks:
+----------------------
+
+o Add autoconf defines checks. (and use them)
+
+o Add lp_solve standalone to autoconf makefiles
+
+o Add CPLEX stuff to autoconf check
+
+o Add test to autoconf makefiles
+
+o There is a dependency on a symlink from lp_solve_X.Y to lp_solve.
+  Do something about this (especially when doing a cvs checkout
+  initially).
+
+o On Darwin (Mac) system, I need to run 'ranlin libmdp.a' to create a
+  table of contents before it would like.
+
+o Update code to lp_solve 2.3 (or most recent version)
+
+o Scour previous NOTES and correspondence for feedback about porting
+  the pomdp-solve code.
+
+o Run the auto-test stuff on a CPLEX machine (need to code a few
+  routines to do this.)
+
+o See which of the libraries I really need and also which are
+  solaris/linux specific. (-lgen -lm -ldl)
+ 
+o Go through all the documentation and update it.
+
+o Make the timing and resource (memory) limitation stuff as platform
+  independent as possible as well as selectable in the Makefile with e
+  define (-D) so they can be disabled.
+
+o Grep for 'zzz' comments when all is said and done.
+
+o Run 'lint' on the code!  Maybe gcc option -pedantic? both?
+
+o Search for functions that exist, but that are not used anywhere.
+
+o Only make external routines in .h file that need to be there.
+
+o Make the time measurements independent of the platform.
+
+o Resolve the lex/yacc flex/bison differences especially concerning
+  those warning messages the compiler gives.  I should have a good
+  grasp of the differences between the programs and combinations of
+  the programs and document it.
+
+----------------------
+Representation Tasks:
+----------------------
+
+o Make a version that can read model parameters from a pipe where it
+  Requests the parameter and gets the value.
+
+o Make a version where some other separate piece of code can build the
+  internal representations and this code can use it. (socket based)
+
+o Make an option for deterministic domains (maybe just an
+  optimization).  Maybe add automated detection of deterministic
+  domains
+
+----------------------
+Documentation Tasks:
+----------------------
+
+o Add docs for the general command stufff including XML file format.
+
+o Add command line stuff for ZLZ speedup
+
+o Remove the 'succinct' argument.
+
+o Explain policy graph output (and its meaning/use).
+
+----------------------
+Misc. Tasks:
+----------------------
+
+o For finite grid, and a purging option that will purge the list by
+  looking only at the grid points (rather than doing linear
+  programming).
+
+o Add a user signal (CTRL-d or equivalent) that will interrupt an dset
+  a flag, and that all major loops periodically lok at.  Then, on
+  issuing the interrupt, the loop will print status information.
+
+o Add a date/timestamp option that prints out the wall-clock time as
+  each solution is produced.
+
+o Wire up the MCGS module to the main loop.  There is a loop which I
+  think does not make sense in the MCGS_improve():
+   
+        for( m = 0; m < param->opts->mcgs_traj_iter_count; m++ ) {
+
+  Also, need to invert the loop, so that the merging and restarting of
+  trajectories is done within the improveV() loop.
+
+o Have mdp, lp-solve and other libs all use a common header file that
+  has the dmalloc and xalloc stuff in it.
+
+o Add a CTRL-<something> key to send a SIGUSER (or similar) to the
+  program where it will dump the last set of vectors to a file (but
+  continue executing).
+
+o See if incorporating the documentation system: doxygen will be
+  useful.
+
+o Have the problem only outputput suffixes .alpha and .pg if the
+  problem converges.  Otherwise, it outputs the final epoch number
+  appended to .alphan and .pg
+
+o Do something to make command line options less overwhelming
+
+o The vertex functions in linear-support and the belief.[ch] are very
+  similar. Consolidate this where I can.
+
+o The sim.c module has a lot of stuff that is duplicated in
+  belief.[ch] and maybe somewhere else in the mdp libary. Check it out
+  and consolidate.
+
+o Add policy-graph evaluation code. Add this to one of the possible
+  tools, as well as an option for more rapidly converging on values
+  after each VI step.  Will need to reconcile the fact that policy
+  grpah pointer are to previous iteration, so need some heuristic to
+  reconnect the pointers and also track when the connection resets are
+  good or bad.
+
+o Need to merge and cordinate times and reporting between DP update
+  and ZLZ updates.
+
+o Only check Bellman residual when previous and current set sizes are
+  within some delta in size.  This will stop the costly comparison for
+  early epochs.
+
+o Move those ZLZ routines which belong elsewhere.  Some of it is a
+  generalized form of existing routines which should be adapted.
+
+o Add automatic reward adjustment to convert to positive *and*
+  reward.  Do it after it is loaded in!  Also on write-out, convet
+  back!
+
+o Add better CTRL-C handling.  Give message and maybe have it exit
+  various level of code on each CTRL-C, trying to maintain as much of
+  the latest answer as possible.  Especially consider exiting the ZLZ
+  loop with an intermediate result.
+
+o Do something about bellman context showing -1.0 in the stat_summary.
+
+o Add an interval of how frequently the bellman error should be
+  checked.  This will just save soem time from having to compute the
+  Bellman error after each iteration.
+
+o Add a "span-norm" stopping criteria.  First see if the span-norm
+  results (see Puterman's MDP book) applies to continuous state
+  spaces.  If so, then we find the point where the difference between
+  the old and new functions is minimum and where the difference is
+  maximum (Bellman error).  It is this difference which is the
+  stopping condition, and not necessarily the max difference.
+
+o Add a document that summarizes the function of each module in the
+  program.
+
+o Add a document that describes the files in the testing
+  sub-directory.
+
+o For adjustable epsilon algorithm, make the delta factor have a
+  option to be in terms of the percentage of vectors instead of simply
+  the number of vectors.
+
+o Add the number of vertices, number of LPs, number dominated, etc. to
+  the stat summary.
+
+o Add machine name and date to header of parameters (along side of
+  PID)
+
+o Looks like I need to define other contexts.  e.g., an 'enumeration'
+  and purging context for enumeration algorithm.
+
+o Add more explanations in the inc-prune.c file and think about ways
+  to do it more efficiently. 
+
+o Remove the #define stuff for the two LP options 'DENSE' and
+  'OLD_FORMULATION'.  Either make one of the options go away, or make
+  it a selectable variable.  If the latter, then adjst the auto-test
+  routines to test all possible setting of these by flipping this
+  variables value.
+
+o The one observation POMDP case is not handled correctly in
+  enumerationByQ() and improveIcPrune() because they do not set the
+  obs_source or witness point fields. Correct this, because we may
+  like to use this for completely unobservable problems.  In fact, I
+  should make a completely unobservable problem test case to make sure
+  things are handled properly.  Until that is working, I should give a
+  warning or abort on single observation problems.
+
+o See about fixing the enumeration and/or prune to check for duplicate
+  vectors. 
+
+o Remove the #define stuff from projection.c for the impossible
+  observation stuff.  Put comments explaining what is going on.
+
+o I have a bit of a problem with the INFINTE upper bound . In lpkit.h,
+  it seems they define the constant DEF_INFINITE as the infinite value
+  used.  In CPLEX they use the constant INFBOUND, which I do not know
+  off-hand.  For now, I defined INFBOUND to be the same as
+  DEF_INFINITE, but I need to check the CPLEX .h file and make these
+  consistent.
+
+o Add stuff to reuse LP data structures.  Make it transparent to the
+  algorithms. Use the "growable" idea of allocating for a certain size
+  problem and only reallocating when we need more.  See whether
+  lp-solve can tolerate if array sizes are bigger than it needs.
+
+o Need to make sure the LP solvers use the same and meaningful epsilon
+  value. We cannot say anything about the precision of our answer if we
+  do not know anything about the precision of the LP solver.
+
+o See about setting upper and lower bound on LP vars in
+  CPLEX/lp_solve.
+
+o I have not considered what would happen with the LPs for the
+  case if the same vector is comared to itself.  We will get a row of
+  all zeroes, but them with the extra delta (and another in new
+  fomrulation) variables and nothing else.
+
+o When merging Q-sets, bear in mind that there could really be
+  duplicate vectors. I should make sure this is handled properly and
+  that some manner of deterministic selection is used to remove the
+  arbitrariness of the selection.
+
+o Convert CPLEX calls to lp_solve calls for the vertex enumeration
+  code.
+
+o Redo the gMethodType stuff to keep statistics.
+
+o Remove POMDP value sense (reward vs. cost) from LPs, and possibly
+  from entire code.
+
+o Make linear support and enumeration work with both Q and V functions.
+
+o Have alias names for the algorithms and for common parameter
+  settings.
+
+o In simple domination checking, build up set incrementally so an
+  epsilon comparison can be guaranteed to give us a good
+  approximation.
+
+o Better stopping criteria
+
+o Make it possible to do *all* algorithms.  This can be used as
+  comparisons both in answer and timing. (method=all)
+
+o Redo the domination check.  Make it more efficient and I believe
+  Michael had another idea with how to improve it years ago.
+  Routines:
+    int removeDominatedAlphaList( double *alpha, AlphaList list )
+
+o Restructure LP stuff to be able to re-use LPs when only vector being
+  compared changes or if a new vector is added to a set.
+
+
+----------------------
+Parsing/File Tasks:
+----------------------
+
+o Do something about the "-1" for the discount factor that shows up in
+  the config file and parameters.  This value means not to override,
+  but it confuses people.
+
+o Test config file stuff.
+
+o BUG: in pomdp file observation label enumeration using floating
+  point numbers worked for Brian, but failed when referenced.  Need to
+  catch this error while parsing the enumeration.
+
+o Add the ability to reference other parts of line. e.g.,
+
+   T : foo : * : $2 1.0
+
+  will specify a deterministic transition from every state to itself.
+
+o Anywhere in the transitions, observation, rewards, allow a list of
+  mnemoicsa/indices.
+
+o Anywhere in the transitions, observation, rewards, add a "!"
+  negation operator (to also work withj lists)
+
+o More robust alpha vector file reading with sanity checking and
+  such. 
+
+o I think that my file parser does not handle scientific notation:
+  e.g. 1.0e-05
+
+o lp_solve does nothing to keep track of line numbers.  Add something
+  to increment yylineno on newline characters (lex.l file).
+
+o Allow strings for states, observation and actions everywhere and
+  internally map these to numeric values.  Need to do something about
+  keeping track of this mapping, especially when showing results
+  (esp. policy graphs).
+
+----------------------
+Optimization Tasks:
+----------------------
+
+o For pruning sets of alpha vectors using linear programming, we do
+  not really need to find the point of maximal difference in the
+  linear program.  We only need to find a point where there is a
+  positive difference.  Thus, potentially many more LP pivots occur
+  than are necessary.  If there is some way to direct the LPs to stop
+  the pivots after it finds positive objective function, this could
+  save time.
+
+o When the Bellman errro is reached after a DP update and the ZLZ
+  option is being used, there is a double computation of the bellman
+  error. First the ZLZ checks the Bellman error, and if this reached
+  it exits immediately, where the end of the VI loop will also chekc
+  the Bellman error.
+
+o Make the generalized IP algorithm more efficient.  It is coded
+  pretty much straightfrwardly now, which is not the most efficient
+  way it can be done.
+
+o Add the save-a-point optimizations.  This needs to be a flag in the
+  prune() routine as well.
+  Have witness points saving in enumeraton, two-pass and inc-prune.
+
+o Install and try the Pentium optimized compiler on this when is all
+  works.  See what the speed-up looks like and if good, put URL in
+  docs.
+
+o Using lp_solve structure more efficeiently (i.e., reused lprec
+  structs from instance to instance.
+
+o Make the program truly sparse!  Need sparse representation of the
+  alpha vectors, belief states, etc. (Related to an algorithmic idea
+  of bounding the sizes of these and seeing what effect truncating
+  components that are near zero might be.)
+
+o unify the belief states and alpha vectors into a DoubleVector type.
+  Also unify the linked list (BeliefList and AlphaList, etc.) 
+
+o Make more efficient sparse POMDP representation: 
+  - recognize duplicate matrices for actions and only store once.  
+  - only store compact immediate rewards (do expectation up front).
+
+o Add witness optimizations discussed in my thesis.
+
+o See about using previous LP solution as a seed for the next LP when
+  constraints do not change very much.
+
+o Reusing previous linear programs (analyze similarities) and also
+  just start LPs with previous solution.
+
+o Reusing LP memory areas.  Check to see if previous one is large
+  enough and just reuse rather than destroy and reallocate.
+
+o Speeding up convergence using policy graph evaluation. Some notes on
+  where this came from in my proposing some solution for astudent's
+  research project:
+
+    -----
+    Here's one way to be able to stay with the policy graph evaluation
+    approach. (The basics of this are now implemented as the
+    UTIL_relinkPolicyGraph and UTIL_matchAlphaLists procedures)
+
+    Generate the solution .pg for epochs 499 and 500.
+
+    Since the epoch 500 pointers point to the vectors of epoch 499,
+    create a mapping from vectors in 499 to vector in 500.  Then, if
+    you supposed that node 'i' in 499 maps to node 'j' in 500,
+    everytime you see an 'i' in the policy graph pointers, you replace
+    it with a 'j'.
+
+    This gives you a policy graph that makes sense, and for which you
+    can feed into the pg-eval code.  the beauty of this is that for
+    the case where 499 and 500 are the same, you get the identity
+    mapping which is * exactly* the right thing to do.
+
+    My guess is that you will always get *almost* the identity
+    mapping, with a few bizarro ones that'll map elsewhere.
+
+    The only catch is to define the criteria for the mapping.  It
+    could be closeness in distance, with possibly closeness in the
+    action selection for that node, and likely some combination with
+    action taking priority or having more weight.
+
+    This might be a way to do some approximation where the process of
+    trying to make the mapping will tell us which are not that useful
+    that we can discard them.  Thus, we could get apseudo-convergence.
+
+    Another important point about this, is that I think this technique
+    could be used to speed up some of my other algorithms.
+
+
+----------------------
+Algorithm Tasks:
+----------------------
+
+o Look at papers and code on grid-based stuff: Spaan and Vlassis (and
+  related work they cite.
+  
+o Create a variation of an MDP where we assume that all are always
+  likely, thought mostly with a very small probability.  We could then
+  try to figure out how to alter the regular MDP models/algorithms to
+  deal with these fringe probabilities maybe separately.  Also, we
+  could use POMDP model with two state: "Where I am expected" or not
+  where I expected, and two observations: "Saw Expected" "Saw
+  Unexepcted". An dfind out just how much unexpected things we need to
+  see before we decide to not assume determinism.
+
+o Creating an approximate MDP from a POMDP using some set of belief
+  points.
+   - comparison to finite grid methods (versus MDP solution directly)
+   - strategies for grid or belief states for MDP:
+     * depth first (from initial belief, or uniform belief)
+     * breadth first (from initial belief or all simplex corners)
+     * first 'n' beliefs
+     * choose subsets of the corners of the belief space, where the
+       size of the subset is adjustable (e.g., only consider beliefs that
+       comprise uncertainty of 4 possible locations.) 
+     * beliefs to search depth 'h'
+     * using clustering technqiues to cluster belief points and build
+       an approximate MDP based on cluster centers
+     * looking at improvement to existing value function for  agiven
+       point and only add if the vector it leads to is "significantly"
+	  different from existing ones 
+     * (This may be similar to mcgs) Here we implicitly encode the
+       grid as the set of vectors.  We choose a vector (random or in
+       some sequence), do an LP to find a point for that vector, then
+       create a new vector for that point.  We then add this new
+       vector, possibly eliminating and dominated vector (or
+       periodically purging the set of vectors when it grows to a
+       certain point.).
+
+o Another idea related to the finite grid for generating the grid.
+  Using the 'search' option will cause it to consider all possible
+  next belief states for all action/observation sequences.  however,
+  in reality, there are some actionsequences that are obviously not
+  useful.  Thus, the search for belief points could be truncated along
+  path of not so good action sequences.  These not so good sequences
+  could be identified by actions that do not lead to a less entropic
+  belief state;
+
+o In finite grid, instead of computing the vector at a point by
+  "maxing" the transformed belief sttae (one for each action) with the
+  projection sets, transform the belief, then find the nearest
+  neighbor, and use its vector, regardless of the maximal value.  Sort
+  of forcing an MDP transition matrix even when it is not.  This
+  leads to the idea of creating not only a finite grid, but a finite
+  grid with specific state transition dynamics that only go fropm
+  point to point and for which you can build an MDP.
+
+o Another finite grid idea:
+   Make the search on belief states interuptable.  Have the search got
+   to generate N points, then do first iteration (or first few), then
+   throw away the points (or just mark them as unuseful) those that do
+   not lead to new value function facets.  Resume search adding as
+   many as were thrown away.  Possible add more and do a sort of
+   generic algorithm "survival of the fittest" on the grid.  This
+   interleaves the search and point updates.
+
+o Parallel finite grid: do many finite grids (small) in paralllel and
+  then merge their results in some manner.
+
+o FACTOID: If observations are composite, and each dimension is
+  independent, then instead of cross-product model/belief update, we
+  can update belief in sequence and we get the same thing.  Ordering
+  does not matter. Also this is equivalent to doing a sequence of
+  updates in the cross-product space where other observations provide
+  no-information (i.e., uniform distribution)
+
+o Adding policy graph evaluation subroutine to help convergence.
+
+o The ZLZ speedup method may be just a variant of the finite grid
+  method.  Explore this idea further and consolidate the two if
+  possible.
+
+o the mcgs algorithm/code seems to be a special case of a more
+  generalized finite grid method.  Combine these if possible
+  (trajectory == belief list)
+
+o Implement Hauskrecht's MDP and QMDP update rules, which is the DP
+  update rule with the max over actions on a component-wise basis.
+
+o Code this simple approximation scheme: Start with a value function,
+  select a random point. Using the current value function, compute the
+  vector at this point. Add this vector to the set, prune the set,
+  repeat.
+
+o Implement the fast-informed upper bound of Hauskrecht
+
+o Add a Gauss-Seidel variation.  Need to look at Hauskrecht paper.
+ 
+o Add Sondik's one-pass algorithm?
+
+o Add Cheng's relaxed region?
+
+o Add heuristics to automatically select algorithm based upon problem
+  size? (method = best)
+
+o Add ability to read an initial grid of belief states from a file for
+  the finite grid option.
+
+o See about implementing Lovejoy's finite grid method.
+
+o If doing some pruning or such where we have to throw away vectors,
+  in order to possible make the policy graph stuff still work by
+  looping back the pointers, we may need to reset the links of the
+  policy graph.  For things that used to point to a node that was
+  removed, we should find the "closest" non-pruned node and use that./
+  Here closest could be closest in value, least error, similar action,
+  etc. (see UTIL_matchAlphaLists and UTIL_relinkPolicyGraph)
+
+----------------------
+Highly Optional Tasks:
+----------------------
+
+o Read all arguments from a configuration file rather than the command
+  line.  Also provide a template for such a thing, and retain all
+  command line options that will override the stuff in the config
+  file.
+
+o Make a utility program template or mechanism to allow new utility
+  tools to be more easily built.  See compare-alphas, map-belief,
+  sort-alphas, etc. for the instances that can be generalized from.
+
+o Think about parallel version of the code and possibly distributing
+  the solution process among various machines.  Two things: distribute
+  computation of the individual Q^a sets. In incremental pruning,
+  distribute the individual cross-sums.  Eventually everything has to
+  come back to a single calculation, so I wouldn't say it is highly
+  parallelizable, but it has a lot of potential.
+
+o Speed up convergence by solving policy graphs.  
+
+o Allow compact POMDP specifications.
+
+o Implement the gMaxSolnSize thing.  There are at least two ways to do
+  it.  Stop the algorithm when you get that many *or* solve the whole
+  epoch, but throw out vectors to make it that size before moving onto
+  the next iteration.
+
+o See about putting some of the finite transience stuff in there.
+  i.e., you can optional ask whether or not the resulting policy is
+  finitely transient. the belief serach stuff in finite-grid.c maight
+  be helpful here.
+
+o Add a utils directory and put in various helpful utilities:
+    - simulator of a policy/value function
+    - value function viewer, 2D and 3D with selection of cross-section
+      for problems with more states than that.  Allow superimposition of
+      multiple functions.
+    - solving q-mdp values
+    - finite transience test?
+
+------
+Tools:
+------
+
+o (alpha-trim) Takes an alpha list input file, produces a reduced and
+  sorted version of this file (removed useless vectors.) Options to
+  report original and reduced sizes. (this is the same as what I did
+  with the UTIL_purgeAlphaFile I think)
+
+o (alpha-diff) Takes two alpha lists files and compares them.  Show
+  which are identical between files, shows which of the two functions
+  is best for a bunch of witness points.  Shows whether one completely
+  dominates the other, etc. (this is the same as what I did with the
+  UTIL_compareAlphaFiles I think)
+
+o (pg-diff) Takes two policy graphs and sees if their are isomorphic
+  or is subpieces are isomorphic (graph structural
+  comparisons). framework in pg-tools and pg-isomophism.c is there,
+  but it needs some work I think)
+
+o Add an "analyze" tool that gives help about what method and
+  parameters will be useful.
+
+o (alpha-value) Takes a belief list and a value function and show the
+  value of each belief state for that value function (and which vector
+  was maximal (keeping track of ties too)). Also output the action for
+  each belief state (policy). (Is this the same as what I implemented
+  with: UTIL_mapBeliefList)
+
+o Take a policy graph, computes its value.  Also let it compute the
+  value for one or more belief states. (have the pg_eval tool now, but
+  maybe integrate finding values for more than one belief state.
+
+o For a fixed number of policy graph nodes, find the best policy graph
+  (see pg-search) and its value for a set of belief states.

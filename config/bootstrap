@@ -1,0 +1,23 @@
+#! /bin/sh
+
+##set -x
+
+echo "Running 'aclocal' ..."
+aclocal -I config
+
+##aclocal -I config
+
+echo "Running 'autoheader' ..."
+autoheader
+
+##automake --foreign --add-missing --copy
+
+echo "Running 'automake' ..."
+automake --gnu --add-missing 
+
+echo "Running 'autoconf' ..."
+autoconf
+
+echo "done."
+
+exit 1

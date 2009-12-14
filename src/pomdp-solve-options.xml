@@ -1,0 +1,702 @@
+<executable value="pomdp-solve"/>
+
+<version value="5.2"/>
+
+<description>
+  The pomdp-solve program solve partially observable Markov decision
+  processes (POMDPs), taking a model specifical and outputting a value
+  function and action policy.  It employs many different algorithms,
+  some exact and some approximate.  
+</description>
+
+<param name="stdout">
+  <varname value="report_filename"/>
+  <type value="string"/>
+  <usage value="non-web"/>
+  <units value="filename"/>
+  <summary value="Redirect programs stdout to a file of this name."/>
+  <description>
+    The pomdp-solve program displays much status and progress
+    information to stdout.  If you want to have this redirected to a file
+    instead, provide the file name as this parameter.  Not specifying
+    this option will simply make this information go to normal stdout.
+  </description>
+</param>
+
+<param name="rand_seed">
+  <type value="string"/>
+  <usage value="advanced"/>
+  <summary value="Set the random seed for program execution."/>
+  <description>
+    For any functionality that requires random numbers, we want to be
+    able to reproduce a given run by executing with the same random
+    number seed.  This parameter allows you to set the initial random
+    seed by specifying a string consisting of three integers separated by
+    a colon (e.g., "34523:12987:50732" ) Not setting this value will
+    result in the random seed being pseudo-randomized based on the system
+    clock. 
+  </description>
+</param>
+
+<param name="stat_summary">
+  <class value="flag"/>
+  <usage value="advanced"/>
+  <default value="false"/>
+  <summary value="Whether to keep and print internal execution stats."/>
+  <description>
+    The pomdp-solve program is capable of keeping various statistical
+    information as it solves the problem.  If you want to track these
+    stats and print them, set this flag to true.
+  </description>
+</param>
+
+<param name="memory_limit">
+  <category value="Resource Limits"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="bytes"/>
+  <valid value="1:any"/>
+  <summary value="Set upper bound memory usage."/>
+  <description>
+    This parameter allows you to set an upper bound on the amount of
+    memory that this program uses. If the memory threshold is met, the
+    program execution is terminated.  Without specifying this
+    parameter, there will be no upper bound imposed by the pomdp-solve
+    program (though the OS will naturally have something to say about
+    this). 
+  </description>
+</param>
+
+<param name="time_limit">
+  <varname value="max_secs"/>
+  <category value="Resource Limits"/>
+  <usage value="basic""/>
+  <type value="int"/>
+  <units value="seconds"/>
+  <valid value="1:any"/>
+  <summary value="Set upper bound on execution time."/>
+  <description>
+    This parameter allows you to set an upper bound on the amount of
+    time that this program will run. When this amount of time has
+    elapsed, the program execution is terminated.  Without specifying
+    this parameter, there will be no upper bound imposed by the pomdp-solve
+    program.
+  </description>
+</param>
+
+<param name="pomdp">
+  <varname value="param_filename"/>
+  <category value="Value Iteration"/>
+  <usage value="required"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <summary value="Sets the POMDP model input file name to use."/>
+  <description>
+    All executions for solution of a POMDP needs a file as input to
+    the solution process.  This filename by convention will end with
+    with or ".pomdp" or ".POMDP" and needs to conform to the
+    pomdp-solve file format (which is described elsewhere.
+  </description>
+</param>
+
+<param name="terminal_values">
+  <varname value="initial_policy_filename"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <summary value="Sets the terminal value function (starting point.)"/>
+  <description>
+    Value iteration assumes that at the end of the lifetime of the
+    decision maker that no more values will be accrued.  This corresponds
+    to a terminal value function of all zeroes.  This is essentially the
+    default starting point for the program.  However, with this parameter,
+    you can set a different terminal value function, which serves as the
+    seed or initial starting point for value iteration.  Effectively, this
+    allows you to take the output of one value iteration run and send it
+    as input to the next.  The file format for this input file is
+    identical to the output file format of this program (the ".alpha"
+    file). 
+  </description>
+</param>
+
+<param name="horizon">
+  <category value="Value Iteration"/>
+  <usage value="basic"/>
+  <type value="int"/>
+  <units value="iterations"/>
+  <valid value="1:any"/>
+  <summary value="Sets the number of iterations of value iteration."/>
+  <description>
+    Value iteration is iterative and thus we may want to find 'finite
+    horizon' solutions for various reasons.  To make pomdp-solve terminate
+    after a fixed number of iterations (aka epochs) set this value to be
+    some positive number.  By default, value iteration will run for as
+    many iterations as it take to 'converge' on the infinite horizon
+    solution. 
+  </description>
+</param>
+
+<param name="discount">
+  <varname value="override_discount"/>
+  <category value="Value Iteration"/>
+  <usage value="basic"/>
+  <type value="double"/>
+  <valid value="0:1"/>
+  <default value="-1"/>
+  <summary value="Set the discount fact to use in value iteration."/>
+  <description>
+    This sets the discount factor to use during value iteration which
+    dictates the relative usefulness of future rewards compared to
+    immediate rewards.
+  </description>
+</param>
+
+<param name="stop_criteria">
+  <category value="Value Iteration"/>
+  <class value="enum"/>
+  <usage value="advanced"/>
+  <valid value="exact weak bellman"/>
+  <default value="weak"/>
+  <summary value="Sets the value iteration stopping criteria."/>
+  <description>
+    At the end of each epoch of value iteration, a check is done to
+    see whether the solutions have 'converged' to the (near) optimal
+    infinite horizon solution.  there are more than one way to determine
+    this stopping condition.  The exact semantics of each are not
+    described here at this time.
+  </description>
+</param>
+
+<param name="stop_delta">
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="Sets the precision for the stopping criteria check."/>
+  <description>
+    When checking the stopping criteria at the end of each value
+    iteration epoch, some of the stopping condition types use a
+    tolerance/precision in their calculations.  This parameter allows you
+    to set that precision.
+  </description>
+</param>
+
+<param name="o">
+  <varname value="prefix_str"/>
+  <category value="Value Iteration"/>
+  <usage value="non-web"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <default value="solution"/>
+  <summary value="Define the prefix name for the program solution files."/>
+  <description>
+    All the information relevant to the solution of the POMDP are
+    written to files.  This parameter allows you to set the prefix to use
+    for the given run of this program.  The suffix is generated internall
+    by the program connected to the time and contents of the various
+    files. 
+  </description>
+</param>
+
+<param name="save_all">
+  <category value="Value Iteration"/>
+  <class value="flag"/>
+  <usage value="advanced"/>
+  <default value="false"/>
+  <summary value="Sets whether or not to save every iteration's solution."/>
+  <description>
+    Normally, only the final solution is saved to a file, but if you
+    would like to write out the solution to every epoch of value
+    iteration, then set this flag to true.  The epoch number will be
+    appened to the filenames that are output.
+  </description>
+</param>
+
+<param name="vi_variation">
+  <category value="Value Iteration"/>
+  <class value="enum"/>
+  <usage value="advanced"/>
+  <valid value="normal zlz adjustable_epsilon fixed_soln_size"/>
+  <default value="normal"/>
+  <summary value="Sets the general category of value iteration to use."/>
+  <description>
+    Independent of particular algortihms for computing one iteration
+    of value iteration are a number of variations of value iteration meant
+    to help speed up convergence.  We do not yet attempt to give a full
+    description of the semantics of each here.
+  </description>
+</param>
+
+<param name="start_epsilon">
+  <varname value="starting_epsilon"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <depends param="vi_variation" value="adjustable_epsilon"/>
+  <summary value="Sets the starting precision for adjustable epsilon VI."/>
+  <description>
+    When solving using the 'adjustable_epsilon' method of value
+    iteration, we need to specify both a staring and ending precision.
+    This is the starting precision.
+  </description>
+</param>
+
+<param name="end_epsilon">
+  <varname value="ending_epsilon"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <depends param="vi_variation" value="adjustable_epsilon"/>
+  <summary value="Sets the ending precision for adjustable epsilon VI."/>
+  <description>
+    When solving using the 'adjustable_epsilon' method of value
+    iteration, we need to specify both a staring and ending precision.
+    This is the ending precision.
+  </description>
+</param>
+
+<param name="epsilon_adjust">
+  <varname value="epsilon_adjust_factor"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <depends param="vi_variation" value="adjustable_epsilon"/>
+  <summary value="Sets the precision increment for adjustable epsilon VI."/>
+  <description>
+    When solving using the 'adjustable_epsilon' method of value
+    iteration, we need to specify a staring and ending precision as
+    well as the increment to use for each adjustment.
+    This is the precision increment.
+  </description>
+</param>
+
+<param name="max_soln_size">
+  <category value="Value Iteration"/>
+  <type value="double"/>
+  <usage value="advanced"/>
+  <valid value="0:any"/>
+  <depends param="vi_variation" value="fixed_soln_size"/>
+  <summary value="Sets the max size for the fixed solution size VI."/>
+  <description>
+    When solving using the 'fixed_soln_size' method we need to define
+    what the maximal size of a soltuion we will tolerate.  This sets that
+    limit. 
+  </description>
+</param>
+
+<param name="history_length">
+  <varname value="epoch_history_window_length"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="epochs"/>
+  <valid value="1:any"/>
+  <depends param="vi_variation" value="adjustable_epsilon"/>
+  <summary value="Sets history window to use for adjustable epsilon VI."/>
+  <description>
+    When using the 'adjustable_epsilon' value iteration variant, we
+    need to compare solution sizes from the the rpevious epochs to see
+    whethere or not the solutions are staying relatively constant in
+    size.  To do this, we need to define a past window length, as well as
+    a tolerance on how much variation in solution size we want to care
+    about.  This parameter defines the length of the epoch window history
+    to use when determining whether it is time to adjust the precision of
+    the value iteration solution.
+  </description>
+</param>
+
+<param name="history_delta">
+  <varname value="epoch_history_window_delta"/>
+  <category value="Value Iteration"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <valid value="1:any"/>
+  <depends param="vi_variation" value="adjustable_epsilon"/>
+  <summary value="Sets solution size delta to use for adjustable epsilon VI."/>
+  <description>
+    When using the 'adjustable_epsilon' value iteration variant, we
+    need to compare solution sizes from the the previous epochs to see
+    whether or not the solutions are staying relatively constant in
+    size.  To do this, we need to define a past window length, as well as
+    a tolerance on how much variation in solution size we want to care
+    about.  This parameter defines the tolerance on what we will
+    consider all solutions to be of the same size.
+  </description>
+</param>
+
+<param name="dom_check">
+  <varname value="domination_check"/>
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <class value="flag"/>
+  <default value="true"/>
+  <summary value="Controls whether simple domination check is done or not."/>
+  <description>
+    There is a computationally simple, but not precision domination
+    check that can be done to discover useless components of a value
+    function.  This is often useful, but there are circumstances in which
+    it is best to turn this off.
+  </description>
+</param>
+
+<param name="prune_epsilon">
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="Sets the precision level for the prune operations."/>
+  <description>
+    There are a number of ways to prune sets of value function
+    components.  Each uses a precision actor which is this parameter.
+  </description>
+</param>
+
+<param name="epsilon">
+  <category value="Optimization"/>
+  <usage value="basic"/>
+  <type value="double"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="General solution precision level setting."/>
+  <description>
+    This is the main precision setting parameter which will effect the
+    preciseness fo the solution procedures.
+  </description>
+</param>
+
+<param name="lp_epsilon">
+  <category value="Optimization"/>
+  <type value="double"/>
+  <usage value="advanced"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="Precision use in linear programs."/>
+  <description>
+    Many solution procedures employ linear programming in their
+    algorithms.  For those that do, thisk is the precision level used
+    inside the linear programming routines.
+  </description>
+</param>
+
+<param name="fg_epsilon">
+  <category value="Optimization"/>
+  <type value="double"/>
+  <usage value="advanced"/>
+  <valid value="0:any"/>
+  <default value="1e-9"/>
+  <summary value="Precision use in comparing belief points in finite grids."/>
+  <description>
+    When using the finite grid approximation, as belief are
+    encountered, before they are put into the grid, they are checked to
+    make sure they are not already in the grid.  This comparison uses the
+    value of this option in that comparison. Therefore, you can limit the
+    grid precision by twekaing this parameter. 
+  </description>
+</param>
+
+<param name="proj_purge">
+  <category value="Optimization"/>
+  <class value="enum"/>
+  <usage value="advanced"/>
+  <valid value="none domonly normal_prune epsilon_prune"/>
+  <default value="normal_prune"/>
+  <summary value="Type of pruning to use for pre-iteration solving."/>
+  <description>
+    The first step for most algorithms is to compute the forward
+    projection of the previous iteration solution components.
+    Combinations of these will comprise the current solution.  Prior
+    to emplying any algorithm to find which combinations are needed (the
+    heart of the POMDP solution algorithms) we can employ a process of
+    pruning the projected set, often reducing the complexity of the
+    algorithms.  This parameter decides what type of pruning to use at
+    this step.  Details on the semantics of each type of pruning are not
+    yet given here.
+  </description>
+</param>
+
+<param name="q_purge">
+  <varname value="q_purge_option"/>
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <class value="enum"/>
+  <valid value="none domonly normal_prune epsilon_prune"/>
+  <default value="normal_prune"/>
+  <summary value="Type of pruning to use for a post-iteration solving."/>
+  <description>
+    Some algorithms will separately solve the problem for individual
+    actions, then merge these results together.  The individual action
+    solutions are referred to as the "Q-functions".  After merging, some
+    pruning process will likely take place, but we can also choose to do a
+    pre-merge pruning of these sets which often simplifies the merging
+    process.  This parameter defines the method to use for this pre-merge
+    pruning. 
+  </description>
+</param>
+
+<param name="witness_points">
+  <varname value="use_witness_points"/>
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <class value="flag"/>
+  <default value="false"/>
+  <summary value="Whether to include 'witness points' in solving."/>
+  <description>
+    Keeping 'witness points' means to track individual points that
+    have been found that gave rise to individual value function
+    components. These can often be used to help speed up the solution
+    process.
+  </description>
+</param>
+
+<param name="alg_rand">
+  <varname value="alg_init_rand_points"/>
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="points"/>
+  <valid value="0:any"/>
+  <summary value="How many points to use to seed value function creation."/>
+  <description>
+    One can speed up the discovery of the initial shape of the value
+    function by randomly generating points and finding the value function
+    components needed for those points.  This technique is used if this
+    parameter has a non-zero value.
+  </description>
+</param>
+
+<param name="prune_rand">
+  <varname value="prune_init_rand_points"/>
+  <category value="Optimization"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="points"/>
+  <valid value="0:any"/>
+  <summary value="How many points to use to seed pruning process."/>
+  <description>
+    When pruning sets of value function components, we can use a
+    random set of points to help speed up the pruning process.  This
+    parameter, if specified and non-zero, will define the number of random
+    points to use in this way.
+  </description>
+</param>
+
+<param name="method">
+  <category value="Algorithm"/>
+  <usage value="basic"/>
+  <class value="enum"/>
+  <valid value="enum twopass linsup witness incprune grid mcgs"/>
+  <default value="incprune"/>
+  <summary value="Selects the main solution algorithm to use."/>
+  <description>
+    The pomdp-solve program implements a number of differnt
+    algorithms.  This selects the one that should be used. Details of
+    each method not yet provided here.
+  </description>
+</param>
+
+<param name="enum_purge">
+  <varname value="enum_purge_option"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <class value="enum"/>
+  <valid value="none domonly normal_prune epsilon_prune"/>
+  <default value="normal_prune"/>
+  <depends param="method" value="enum"/>
+  <summary value="The pruning method to use when using the 'enum' algorithm."/>
+  <description>
+    When using the enumeration method, there will be times where the
+    set of value function components will need to be pruned or purged of
+    useless components.  This define the pruning method to use for this
+    algorithm. 
+  </description>
+</param>
+
+<param name="inc_prune">
+  <varname value="ip_type"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <class value="enum"/>
+  <valid value="normal restricted_region generalized"/>
+  <default value="normal"/>
+  <depends param="method" value="incprune"/>
+  <summary value="The variation of the incremental pruning algorithm."/>
+  <description>
+    The incremental pruning algorithm has a number of variations.
+    This parameter selects the variation.  We do not yet discuss here the
+    nuances of these variations.
+  </description>
+</param>
+
+<param name="fg_type">
+  <varname value="finite_grid_type"/>
+  <category value="Algorithm"/>
+  <class value="enum"/>
+  <usage value="advanced"/>
+  <valid value="simplex pairwise search initial"/>
+  <default value="initial"/>
+  <depends param="method" value="grid"/>
+  <summary value="Finite grid method means to generate belief points."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  There are a number of ways to generate this grid, and this
+    parameter selects the technique to use.  We do not yet here discuss
+    the details of each of these.
+  </description>
+</param>
+
+<param name="fg_points">
+  <varname value="finite_grid_points"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <valid value="1:any"/>
+  <default value="10000"/>
+  <depends param="method" value="grid"/>
+  <summary value="Maximal number of belief points to use in finite grid."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  There are a number of ways to generate this grid, and this
+    parameter selects the maximum number of points that should be
+    generated during this process. 
+  </description>
+</param>
+
+<param name="fg_save">
+  <varname value="finite_grid_save"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <class value="flag"/>
+  <default value="false"/>
+  <depends param="method" value="grid"/>
+  <summary value="Whether to save the points used in finite grid."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  This parameter will turn on and off the saving of these
+    belief points to an external file. 
+  </description>
+</param>
+
+<param name="mcgs_traj_length">
+  <varname value="mcgs_traj_length"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="steps"/>
+  <valid value="1:any"/>
+  <default value="100"/>
+  <depends param="method" value="mcgs"/>
+  <summary value="Trajectory length for Monte Carlo belief generation."/>
+  <description>
+   The Monte-Carlo, Gauss-Seidel method using trajectories through the
+   belief space to lay down a grid of points that we will compute the
+   optimal value funciton for.  This parameter defines the lengths of
+   the trajectories.
+  </description>
+</param>
+
+<param name="mcgs_num_traj">
+  <varname value="mcgs_num_traj"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="trajectories"/>
+  <valid value="1:any"/>
+  <default value="1000"/>
+  <depends param="method" value="mcgs"/>
+  <summary value="Number of trajectories for Monte Carlo belief generation."/>
+  <description>
+   The Monte-Carlo, Gauss-Seidel method using trajectories through the
+   belief space to lay down a grid of points that we will compute the
+   optimal value funciton for.  This parameter defines the number of
+   trajectories to use.
+  </description>
+</param>
+
+<param name="mcgs_traj_iter_count">
+  <varname value="mcgs_traj_iter_count"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="iterations"/>
+  <valid value="1:any"/>
+  <default value="1"/>
+  <depends param="method" value="mcgs"/>
+  <summary value="Times to iterate on a trajectory for MCGS method."/>
+  <description>
+   The Monte-Carlo, Gauss-Seidel method using trajectories through the
+   belief space to lay down a grid of points that we will compute the
+   optimal value funciton for.  This parameter defines the number of
+   value function update iterations to use on a given set of
+   trajectories.
+  </description>
+</param>
+
+<param name="mcgs_prune_freq">
+  <varname value="mcgs_prune_freq"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="iterations"/>
+  <valid value="1:any"/>
+  <default value="100"/>
+  <depends param="method" value="mcgs"/>
+  <summary value="How frequently to prune during MCGS method."/>
+  <description>
+   The Monte-Carlo, Gauss-Seidel method using trajectories through the
+   belief space to lay down a grid of points that we will compute the
+   optimal value funciton for.  This parameter defines how frequently
+   we should prune the set of newly created value function facets
+  during the generation of the value function points.
+  </description>
+</param>
+
+<param name="fg_purge">
+  <varname value="fg_purge_option"/>
+  <category value="Algorithm"/>
+  <usage value="advanced"/>
+  <class value="enum"/>
+  <valid value="none domonly normal_prune epsilon_prune"/>
+  <default value="normal_prune"/>
+  <depends param="method" value="grid"/>
+  <summary value="Finite grid method means to prune value functions."/>
+  <description>
+    Defines the technique to use during pruning when the finite grid
+    method is being used.
+  </description>
+</param>
+
+<param name="verbose">
+  <category value="Debug"/>
+  <usage value="advanced"/>
+  <class value="enum"/>
+  <repeatable/>
+  <valid value="context lp global timing stats cmdline main alpha proj crosssum agenda enum twopass linsup witness incprune lpinterface vertexenum mdp pomdp param parsimonious region approx_mcgs zlz_speedup finite_grid mcgs"/>
+  <summary value="Turns on extra debugging output for a module."/>
+  <description>
+    Each main module of pomdp-solve can be separately controlled as
+    far as extra debugging output is concerned. This option can be used
+    more than once to turn on debugging in more than one module.
+  </description>
+</param>
+
+<param name="save_penultimate">
+  <class value="flag"/>
+  <default value="false"/>
+  <usage value="advanced"/>
+  <summary value="Whether to save previous iterations alpha vectors."/>
+  <description>
+    The pomdp-solve program normally only saves the last epoch's
+    solution to a file.  There is an option (save_all) to save every
+    iteration, but that can require a lot of space for a long horizon.
+    There are times when it is useful to have the current and immediately
+    previous epoch' solutions.  When this flag is set, you will always
+    find the previous epochs solution in *.prev.alpha (where '*' is
+    the prefix defined for the execution run.
+  </description>
+</param>

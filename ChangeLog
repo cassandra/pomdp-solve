@@ -1,0 +1,160 @@
+2003-05-13  Tony Cassandra <arc@cassandra.org>
+
+	* ChangeLog: adding per GNU build addition
+	* configure.ac: adding per GNU build addition
+	* Makefile.am: adding per GNU build addition
+	* AUTHORS: adding per GNU build addition
+	* NEWS: adding per GNU build addition
+	* THANKS: adding per GNU build addition
+	* src/Makefile.am: adding per GNU build addition
+	* mdp/Makefile.am: adding per GNU build addition
+	* lp-solve/Makefile.am: adding per GNU build addition
+	* config/: adding per GNU build addition
+	* config/bootstrap: adding per GNU build addition
+	
+	* src/: Added XML headers to all 'src' dir source files
+
+	* src/mdp/scaner.l: Using parser.h instead of parser.tab.h
+	* src/lp-solve/lex.l: Added includes and extern defs
+
+2004-03-08  Tony Cassandra <arc@cassandra.org>
+
+	* src/finite-grid.c: fixed major logic bug in main function call
+	* src/utils.c: added to support map-belief executable
+	* src/map-belief-main.c: added to support map-belief executable
+	* src/: refactored some of the belief and alpha file writing things
+
+2004-03-16  Tony Cassandra <arc@cassandra.org>
+
+	* src/pg.[ch]: adding for explicit policy graph data structure
+	* src/pg-isomorphism-main.c: adding utility program to check isomorphisms
+	* src/params.c: added '-v' and '-version' flags
+
+2004-04-18  Tony Cassandra <arc@cassandra.org>
+
+	* added the sort-alpha-list utility program
+	* src/pomdp-solve.c: sorting alpha list before saving for -save_all
+	* added the compare-alpha-lists utility program
+	* src/utils.c: added more alpha vector stats to the map-belief utility
+	* added the purge-alpha-list utility program
+	* src/finite-grid.c: added alpha list purge to finite grid method
+
+2004-04-19  Tony Cassandra <arc@cassandra.org>
+
+	* src/pomdp-solve.c: fixed context bug for 'exact' stopping criteria
+
+2004-06-16  Tony Cassandra <arc@cassandra.org>
+
+	* src/pomdp-tools-main.c: added for consolidation of misc tools programs
+	* src/associative-array.c: added for better option handling
+	* src/associative-array.h: added for better option handling
+	* src/command-line.c: added for better option handling
+	* src/command-line.h: added for better option handling
+	* src/config-file.c: added for better option handling
+	* src/config-file.h: added for better option handling
+	* src/pomdp-tools-options.c: added for better option handling
+	* src/pomdp-tools-options.h: added for better option handling
+	* src/program-options.c: added for better option handling
+	* src/program-options.h: added for better option handling
+	* src/compare-alpha-main.c: removed due to consolidation
+	* src/map-belief-main.c: removed due to consolidation
+	* src/pg-isomorphism-main.c: removed due to consolidation
+	* src/pomdp-tools-main.c: removed due to consolidation
+	* src/purge-alpha-main.c: removed due to consolidation
+	* src/sort-alpha-main.c: removed due to consolidation
+
+2004-06-17  Tony Cassandra <arc@cassandra.org>
+
+	* src/Makefile.am: Added object files to 'tools' binary list
+	* src/main.c: altered main to deal with new option scheme
+	* src/params.c: removed functionality that new option scheme handles
+	* src/params.h: removed functionality that new option scheme handles
+	* src/pomdp-solve.c: removed usage routine, new option scheme handles this
+	* src/pomdp-tools-main.c: updated for more unique names
+	* src/pomdp-tools-options.c: updated for more unique names
+	* src/pomdp-tools-options.h: updated for more unique names
+	* src/program-options.c: updated for more unique names
+	* src/program-options.h: updated for more unique names
+
+2004-07-01  Tony Cassandra <arc@cassandra.org>
+
+	* src/pomdp-tools-main.c: Added belief update loop tool
+	* src/utils.c: Added belief update loop tool
+
+2004-09-03  Tony Cassandra <arc@cassandra.org>
+
+	* examples/: Added example .POMDP and .prob files
+	* examples/: Added example .POMDP and .prob files
+	* src/common.c: Added shouldTerminateEarly() stub procedure
+	* src/inc-prune.c: Added shouldTerminateEarly() call
+	* src/two-pass.c: Added two shouldTerminateEarly() calls
+	* src/witness.c: Added shouldTerminateEarly() call
+	* src/scripts/generate-options/: Added script for auto-code generation
+
+2004-10-01  Tony Cassandra <arc@cassandra.org>
+
+	* src/mcgs.c: Merged this into main pomdp-solve executable
+	* src/finite-grid.c: Fixed bug in looping for initial belief list
+	* src/finite-grid.c: Made default belief list size 10,000 (old=50,000)
+	* src/finite-graid.c: Added option 'initial' for finite grid types
+
+2004-10-05  Tony Cassandra <arc@cassandra.org>
+
+	* src/pg-eval.[ch]: Added for pomdp-tool use (future)
+	* src/laspack-utils.[ch]: Added for laspack support (future)
+	* src/laspack: added library source code for future use
+
+2004-10-06  Tony Cassandra <arc@cassandra.org>
+
+	* src/mdp/scanner.l: Added '\r' as no-op character
+	* src/command-line.h: Increased MAX_CMD_LINE_STRING_LEN to 1024
+
+2004-10-08  Tony Cassandra <arc@cassandra.org>
+
+	* src/alpha.c: Redid isBetterValue to use GreaterThan macro 
+	* src/global.h: Redid isBetterValue to use GreaterThan macro 
+	* src/pomdp-solve.c: Added sorting before 'exact'  stopping criteria
+	* src/pomdp.c: Redid isBetterValue to use GreaterThan macro 
+	* src/pomdp.h: Removed spurious isBetterValue() function 
+	* src/utils.c: Redid isBetterValue to use GreaterThan macro 
+	* src/pomdp-solve-options.[ch]: Added new defaults
+
+2004-10-09  Tony Cassandra <arc@cassandra.org>
+
+	* configure.ac: Added debug and dmalloc support 
+	* src/Makefile.am: Added debug and dmalloc support 
+	* src/mdp/Makefile.am: Added debug and dmalloc support 
+	* src/lp-solve/Makefile.am: Added debug and dmalloc support 
+	* src/xalloc.[ch]: Redid to support dmalloc
+
+2004-10-31  Tony Cassandra <arc@cassandra.org>
+
+	* pg.[ch]: Merged policy-graph.[ch] into here
+	* policy-graph.[ch]: Removed due to merge with pg.[ch]
+	* pg.[ch]: Refactored so only one read and one write pg routine
+	* pg-eval-main.c: changes to support being hooked up to pomdp-tools
+	* pomdp-tools-main.c: Hooked up pg_eval tool
+	* pomdp-tools-main.c: Added support for pg_relink tool
+	* utils.[ch]: Added routines to support pg_relink tool
+	* pomdp-tools-options.xml: Added 'pg_relink option
+	* pomdp-solve-options.xml: Added 'save_penultimate' flag
+	* params.[ch]: Added penultimate_filename to struct
+	
+2005-01-18  Tony Cassandra <arc@cassandra.org>
+
+	* util.c: Added tracking action in alpha compare
+
+2005-01-25  Tony Cassandra <arc@cassandra.org>
+
+	* common.c: Added things to support belief-based alpah compare
+	* pomdp-solve.c: Added case of finite grid stopping criteria
+	* finite-grid.[ch]: Added special sopping critera function
+	* utils.c: 
+
+2005-02-01  Tony Cassandra <arc@cassandra.org>
+
+	* src/pomdp-fg-main.c: Beginnings of separate finite grid binary
+	* src/index-list.[ch]: Maintains a list of integers
+	* testing/Makefile.am: Unit test automake file
+	* testing/main-test.c: Unit test driver program
+	* testing/index-list-test.[ch]: Unit test for index-list.c

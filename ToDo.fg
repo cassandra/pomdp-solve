@@ -1,0 +1,432 @@
+
+o First get sequential version going, annoted with @parallel all
+  places ripe for parallelization.
+
+o Routine that takes a value function and produces a BeliefGrid.  Uses
+  linear program to find one point per value function facet.
+  Parameterized by:   
+  - order vectors are chosen
+  - max number of points
+  - min precision of points
+  
+o Routine to take a BeliefGrid and create a value
+  function. Parameterized by:
+  - order in which  updates happen
+  - min precision
+  - max number of facets
+  
+------------------------------------------------------------
+
+Requirements:
+
+o Interrupt checkpoint capability.
+
+o Grid creation:
+  - trajectory
+
+
+MCGS:
+  (trajectory-based grid)
+
+  generate a trajectory of length N (from initial belief) (trajectory
+         from random policy)
+
+  loop over these trajectory points M times
+    for each point in the trajectory
+       generate a new vector and add it to the set
+       increment new vector count if added
+       Every P new vectors (this defines an epoch), prune the set
+       After pruning, generate a new projection set.
+
+ZLZ Speedup:
+  (periodic finite grid or interleaving of region-search)
+
+  Loop until error between old and new value function < delta
+    Loops over witness points
+      create a new alpha set (but only if new vector is better at point
+              than old) (use prev alpha set to make projections)
+
+Two-pass/witness/cheng
+  (using LPs ( constrained linear regions) to find grid)
+  (interleaves finding point and doing update)
+
+
+Using just belief corners we can compute MDP solution where we get
+gradients instead of points.
+    
+
+------------------------------------------------------------
+Main parameters (and thoughts) for point based value iteration:
+
+[ Relate to Pineau, Gordon, Thrun paper ]
+[ Relate to other work: Brafman, Hauskrut, ZLZ, Lovejoy, Spaan, etc. ]
+[ Relate to Monte-Carlo Gauss Seidel in continuous MDP case ]
+[ Relate to general MDP solutions ]
+[ Relate problem characteristics:
+   - navigation problem
+   - parallel worlds (seek-n-destroy) ]
+
+o What initial value function is used:
+  - all zeroes (ok if alll positive rewards)
+  - immediate rewards
+  - guaranteed lower bounds (smallest reward discounted sum over time)
+    (I think this is actually important for convergence)
+  - guaranteed upper bounds (e.g., QMDP) for case where using
+    point-value-based value iteration, (versus point-gradient-based
+    value iteration).
+
+o How are grid generation and value update interleaved
+  (i.e., How long do we do updates on a given grid)
+  - extreme interleave (e.g., exact algorithms)
+  - batch interleaving
+  - spaan and vlassis (after new facet at a belief, also check other
+    beliefs to see if this new facet is an improvement on their
+    value. if it is, then do not bother computing the facet at this
+    point, simply discard this for this epoch)
+
+o Are the new facets computed as a batch before creating new
+
+o What order are grid points updated?
+  - random at each step
+  - random but fixed at start
+  - based on metric
+    x track improvement delta for point and process in order of those
+      that most improved on the last update (ala Poon)
+  - (for trajectory-based) ordered by distance from the start of the
+    trajectory (reverse or der from the trajectory, since values get
+    propogated backwards (Hauskrecht's idea)
+
+o are all points updated, or only a subset?
+
+o do you buld one new value function or several:
+  - build a new value function for each action (merge somehow)
+
+o When are points removed from grid?
+  - after/during each iteration
+  - when value function converges 
+    - either on converegcne epsilon, or special grid expansion epsilon
+  - grid gets too large
+  - point has same value as other (how to know which to toss?)
+  - always start with new grid
+
+o What is criteria for removing points from grid?
+  - those that did not result in a value function improvement past
+    some threshold, or all but the top one that improved it.
+
+o What is criteria for considering two points the same?
+  - epsilon component diff
+  - euclidean distance
+  - epsilion value diff
+  - has same value
+  - has similar facet
+    x how to define similar facet
+  - exceed
+  - trucate to N components (highest probability?) and compare in
+    that space
+  - distance metric (clustering ala Pineau, Gordon, Thrun, 2003)
+
+o How are new points added to grid?
+  - take best N points from the previous grid
+  - simplex corners
+  - midpoints between  existing grid points
+  - pairwise
+  - exploiting problem structure (i.e., parallel world problems)
+  - search
+    x breadth-first vs. depth-first
+    x beam search (based on likelihoods)
+    x how deep
+    x how wide
+    x how many points
+    x starting point
+      = initial belief
+      = simplex corners
+  - trajectory
+    x what policy drives trajectory
+      = random (compare "naive" random with correct (Hughes) random to
+        try to reproduce Pineau, Gordon, Thrun results to see which 
+        was used or if it matters.)
+      = greedy (see Pineau, Gordon, Thrun:)
+      = greedy + exploratory (see Pineau, Gordon, Thrun:)
+      = greedy entropy reduction metric
+      = current policy
+      = current policy + random
+      = some policy graph that is adjusted over time in some manner
+      = (Pineau, Gordon, Thrun variation) Simulate trajectories, then
+        (after the entire trajectory is simulated) keep only those
+        points that are different enough (L_1 distance) from existing
+        grid points.  This is better than searching as it takes the
+        likelihood of the belief point into account, and also doesn't
+        truncate a whole branch just because one belief state along
+        there is similar to another.  Further, for a given trajectory,
+        it only keeps the point that is furthest away from an existing
+        belief point.  So the grid at most doubles in size on one
+        pass.
+        (** good variation to try is this same idea, but choose the
+            one that has maximal difference in value rather than
+            maximal distance from another grid point Poupart and
+		  Boutillier discuss this idea of value-directed
+		  improvements whicih this seems to be an instance of.)
+    x how long is trajectory
+      = fixed
+      = vary over time
+    x have we reached a bound
+      = how to select which to remove
+  - pure random
+  - random point candidates where they are added when:
+    - new vector for this point is delta better than existing vector
+    - best N improvement from M random points after all generated
+  - region search based (using LPs)
+    x  Here we implicitly encode the
+       grid as the set of vectors.  We choose a vector (random or in
+       some sequence), do an LP to find a point for that vector, then
+       create a new vector for that point.  We then add this new
+       vector, possibly eliminating any dominated vector (or
+       periodically purging the set of vectors when it grows to a
+       certain point.).
+
+o Mechanism for computing improvement at a point:
+  - compare new vector against old
+  - compare new value (existing vector from other belief point, i.e.,
+    no backup) against old value function
+  - compare value of current value function to upper bound at
+    that point.
+    x QMDP upper bound
+    x Hauskrecht upper bound (fast informed bound)
+    x Lovejoy's upper bound
+    x Zhou uper bound (how related to Lovejoy?)
+
+o Mechanism for adding facets:
+  - always add the newest
+  - add the best of the new and old at that point
+  - add with value and delta and prune to size N later
+  - add only if epsilon-better than existing
+
+o When are value function facets removed from representation?
+  - domination (component-wise)
+  - domination (grid/value based)
+  - similarity
+  - size too large
+    x how do we select which to remove
+  - has facet not valuable enough to add (decreases the error the least)
+
+o What is criteria for considering two facets the same
+  - epsilon component difference
+  - epsilon component + associated action
+  - trucate to N components (largest and smallest?) and compare in
+    that space (maybe determine which componennts in the context of
+    which belief it is optimal for and take the components
+    corresponding to the N most likely states, or possibly the highest
+    magnitude (absolute value) for each component times the belief).
+
+o Representation issues:
+  - Do you use a point-facet representation (most of mine and
+    thrun-related) or  point-value one
+    (ala Lovejoy, Brafman, Hauskrecht, Zhou/hansen) The latter use
+    interpolation to find values of non-grid points.
+    The interpollation-based representations require altering the DP
+    value function update to use interpolation rather than a maximization 
+    over vectors (see Zhou & Hansen)  Interestingly, Zhou and Hansen 
+    says this altered form provides an upper bound on the values.
+    I am guessing it is an upper bound because the interpolated points are
+    combining points on the upper surface without regard for the gradient
+    of the value function.  Thus, the point could lie above the gradient.
+  - Use sparse belief states:
+    x bound the total number of non-zero components
+  - Use sparse facet representation:
+    x bound the total number of non-zero components
+
+o How is value function represented:
+  - facets (linear segments)
+  - single values
+
+o How are points new facet computed (backed up)?
+  - use previous value function (assumes facets representation)
+  - use extrapolation/interpolation (assumes single value representation
+    (Hauskrecht has a good survey of the various interpolation and
+    extrapolation techniques)
+  
+Parallel finite grids with merge step.
+
+Relate to the creation of approximate MDP from belief points
+  - cluster belief points and build approximate MDP based on belief
+    points
+
+Instead of pure point-based, how about a cluster based.  Here the
+"grid" is a set of clusters, which can be merged, split and grouped
+on distance, values, etc.  Brings up interesting ways you can compute
+the value facet at a cluster, and can be set up to degenerate into a
+point-based method. [See Pineau, Gordon, Thrun, NIPS 2003]
+
+!! An important thing to consider building into this is the ability
+for it to learn how well a given heuristic is doing and switch between
+the methods as it progresses. Maybe build a small model of the
+learning problem, and do some RL-ish algorjthm inside the algorithm to
+find the best heuristic selection policy.
+
+Also, do not necessarily need linear programming to prune.  When
+computing the facet at a point, it is guaranteed to be useful.  The
+only real questikon is whether the facet already exists or not (or is
+within epsilon of an existing vector).
+
+An important contribution to this may also be creating (and
+evaluating) policy graphs derived from finite-grid approximations of
+various flavors. 
+
+There may also be some leverage in switching back and forth between
+policy-graph and value function representations (interleaving them).
+There is some work on doing this swapping (Hansen?, see Hauskrecht for
+discussion of this work)  Hauskrecht has some good discussion on the
+bounds of pg qualitgy related to the value function it is derived from
+p. 48)
+
+There is also a class of finite grid methods that do not use the facet
+representation of the value function, but instead use simple values,
+including interpolation and extrapolation rules.  Would I want to
+include this in the set of this, or simply limit it to technqiues that
+use a facet-style value function representation?
+
+Other thing to thing about is point based approximations for finite
+horizon problems.  This bounds the set of points, and if you can
+provide some upper bound on the horizon needed to most likely solve
+the problem, you can apply this and get a useful policy.
+
+Theoretical results:
+
+  Value iteration on grid points using the normal equations will yield
+  a lower bound on the value function, but it may not converge.
+
+  Hauskrecht and Zhang & Zhang provide a different update rule (keep
+  old vector if new one is not better) that can guarantee convergence
+  to a lower bound.
+
+  Value iteration on grid points using interpolation on values at
+  belief points will provide an upper bound and it will converge to a
+  fixed point.
+
+  With a fixed grid, each DP step in value iteration is using exactly
+  the same set of successor belief states, so the transformation and
+  interpolations can be cached.  This is essentially constructing a
+  regular MDP over the grid points, so guarantees computation in
+  polynomial time.
+
+
+
+----------------------------------------------------------------------
+
+Choose value function representation
+  - points or gradient
+  - value or Q value
+  - sparse or dense)
+Set initial value function
+Set initial grid
+
+Iteration over horizon:
+
+  Do iteration initialization (e.g., projection sets)
+
+  Choose how much of grid to update
+  Choose iteration over current grid points:
+
+    update value function
+    
+    prune value function
+
+    prune grid
+      - remove point criteria
+
+    extend grid
+      - add point criteria
+
+  Choose error calculation
+
+  Auto-adjust params for next iteration.
+
+----------------------------------------
+Need:
+
+  - sparse representation of beliefs and alpha vectors
+
+  - make all loops dividable/mergable
+
+  - Search on belief points that can maintain its state, be stopped
+    and resumed
+
+  - representation that can go from a list of facets to a set of
+    points.
+
+  - All updates to keep track of where they are, and how much time
+    they are spending.
+
+
+** Thu Feb 24 13:36:17 CST 2005 **
+
+Biggest dilema is whether to do the finite grid stuff in Java or C.
+Java will make it more extensible, reduce memory management issues,
+but it also requires creating a new parser.
+
+I should spend a day working on the parser in Java, and after this,
+depending on the progress, either continue with the Java
+implementation, or bail out and identify the low-hanging fruit of the
+finite grid (that which will be easiest to implement in the current C
+system).
+
+I should also do a little research into Java/MPI too see if
+parallelizing Java code is any harder/easier than if I stick with C.
+
+Also research whether there is any lp-solve equivalent in Java.
+
+Interfaces:
+
+  GridManager
+    - initialization
+    - adjustment (removing and adding)
+
+  ValueFunctionImprover
+    - PWLCImprover
+    - PointImprover
+
+  BeliefGridIterator (?)
+    - for defining the order that points are updated)
+
+  Interpolator
+
+  ValueComparator
+  FacetComparator
+  BeliefComparator
+    - look at coefs
+    - look at value function values
+
+Main data structures (parent classes)
+
+  BeliefGrid
+
+  BeliefSet (?)
+    - for clusters, or just a single point
+
+  BeliefTree (? BeliefHistory ?)
+    - given starting point, a way to search
+    - BeliefTreeSearchPolicy
+
+  BeliefTrajectory
+    - subclass of BeliefTree/BeliefHistory
+ 
+  Policy
+    - PolicyGraph (subclass)
+    - PolicyRandom (subclass)
+
+  BeliefState
+    - BeliefStateDense (subclass)
+    - BeliefStateSparse (subclass)
+    - BeliefStateCluster (? subclass ?)
+
+  ValueFunction
+    - ValueFunctionPWLC (subclass)
+    - ValueFunctionPoints (subclass)
+    - ValueFunctionFacet (alpha vector)
+    - ValueFunctionPoint (point-value)
+    - QValueFunction (subclass)
+
+  ProjectionSets
+    - a series of transformed value functions
+
+  

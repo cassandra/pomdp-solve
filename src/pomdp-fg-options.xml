@@ -1,0 +1,235 @@
+<executable value="pomdp-fg"/>
+
+<version value="0.1"/>
+
+<description>
+  The pomdp-fg program solves partially observable Markov decision
+  processes (POMDPs), taking a model specification and outputting a value
+  function and action policy.  It employs a general finite-grid
+  algorithm which can be instantiated many different ways and which
+  can result in approximate or exact solutions.  
+</description>
+
+<param name="rand_seed">
+  <type value="string"/>
+  <usage value="advanced"/>
+  <summary value="Set the random seed for program execution."/>
+  <description>
+    For any functionality that requires random numbers, we want to be
+    able to reproduce a given run by executing with the same random
+    number seed.  This parameter allows you to set the initial random
+    seed by specifying a string consisting of three integers separated by
+    a colon (e.g., "34523:12987:50732" ) Not setting this value will
+    result in the random seed being pseudo-randomized based on the system
+    clock. 
+  </description>
+</param>
+
+<param name="memory_limit">
+  <category value="Resource Limits"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <units value="bytes"/>
+  <valid value="1:any"/>
+  <summary value="Set upper bound memory usage."/>
+  <description>
+    This parameter allows you to set an upper bound on the amount of
+    memory that this program uses. If the memory threshold is met, the
+    program execution is terminated.  Without specifying this
+    parameter, there will be no upper bound imposed by the pomdp-fg
+    program (though the OS will naturally have something to say about
+    this). 
+  </description>
+</param>
+
+<param name="time_limit">
+  <varname value="max_secs"/>
+  <category value="Resource Limits"/>
+  <usage value="basic""/>
+  <type value="int"/>
+  <units value="seconds"/>
+  <valid value="1:any"/>
+  <summary value="Set upper bound on execution time."/>
+  <description>
+    This parameter allows you to set an upper bound on the amount of
+    time that this program will run. When this amount of time has
+    elapsed, the program execution is terminated.  Without specifying
+    this parameter, there will be no upper bound imposed by the pomdp-fg
+    program.
+  </description>
+</param>
+
+<param name="pomdp">
+  <varname value="pomdp_filename"/>
+  <usage value="required"/>
+  <category value="Domain"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <summary value="Sets the POMDP model input file name to use."/>
+  <description>
+    All executions for solution of a POMDP needs a file as input to
+    the solution process.  This filename by convention will end with
+    with or ".pomdp" or ".POMDP" and needs to conform to the
+    pomdp-solve file format (which is described elsewhere.)
+  </description>
+</param>
+
+<param name="initial_values">
+  <varname value="initial_values_filename"/>
+  <usage value="advanced"/>
+  <category value="Value Function"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <summary value="Sets the initial DP value function (i.e., terminal values)."/>
+  <description>
+    Value iteration assumes that at the end of the lifetime of the
+    decision maker that no more values will be accrued.  This corresponds
+    to a terminal value function of all zeroes.  This is essentially the
+    default starting point for the program.  However, with this parameter,
+    you can set a different terminal value function, which serves as the
+    seed or initial starting point for value iteration.  Effectively, this
+    allows you to take the output of one value iteration run and send it
+    as input to the next.  The file format for this input file is
+    identical to the output file format of this program (the ".values"
+    file). 
+  </description>
+</param>
+
+<param name="initial_grid">
+  <varname value="initial_grid_filename"/>
+  <category value="Belief Grid"/>
+  <usage value="advanced"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <summary value="Sets the initial grid points (belief states.)"/>
+  <description>
+    Sets the initial finite grid (belief points) to use by reading
+    them from a file.
+  </description>
+</param>
+
+<param name="horizon">
+  <category value="Domain"/>
+  <usage value="basic"/>
+  <type value="int"/>
+  <units value="iterations"/>
+  <valid value="1:any"/>
+  <summary value="Sets the number of iterations of value iteration."/>
+  <description>
+    Value iteration is iterative and thus we may want to find 'finite
+    horizon' solutions for various reasons.  To make pomdp-fg terminate
+    after a fixed number of iterations (aka epochs) set this value to be
+    some positive number.  By default, value iteration will run for as
+    many iterations as it take to 'converge' on the infinite horizon
+    solution (i.e., when the error gets small enough). 
+  </description>
+</param>
+
+<param name="o">
+  <varname value="prefix_str"/>
+  <usage value="non-web"/>
+  <type value="string"/>
+  <units value="filename"/>
+  <default value="solution"/>
+  <summary value="Define the prefix name for the program solution files."/>
+  <description>
+    All the information relevant to the solution of the POMDP are
+    written to files.  This parameter allows you to set the prefix to use
+    for the given run of this program.  The suffix is generated internall
+    by the program connected to the time and contents of the various
+    files. 
+  </description>
+</param>
+
+<param name="grid_type">
+  <varname value="finite_grid_type"/>
+  <category value="Belief Grid"/>
+  <class value="enum"/>
+  <usage value="advanced"/>
+  <valid value="simplex pairwise search initial"/>
+  <default value="initial"/>
+  <depends param="method" value="grid"/>
+  <summary value="Finite grid method means to generate belief points."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  There are a number of ways to generate this grid, and this
+    parameter selects the technique to use.  We do not yet here discuss
+    the details of each of these.
+  </description>
+</param>
+
+<param name="max_grid_points">
+  <varname value="finite_grid_points"/>
+  <category value="Belief Grid"/>
+  <usage value="advanced"/>
+  <type value="int"/>
+  <valid value="1:any"/>
+  <default value="10000"/>
+  <depends param="method" value="grid"/>
+  <summary value="Maximal number of belief points to use in finite grid."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  There are a number of ways to generate this grid, and this
+    parameter selects the maximum number of points that should be
+    generated during this process. 
+  </description>
+</param>
+
+<param name="grid_save">
+  <varname value="finite_grid_save"/>
+  <category value="Belief Grid"/>
+  <usage value="advanced"/>
+  <class value="flag"/>
+  <default value="false"/>
+  <depends param="method" value="grid"/>
+  <summary value="Whether to save the points used in finite grid."/>
+  <description>
+    The finite grid method needs a set of belief points to compute
+    over.  This parameter will turn on and off the saving of these
+    belief points to an external file. 
+  </description>
+</param>
+
+<param name="save_all">
+  <class value="flag"/>
+  <usage value="advanced"/>
+  <default value="false"/>
+  <summary value="Sets whether or not to save every iteration's solution."/>
+  <description>
+    Normally, only the final solution is saved to a file, but if you
+    would like to write out the solution to every epoch of value
+    iteration, then set this flag to true.  The epoch number will be
+    appened to the filenames that are output.
+  </description>
+</param>
+
+<param name="save_penultimate">
+  <class value="flag"/>
+  <default value="false"/>
+  <usage value="advanced"/>
+  <summary value="Whether to save previous iterations alpha vectors."/>
+  <description>
+    The pomdp-fg program normally only saves the last epoch's
+    solution to a file.  There is an option (save_all) to save every
+    iteration, but that can require a lot of space for a long horizon.
+    There are times when it is useful to have the current and immediately
+    previous epoch' solutions.  When this flag is set, you will always
+    find the previous epochs solution in *.prev.alpha (where '*' is
+    the prefix defined for the execution run.
+  </description>
+</param>
+
+<!-- zzz -->
+
+<!-- grid_size [n] -->
+<!-- grid_precision -->
+<!-- alpha size -->
+<!-- alpha precision -->
+<!-- value precision -->
+<!-- grid increment policy [ none, belief-search, random, search, -->
+<!--                         mls-search, etc. ] -->
+<!-- grid decrement policy [ none, redundant, all, etc ] -->
+<!-- value update policy [ all, monte carlo, random, etc ] -->
+
+<!-- zzz -->
+ 

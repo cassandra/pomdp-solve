@@ -1,0 +1,14 @@
+Notes on adding command line/config file options.
+
+Edit the pomdp-solve-options.xml (or pomdp-tools-options.xml) file, by
+adding whatever you want.  Follow the syntax.
+
+In the 'src' directory, execute:
+
+  ./scripts/enerate-options/gen-program-opts.py pomdp-solve-options.xml
+
+This will geenrate the files pomdp-solve-options.[ch].
+
+naturally, you should not hand-edit these files as any changes will be
+lost on rerunning this command.
+

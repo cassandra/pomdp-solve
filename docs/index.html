@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.1.123 i586) [Netscape]">
+   <META NAME="Author" CONTENT="Anthony R. Cassandra">
+   <META NAME="Keywords" CONTENT="POMDP, Markov, Planning, decision theory">
+   <TITLE>Tony's pomdp-solve Page</TITLE>
+<HEADER>
+</HEADER>
+</HEAD>
+<BODY TEXT="#F0F0F0" BGCOLOR="#003300" LINK="#F8D900" VLINK="#CCCCCC" ALINK="#00FF00">
+
+<A HREF="http://www.cs.brown.edu/research/ai/pomdp/index.html">
+<IMG SRC="images/brown-pomdp.gif" ALIGN=LEFT></A>
+<CENTER><IMG SRC="images/oak-a-stripe.gif">
+<P>
+<IMG SRC="images/pomdp-solve.gif">
+<IMG SRC="images/oak-a-stripe.gif">
+</CENTER>
+
+<CENTER>
+<H1>POMDP solver software</H1>
+Version 4.0
+<BR>written by A. R. Cassandra
+</CENTER>
+
+<P>
+
+The 'pomdp-solve' program solves problems that are formulated as
+partially observable Markov decision processes, a.k.a. POMDPs. It uses
+the basic dynamic programming approach for all algorithms, solving one
+stage at a time working backwards in time.  It does finite horizon
+problems with or without discounting.  It will stop solving if the
+answer is within a tolerable range of the infinite horizon answer, and
+there are a couple of different stopping conditions (requires a
+discount factor less than 1.0).  Alternatively you can solve a finite
+horizon problem for some fixed horizon length. The code actually
+implements a number of POMDP solution algorithms:
+
+<UL>
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+  <B>Enumeration </B>
+   <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<EM>Sondik '71, Monahan '82, White '91</EM>)
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+	 <B>Two Pass</B>
+	 <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<EM>Sondik '71</EM>)
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+	<B>Linear Support </B>
+	 <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<EM>Cheng '88</EM>)
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+	<B>Witness </B>
+	 <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<EM>Littman '97, Cassandra '98</EM>)
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+	<B>Incremental Pruning </B>
+	 <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<EM>Zhang and Lui '96,
+	 Cassandra, Littman and Zhang '97</EM>)
+
+</UL>
+
+which are selectable from the command line.
+
+<P>The code extensively uses linear programming (LPs) to solve
+POMDPs.&nbsp; There are two options for LP packages: one is to use the
+public domain <A
+HREF="ftp://ftp.es.ele.tue.nl/pub/lp_solve">lp_solve</A> program by <A
+HREF="mailto:michel@ics.ele.tue.nl">Michel Berkelaar</A> (which is
+included); the other is to use the commerical package <A
+HREF="http://www.cplex.com">CPLEX</A>. The CPLEX package is
+numerically more robust, but so is its price tag.  If you have CPLEX,
+or money is no object when it comes to solving POMDPs, then CPLEX is
+defnitely recommended, otherwise the lp_solve program tends to work
+just fine, though some precision and numeric stability is sacrificed.
+
+<P>
+<HR>
+<H2>Links for pomdp-solve</H2>
+
+<UL>
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+  Download the <A HREF="http://www.cs.brown.edu/research/ai/pomdp/code/pomdp-solve-4.0.tar.gz"><IMG
+	 SRC="images/pomdp-solve-mini.gif" ALIGN=TOP></A>
+	 version 4.0 code. 
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+  <A HREF="copyright.html">Copyright</A>.
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+  <A HREF="install.html">Installation instructions</A>.
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+  Input file formats:
+	 <UL>
+	 <LI><A HREF="pomdp-file-spec.html">POMDP parameters</A>,</LI>
+	 <LI><A HREF="alpha-file-spec.html">value functions</A>,</LI>
+	 <LI><A HREF="pg-file-spec.html">policy graphs</A>;</LI>
+    </UL>
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+    <A HREF="cmd-line.html">Command line options</A>.
+
+  <P><IMG SRC="images/yellowba.gif" ALIGN=LEFT>
+    <A HREF="http://www.cs.brown.edu/research/ai/pomdp/examples/index.html">POMDP problem repository</A>.
+
+</UL>
+
+<P>
+<CENTER><IMG SRC="images/oak-a-stripe.gif"></CENTER>
+
+<P><I>Last updated: 02/05/99</I>
+
+</BODY>
+</HTML>
