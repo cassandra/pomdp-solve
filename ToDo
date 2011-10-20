@@ -10,6 +10,37 @@ Problems to add to repository:
 BUGS
 ----------------------
 
+o reported by Matthijs Spaan <m.t.j.spaan@tudelft.nl>:
+
+Dear Tony,
+
+how are you doing? I'm not sure you're still actively maintaining your
+pomdp solve code, but in case you do, I ran into a small memory leak in
+lp-interface.c (fix included below).
+
+Just to let you know that the code has been very valuable to us, we've
+been using in the context of optimal Decentralized POMDP solving (for
+which regular POMDP solutions are often used as heuristics).
+
+Do you happen to know whether somebody updated the LP code to interface
+with more recent version of LP-Solve? (we tried compiling it with the
+lp-solve shipped with current Linux versions, but its interface
+apparently has changed).
+
+Cheers,
+Matthijs
+
+@@ -858,6 +858,9 @@
+    if ( lp == NULL )
+      return;
+
++  // Matthijs: lp->name was allocated but never freed, fixed it
++  XFREE( lp->name );
++
+    XFREE( lp->obj );
+    XFREE( lp->x );
+    XFREE( lp->lowbnd );
+
 o (reported by Pradeep Varakantham at USC) Occasionally, lp-solve is
   returning belief state solutions with negative components.  It
   claims that all variables must be non-negative, so this is curious:
