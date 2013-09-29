@@ -1,0 +1,30 @@
+# Problem set via email from Manuel Hartman on September 13, 2013.
+#
+#   manuel.hartmann@fu-berlin.de
+#
+discount: 1.0
+values: reward
+
+states:  s1 s2
+actions: a b
+observations: y z
+start:
+0.5 0.5
+
+T: a
+0.7  0.3
+0.0  1.0
+
+T: b
+1.0  0.0
+1.0  0.0
+
+O: * : s1 : y 0.9
+O: * : s2 : y 0.2
+O: * : s1 : z 0.1
+O: * : s2 : z 0.8
+
+R: a : * : s1 : * 10
+R: a : * : s2 : * -30
+R: b : * : s1 : * 10
+R: b : * : s2 : * -30

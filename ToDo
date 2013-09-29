@@ -10,6 +10,9 @@ Problems to add to repository:
 BUGS
 ----------------------
 
+o See compilation errors I got when I first compiled it on a 64bit 
+  Ubuntu 12.04 machine: compilation-errors.2013-09-19
+
 o Reported by Chris Mansley <CMANSLEY@cs.rutgers.edu> on Dec 6, 2011:
 
 There was a bug in your linked list with a node not setting its next

@@ -1,0 +1,124 @@
+lp-interface.c: In function 'cleanUpLpInterface':
+lp-interface.c:283:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_make_lp':
+lp-interface.c:323:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+lp-interface.c: In function 'LP_writeLpSolveLP':
+lp-interface.c:494:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_writeLpSolveSolution':
+lp-interface.c:514:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_newLP':
+lp-interface.c:786:23: warning: incompatible implicit declaration of built-in function 'strlen' [enabled by default]
+lp-interface.c:788:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+lp-interface.c: In function 'LP_solveLP':
+lp-interface.c:1145:6: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
+params.c: In function 'enforceSmallestPrecision':
+params.c:221:3: warning: format not a string literal and no format arguments [-Wformat-security]
+params.c: In function 'doPostOptionParseActions':
+params.c:293:5: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+params.c:296:11: warning: incompatible implicit declaration of built-in function 'strlen' [enabled by default]
+params.c: In function 'tempOptsToParamConversion':
+params.c:359:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+
+
+
+pomdp.c: In function 'initializePomdp':
+pomdp.c:162:5: warning: format not a string literal and no format arguments [-Wformat-security]
+pomdp.c:168:5: warning: format not a string literal and no format arguments [-Wformat-security]
+pomdp.c:174:5: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
+pomdp-solve.c: In function 'initPomdpSolve':
+pomdp-solve.c:149:8: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
+vertex-enum.c: In function 'initVertexEnum':
+vertex-enum.c:222:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+vertex-enum.c: In function 'showObjectiveRow':
+vertex-enum.c:1905:7: warning: unknown conversion type character 0x20 in format [-Wformat]
+
+
+
+xalloc.c: In function 'XA_calloc':
+xalloc.c:88:3: warning: incompatible implicit declaration of built-in function 'memset' [enabled by default]
+
+
+
+zlz_speedup.c: In function 'ZLZ_pruneSpecial':
+zlz_speedup.c:194:3: warning: incompatible implicit declaration of built-in function 'exit' [enabled by default]
+zlz_speedup.c: In function 'ZLZ_stop':
+zlz_speedup.c:235:3: warning: incompatible implicit declaration of built-in function 'exit' [enabled by default]
+
+
+
+config-file.c: In function 'CF_delete':
+config-file.c:84:3: warning: incompatible implicit declaration of built-in function 'free' [enabled by default]
+
+
+
+../src/mdp/libmdp.a: could not read symbols: Archive has no index; run ranlib to add one
+collect2: ld returned 1 exit status
+
+
+pomdp-tools-main.c: In function 'main':
+pomdp-tools-main.c:245:8: warning: format '%s' expects a matching 'char *' argument [-Wformat]
+pomdp-tools-main.c:269:8: warning: format '%s' expects a matching 'char *' argument [-Wformat]
+
+
+lp-interface.c: In function 'cleanUpLpInterface':
+lp-interface.c:283:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_make_lp':
+lp-interface.c:323:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+lp-interface.c: In function 'LP_writeLpSolveLP':
+lp-interface.c:494:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_writeLpSolveSolution':
+lp-interface.c:514:5: warning: format not a string literal and no format arguments [-Wformat-security]
+lp-interface.c: In function 'LP_newLP':
+lp-interface.c:786:23: warning: incompatible implicit declaration of built-in function 'strlen' [enabled by default]
+lp-interface.c:788:3: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+lp-interface.c: In function 'LP_solveLP':
+lp-interface.c:1145:6: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
+fg-params.c: In function 'FGP_doPostParseActions':
+fg-params.c:173:5: warning: incompatible implicit declaration of built-in function 'strcpy' [enabled by default]
+fg-params.c:176:11: warning: incompatible implicit declaration of built-in function 'strlen' [enabled by default]
+
+
+
+double-vector.c: In function 'DV_displayList':
+double-vector.c:808:5: warning: format '%d' expects argument of type 'int', but argument 3 has type 'void *' [-Wformat]
+
+
+
+../src/index-list.c: In function 'IL_dispose':
+../src/index-list.c:87:3: warning: incompatible implicit declaration of built-in function 'free' [enabled by default]
+../src/index-list.c:89:3: warning: incompatible implicit declaration of built-in function 'free' [enabled by default]
+../src/index-list.c: In function 'IL_resize':
+../src/index-list.c:115:3: warning: incompatible implicit declaration of built-in function 'free' [enabled by default]
+
+
+
+index-list-test.c: In function 'TEST_IL_append':
+index-list-test.c:126:3: warning: format not a string literal and no format arguments [-Wformat-security]
+index-list-test.c:133:3: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
+../src/double-vector.c: In function 'DV_displayList':
+../src/double-vector.c:808:5: warning: format '%d' expects argument of type 'int', but argument 3 has type 'void *' [-Wformat]
+
+
+double-vector-test.c: In function 'TEST_DV_lists':
+double-vector-test.c:204:3: warning: format not a string literal and no format arguments [-Wformat-security]
+double-vector-test.c:240:3: warning: format not a string literal and no format arguments [-Wformat-security]
+double-vector-test.c:301:7: warning: format not a string literal and no format arguments [-Wformat-security]
+double-vector-test.c:354:3: warning: format not a string literal and no format arguments [-Wformat-security]
+
+
+
