@@ -13,7 +13,7 @@
 # PARTICULAR PURPOSE.
 
 
-SHELL = /bin/sh
+SHELL = /bin/bash
 
 srcdir = .
 top_srcdir = ../..
@@ -38,13 +38,13 @@ pkglibdir = $(libdir)/pomdp-solve
 pkgincludedir = $(includedir)/pomdp-solve
 top_builddir = ../..
 
-ACLOCAL = ${SHELL} /Users/arc/proj/pomdp-solve/missing --run aclocal-1.6
-AUTOCONF = ${SHELL} /Users/arc/proj/pomdp-solve/missing --run autoconf
-AUTOMAKE = ${SHELL} /Users/arc/proj/pomdp-solve/missing --run automake-1.6
-AUTOHEADER = ${SHELL} /Users/arc/proj/pomdp-solve/missing --run autoheader
+ACLOCAL = ${SHELL} /home/arc/proj/pomdp-solve/missing --run aclocal-1.6
+AUTOCONF = ${SHELL} /home/arc/proj/pomdp-solve/missing --run autoconf
+AUTOMAKE = ${SHELL} /home/arc/proj/pomdp-solve/missing --run automake-1.6
+AUTOHEADER = ${SHELL} /home/arc/proj/pomdp-solve/missing --run autoheader
 
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/bin/X11/install -c
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_DATA = ${INSTALL} -m 644
 install_sh_DATA = $(install_sh) -c -m 644
@@ -63,22 +63,22 @@ POST_UNINSTALL = :
 EXEEXT = 
 OBJEXT = o
 PATH_SEPARATOR = :
-AMTAR = ${SHELL} /Users/arc/proj/pomdp-solve/missing --run tar
-AWK = awk
+AMTAR = ${SHELL} /home/arc/proj/pomdp-solve/missing --run tar
+AWK = mawk
 CC = gcc
 DEPDIR = .deps
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
-LEX = flex
-LEXLIB = -lfl
-LEX_OUTPUT_ROOT = lex.yy
+LEX = ${SHELL} /home/arc/proj/pomdp-solve/missing --run flex
+LEXLIB = 
+LEX_OUTPUT_ROOT = 
 PACKAGE = pomdp-solve
 RANLIB = ranlib
 STRIP = 
 VERSION = 5.2.4
-YACC = bison -y
+YACC = yacc
 am__include = include
 am__quote = 
-install_sh = /Users/arc/proj/pomdp-solve/install-sh
+install_sh = /home/arc/proj/pomdp-solve/install-sh
 
 # Override this since it seems to want to do -g -O2 all the time whch
 # seems to be the default and which I do not yet know how to change.
