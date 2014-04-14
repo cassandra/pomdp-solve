@@ -1,0 +1,37 @@
+* Fri Mar 21 18:54:23 CDT 2014 *
+
+Some questions from Dr. Esma Gel from Arizona State in modeling a cancer
+diagnosis problem for an M.Sc. student of hers named Isabel.
+
+States:
+  cancer-free
+  insitu-cancer-undiagnosed
+  invasive-cancer-undiagnosed
+  insitu-cancer-diagnosed (and under treatment)
+  invasive-cancer-diagnosed (and under treatment)
+  deceased
+
+"left untreated insitu cancer develops to an invasive cancer, which is a lot more costly to treat"
+
+"actions don't cost"
+
+First a few comments/questions on the modeling situation:
+
+- In regards to the cost of actions, if they all have no cost, you could just have the final state have all the value. The pomdp-solve code does allows running with a terminal reward vector (for finite horizon problems). 
+
+- You also mentioned that it is more costly to treat invasive cancer than institu cancer, so this seemed to hint there might be some cost to the individual actions.
+
+- As far as making some actions infeasible in some states, there is no way to directly model that in a way that is compatible with pomdp-solve.  However, a common trick is to just assign that action for the specific states to have an exorbitantly high cost (or negative reward).  This will make it unlikely to be selected and so will not be part of the optimal solution.
+
+- Note that I am still unclear on what the action, observation and immediate reward spaces are for your problem, so take everything I say in that context in case I have misunderstood something about the problem domain.
+
+Now a few thoughts on how pomdp-solve could be used for a problem like this.
+
+- With only 6 states, and assuming there are only a handful of observations, this may be solvable to a fairly high precision with pomdp-solve.
+
+- I would first start off trying to solve it using the exact algorithms (the default method), but specify a fairly coarse precision (the "epsilon" parameter), such as 0.1.  See how quickly this runs and have a first look at the solution it produces.  Note that it is likely you will need some supporting code/tools to help inspect the solutions as the pomdp-solve output format is not the most user-friendly.
+
+- If you can solve it exactly at a coarse precision, you can then increase the precision and see how that affects the solution time and quality of the solution.
+
+- If it turns out that the problem requires too much compute power, then you can fall back to the finite-grid approximation method if an approximate solution is something of use to you.
+
