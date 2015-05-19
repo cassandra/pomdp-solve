@@ -57,6 +57,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "mdp/mdp.h"
@@ -66,6 +67,9 @@
 #include "alpha.h"
 #include "lp-interface.h"
 #include "vertex-enum.h"
+
+/* Forward declaration */
+extern int showTableaux(LP lp );
 
 /**********************************************************************/
 /* ALGORITHM STATE VARIABLES
@@ -265,6 +269,7 @@ initVertexEnum( int num_orig_variables )
   /* Set the global variable that we will use. */
   gVertexEnumLp = lp;
 
+  return 1;
 }  /* initVertexEnum */
 /**********************************************************************/
 int 
@@ -287,6 +292,7 @@ cleanUpVertexEnum( )
 
   gVertexEnumLp = NULL;
 
+  return 1;
 }  /* cleanUpVertexEnum */
 /**********************************************************************/
 
@@ -797,6 +803,7 @@ getTableauxColumn( LP lp, int col, double *coefs )
       exit( -1 );
    }
 
+  return 1;
 }  /* getTableauxColumn */
 /**********************************************************************/
 int 
@@ -1168,6 +1175,7 @@ updateRecordList( LP lp )
    if( gVerbose[V_VERTEX_ENUM] && !result )
       fprintf( gStdErrFile, "Duplicate record, not adding to list.\n");
 
+  return 1;
 } /* updateRecordList */
 /**********************************************************************/
 int 
@@ -1567,7 +1575,7 @@ getVertex( double *b )
          if( gVerbose[V_VERTEX_ENUM] ) {
             fprintf( gStdErrFile,
                      "Getting new tableaux to search:\n");
-            showTableaux( lp->lp );
+            showTableaux( lp );
          }
 
          /* We need a special case for when the added variable y = 0.
@@ -1630,6 +1638,7 @@ setUpIndices( LP lp, int num_constraints )
    for( col = 0; col < (lp->cols-1); col++ )
       lp->matind[col*(num_constraints + 1) + num_constraints] = col + num_constraints;
 
+  return 1;
 }  /* setUpIndices */
 /**********************************************************************/
 int 
@@ -1653,6 +1662,7 @@ setUpSimplexConstraints( LP lp, int num_constraints )
    lp->matval[ (num_constraints + 1) 
              * (lp->cols - 1) + 1] = sqrt( gNumStates );
 
+  return 1;
 }  /* setUpSimplexConstraints */
 /**********************************************************************/
 int 
@@ -1747,6 +1757,7 @@ setUpRelaxedRegion( LP lp, AlphaList item, AlphaList list )
 
    }  /* for col and k */
 
+  return 1;
 }  /* setUpRelaxedRegion */
 /**********************************************************************/
 int 
@@ -1801,7 +1812,7 @@ startVertexEnum( AlphaList item, AlphaList list )
 
       if( gVerbose[V_VERTEX_ENUM] ) {
          fprintf( gStdErrFile, "Initial optimal tableaux:\n");
-         showTableaux( lp->lp );
+         showTableaux( lp );
       }
 
       updateRecordList( lp );  /* This gets the first record into the
@@ -1819,6 +1830,7 @@ startVertexEnum( AlphaList item, AlphaList list )
 
    gVertexInit = 1;
 
+  return 1;
 }  /* startVertexEnum */
 /**********************************************************************/
 void 
@@ -1902,7 +1914,7 @@ showObjectiveRow( LP lp )
    }
 
    for( i = 0; i < lp->rows; i++ )
-      fprintf( gStdErrFile, "   %.2l f", tableaux_row[i] );
+      fprintf( gStdErrFile, "   %.2lf", tableaux_row[i] );
 
    if( LP_getobjval( lp, &obj )) {
       fprintf( gStdErrFile, "CPLEX calling problem: getobjval().\n");
@@ -1959,9 +1971,9 @@ showTableaux(LP lp )
 
    fprintf(  gStdErrFile, "============");
    for( i = 0; i < lp->cols; i++ )
-      fprintf(  gStdErrFile, "========", i );
+      fprintf(  gStdErrFile, "========" );
    for( i = 0; i < lp->rows; i++ )
-      fprintf(  gStdErrFile, "========", i );
+      fprintf(  gStdErrFile, "========" );
    fprintf( gStdErrFile, "=============\n");
 
    showObjectiveRow( lp );

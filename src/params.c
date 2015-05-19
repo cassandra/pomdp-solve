@@ -51,6 +51,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "mdp/mdp.h"
@@ -69,6 +70,7 @@
 #include "witness.h"
 #include "inc-prune.h"
 #include "params.h"
+#include "stats.h"
 
 /* Strings for the various stopping criteria */
 char *purge_option_str[] = PURGE_OPTION_STRINGS;
@@ -313,7 +315,7 @@ doPostOptionParseActions( PomdpSolveParams params ) {
   } /* if default prefix is being used */
 
   
-    /* Start at the end of the param_filename string
+    /* Start at the end of the param_filename string */
 
   /****************/
   /* Make sure nothing dips below some maximum precision setting. */
@@ -381,6 +383,7 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
 
   switch( opts->ip_type )
     {
+    case POMDP_SOLVE_OPTS_Inc_Prune__END__:
     case POMDP_SOLVE_OPTS_Inc_Prune_normal: params->ip_type = NormalIp; break;
     case POMDP_SOLVE_OPTS_Inc_Prune_restricted_region: params->ip_type = RestrictedRegionIp; break;
     case POMDP_SOLVE_OPTS_Inc_Prune_generalized: params->ip_type = GeneralizedIp; break;
@@ -388,6 +391,7 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
 
   switch( opts->proj_purge )
     {
+    case POMDP_SOLVE_OPTS_Enum_Purge__END__:
     case POMDP_SOLVE_OPTS_Proj_Purge_none: params->proj_purge = purge_none; break;
     case POMDP_SOLVE_OPTS_Proj_Purge_domonly: params->proj_purge = purge_dom; break;
     case POMDP_SOLVE_OPTS_Proj_Purge_normal_prune: params->proj_purge = purge_prune; break;
@@ -396,6 +400,7 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
   
   switch( opts->q_purge_option )
     {
+    case POMDP_SOLVE_OPTS_Q_Purge__END__:
     case POMDP_SOLVE_OPTS_Q_Purge_none: params->q_purge_option = purge_none; break;
     case POMDP_SOLVE_OPTS_Q_Purge_domonly: params->q_purge_option = purge_dom; break;
     case POMDP_SOLVE_OPTS_Q_Purge_normal_prune: params->q_purge_option = purge_prune; break;
@@ -404,6 +409,7 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
   
   switch( opts->enum_purge_option )
     {
+    case POMDP_SOLVE_OPTS_Enum_Purge__END__:
     case POMDP_SOLVE_OPTS_Enum_Purge_none: params->enum_purge_option = purge_none; break;
     case POMDP_SOLVE_OPTS_Enum_Purge_domonly: params->enum_purge_option = purge_dom; break;
     case POMDP_SOLVE_OPTS_Enum_Purge_normal_prune: params->enum_purge_option = purge_prune; break;
@@ -412,6 +418,7 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
 
   switch( opts->fg_purge_option )
     {
+    case POMDP_SOLVE_OPTS_Fg_Purge__END__:
     case POMDP_SOLVE_OPTS_Fg_Purge_none: params->fg_purge_option = purge_none; break;
     case POMDP_SOLVE_OPTS_Fg_Purge_domonly: params->fg_purge_option = purge_dom; break;
     case POMDP_SOLVE_OPTS_Fg_Purge_normal_prune: params->fg_purge_option = purge_prune; break;
@@ -420,12 +427,12 @@ tempOptsToParamConversion( PomdpSolveParams params ) {
 
   switch( opts->vi_variation )
     {
+    case POMDP_SOLVE_OPTS_Vi_Variation__END__:
     case POMDP_SOLVE_OPTS_Vi_Variation_normal: params->vi_variation = NormalVi; break;
     case POMDP_SOLVE_OPTS_Vi_Variation_zlz: params->vi_variation = ZlzSpeedup; break;
     case POMDP_SOLVE_OPTS_Vi_Variation_adjustable_epsilon: params->vi_variation = AdjustableEpsilonVi; break;
     case POMDP_SOLVE_OPTS_Vi_Variation_fixed_soln_size: params->vi_variation = FixedSolnSizeVi; break;
     }
-
 
 } /* tempOptsToParamConversion */
 
@@ -466,7 +473,7 @@ parseCmdLineAndCfgFile( int argc, char **argv )
 }  /* parseCmdLineAndCfgFile */
 
 /************************************************************/
-PomdpSolveParams 
+void
 showPomdpSolveParams( PomdpSolveParams params ) 
 {
   ConfigFile cfg;
@@ -480,7 +487,7 @@ showPomdpSolveParams( PomdpSolveParams params )
   fprintf( params->report_file, 
 		 " \\\\****************//\n" );
   fprintf( params->report_file, 
-		 "      PID=%d\n", getpid() );
+		 "      PID=%d\n", getPid() );
 
   cfg = POMDP_SOLVE_OPTS_toConfigFile( params->opts );
 
@@ -494,4 +501,5 @@ showPomdpSolveParams( PomdpSolveParams params )
 
   CF_delete( cfg );
 
+  
 } /* showPomdpSolveParams */

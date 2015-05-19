@@ -76,10 +76,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
-DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog COPYING \
+DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in THANKS compile install-sh missing
+	$(srcdir)/config.h.in COPYING THANKS compile depcomp \
+	install-sh missing ylwrap
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -216,9 +217,9 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
-LEX = ${SHELL} /home/arc/proj/pomdp-solve/missing flex
-LEXLIB = 
-LEX_OUTPUT_ROOT = 
+LEX = flex
+LEXLIB = -lfl
+LEX_OUTPUT_ROOT = lex.yy
 LIBOBJS = 
 LIBS = -lm 
 LTLIBOBJS = 
@@ -228,18 +229,18 @@ OBJEXT = o
 PACKAGE = pomdp-solve
 PACKAGE_BUGREPORT = arc@cassandra.org
 PACKAGE_NAME = pomdp-solve
-PACKAGE_STRING = pomdp-solve 5.2.4
+PACKAGE_STRING = pomdp-solve 5.3.1
 PACKAGE_TARNAME = pomdp-solve
 PACKAGE_URL = 
-PACKAGE_VERSION = 5.2.4
+PACKAGE_VERSION = 5.3.1
 PATH_SEPARATOR = :
 POW_LIB = 
 RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 5.2.4
-YACC = yacc
+VERSION = 5.3.1
+YACC = byacc
 YFLAGS = 
 abs_builddir = /home/arc/proj/pomdp-solve
 abs_srcdir = /home/arc/proj/pomdp-solve

@@ -58,6 +58,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /**********************************************************************/
 /******************   Memory Allocation Stuff  ************************/
@@ -138,14 +139,14 @@
 #define Assert(EXPR,MSG) if(!(EXPR)) { \
   fprintf(gStdErrFile, "\n** ABORT ** File: %s function: %s, Line: %d\n\t", \
           __FILE__, __PRETTY_FUNCTION__, __LINE__ ); \
-  fprintf(gStdErrFile, MSG ); \
+  fputs(MSG, gStdErrFile ); \
   fprintf(gStdErrFile, "\n" ); \
   exit( -1 ); }
 #else
 #define Assert(EXPR,MSG) if(!(EXPR)) { \
   fprintf(gStdErrFile, "\n** ABORT ** File: %s function: %s, Line: %d\n\t", \
           __FILE__, "<Unknown>", __LINE__ ); \
-  fprintf(gStdErrFile, MSG ); \
+  fputs(MSG, gStdErrFile ); \
   fprintf(gStdErrFile, "\n" ); \
   exit( -1 ); }
 #endif
@@ -154,7 +155,7 @@
    with a message. */
 #define Abort(MSG) { \
   fprintf(gStdErrFile, "\n** PROGRAM ABORTED **\n\t" ); \
-  fprintf(gStdErrFile, MSG ); \
+  fputs(MSG, gStdErrFile ); \
   fprintf(gStdErrFile, "\n" ); \
   exit( -1 ); }
 
@@ -162,7 +163,7 @@
    with a message. */
 #define Warning(MSG) { \
   fprintf(gStdErrFile, "\n** Warning **\n\t" ); \
-  fprintf(gStdErrFile, MSG ); \
+  fputs(MSG, gStdErrFile ); \
   fprintf(gStdErrFile, "\n" ); }
 
 /*******************************************************************/

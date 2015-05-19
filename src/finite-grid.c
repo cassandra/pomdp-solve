@@ -57,6 +57,7 @@
 #include "global.h"
 #include "pomdp.h"
 #include "alpha.h"
+#include "parsimonious.h"
 #include "belief.h"
 #include "params.h"
 #include "projection.h"

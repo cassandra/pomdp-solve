@@ -55,6 +55,7 @@
 #include "global.h"
 #include "pomdp.h"
 #include "alpha.h"
+#include "region.h"
 #include "params.h"
 #include "common.h"
 #include "cross-sum.h"

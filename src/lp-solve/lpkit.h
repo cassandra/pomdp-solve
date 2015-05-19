@@ -100,21 +100,21 @@
 
 #define CALLOC(ptr, nr)\
   if(!(ptr = calloc((size_t)(nr), sizeof(*ptr))) && nr) {\
-    fprintf(stderr, "calloc of %d bytes failed on line %d of file %s\n",\
+    fprintf(stderr, "calloc of %ld bytes failed on line %d of file %s\n",\
             nr * sizeof(*ptr), __LINE__, __FILE__);\
     exit(EXIT_FAILURE);\
   }
 
 #define MALLOC(ptr, nr)\
   if(!(ptr = malloc((size_t)((nr) * sizeof(*ptr)))) && nr) {\
-    fprintf(stderr, "malloc of %d bytes failed on line %d of file %s\n",\
+    fprintf(stderr, "malloc of %ld bytes failed on line %d of file %s\n",\
             nr * sizeof(*ptr), __LINE__, __FILE__);\
     exit(EXIT_FAILURE);\
   }
 
 #define REALLOC(ptr, nr)\
   if(!(ptr = realloc(ptr, (size_t)((nr) * sizeof(*ptr)))) && nr) {\
-    fprintf(stderr, "realloc of %d bytes failed on line %d of file %s\n",\
+    fprintf(stderr, "realloc of %ld bytes failed on line %d of file %s\n",\
             nr * sizeof(*ptr), __LINE__, __FILE__);\
     exit(EXIT_FAILURE);\
   }

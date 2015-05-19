@@ -180,6 +180,7 @@ readMDP( char *filename ) {
 /*
    This routine returns 1 if the file is successfully parsed and 0 if not.
 */
+   extern int readMDPFile( FILE *file );  // From parser.y
 
    FILE *file;
 

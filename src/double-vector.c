@@ -805,7 +805,7 @@ DV_displayList( FILE *file, DoubleVectorList list )
   while( node != NULL ) {
     
     fprintf(file, "<id=%d:", node->id );
-    fprintf(file, " attr=%d", list->attr );
+    fprintf(file, " attr=%p", list->attr );
 
     fprintf ( file, "> " );
 

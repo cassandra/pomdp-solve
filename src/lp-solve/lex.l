@@ -1,4 +1,6 @@
 %{
+#include <string.h>
+
 #include "lp.h"
 #include "lpkit.h"
 #include "lpglob.h"

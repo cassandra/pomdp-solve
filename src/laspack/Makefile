@@ -223,9 +223,9 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
-LEX = ${SHELL} /home/arc/proj/pomdp-solve/missing flex
-LEXLIB = 
-LEX_OUTPUT_ROOT = 
+LEX = flex
+LEXLIB = -lfl
+LEX_OUTPUT_ROOT = lex.yy
 LIBOBJS = 
 LIBS = -lm 
 LTLIBOBJS = 
@@ -235,18 +235,18 @@ OBJEXT = o
 PACKAGE = pomdp-solve
 PACKAGE_BUGREPORT = arc@cassandra.org
 PACKAGE_NAME = pomdp-solve
-PACKAGE_STRING = pomdp-solve 5.2.4
+PACKAGE_STRING = pomdp-solve 5.3.1
 PACKAGE_TARNAME = pomdp-solve
 PACKAGE_URL = 
-PACKAGE_VERSION = 5.2.4
+PACKAGE_VERSION = 5.3.1
 PATH_SEPARATOR = :
 POW_LIB = 
 RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 5.2.4
-YACC = yacc
+VERSION = 5.3.1
+YACC = byacc
 
 # Need this to have yacc generate a header file which I include in the
 # scanner.

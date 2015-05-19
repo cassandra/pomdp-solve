@@ -44,6 +44,7 @@
  *
  *</SOURCE_HEADER>
  */
+#include <stdlib.h>
 
 #ifndef XALLOC_H
 #define XALLOC_H

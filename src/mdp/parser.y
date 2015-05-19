@@ -23,6 +23,7 @@
   *****
 
 */
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "mdp-common.h"
@@ -1047,21 +1048,22 @@ enterMatrix( double value ) {
       break;
 
    case mc_obs_row:
-      if( gProblemType == POMDP_problem_type )
-	/* We ignore this if it is an MDP */
-
-	if( curCol < gNumObservations ) {
-
-	  for( a = minA; a <= maxA; a++ )
-            for( j = minJ; j <= maxJ; j++ )
-	      addEntryToIMatrix( IR[a], j, curCol, value );
+	if( gProblemType == POMDP_problem_type ) {
+	  /* We ignore this if it is an MDP */
 	  
-	  curCol++;
+	  if( curCol < gNumObservations ) {
+	    
+	    for( a = minA; a <= maxA; a++ )
+		 for( j = minJ; j <= maxJ; j++ )
+		   addEntryToIMatrix( IR[a], j, curCol, value );
+	    
+	    curCol++;
+	  }
+	  else {
+	    gTooManyEntries = 1;
+	  }
 	}
-	else
-	  gTooManyEntries = 1;
-
-      break;
+	break;
 
    case mc_obs_all:
       if( curCol >= gNumObservations ) {
@@ -1069,18 +1071,19 @@ enterMatrix( double value ) {
          curCol = 0;
       }
 
-      if( gProblemType == POMDP_problem_type )
-	/* We ignore this if it is an MDP */
+      if( gProblemType == POMDP_problem_type ) {
+	   /* We ignore this if it is an MDP */
 
-	if( curRow < gNumStates ) {
-	  for( a = minA; a <= maxA; a++ )
-	    addEntryToIMatrix( IR[a], curRow, curCol, value );
-	  
-	  curCol++;
-	}
-	else
-	  gTooManyEntries = 1;
-
+	   if( curRow < gNumStates ) {
+		for( a = minA; a <= maxA; a++ )
+		  addEntryToIMatrix( IR[a], curRow, curCol, value );
+		
+		curCol++;
+	   }
+	   else {
+		gTooManyEntries = 1;
+	   }
+	 }
       break;
 
 /* This is a special case for POMDPs, since we need a special 

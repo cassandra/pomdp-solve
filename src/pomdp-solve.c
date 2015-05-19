@@ -72,6 +72,7 @@
 #include "cmd-line.h"
 #include "pomdp.h"
 #include "alpha.h"
+#include "parsimonious.h"
 #include "stats.h"
 #include "lp-interface.h"
 #include "common.h"
@@ -812,7 +813,7 @@ endViEpoch( PomdpSolveParams param )
   } /* switch */
   
 }  /* endViEpoch */
-/**********************************************************************
+/**********************************************************************/
 
 /**********************************************************************/
 /**************     High Level Solution Routines      *****************/

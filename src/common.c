@@ -62,6 +62,7 @@
 #include "pomdp.h"
 #include "alpha.h"
 #include "params.h"
+#include "region.h"
 #include "projection.h"
 #include "enumeration.h"
 #include "linear-support.h"
