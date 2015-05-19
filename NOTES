@@ -241,3 +241,15 @@ read in a POMDP file and an alpha file, and takes in observations.
 I'll completely copy the pomdp-solve stuff, then wittle it down to the
 minimum.  This will live in proj/pomdp-driver
 
+** Sun May 17 09:50:58 CDT 2015 **
+
+Trying to recompile pomdp-solve after a very long time and naturally have
+issues:
+
+What I did to resetup tihs:
+
+rm compile depcomp INSTALL install-sh missing mkinstalldirs
+autoconf
+automake --add-missing
+./configure
+make

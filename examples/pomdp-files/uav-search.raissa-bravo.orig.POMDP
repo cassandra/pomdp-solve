@@ -1,0 +1,104 @@
+discount: 0.95
+values: reward
+states: 
+ a b c d e f g h
+
+actions: 
+ n s e w ne nw se sw
+
+observations: 
+ y n
+
+# Starting in g state
+start: 
+ 0 0 0 0 0 0 1 0
+
+# Transition Probabilities
+T: n : a : h 1
+T: s : a : d 1
+T: e : a : b 1
+T: w : a : h 1
+T: ne : a : h 1
+T: nw : a : h 1
+T: se : a : e 1
+T: sw : a : h 1
+
+T: n : b : h 1
+T: s : b : e 1
+T: e : b : c 1
+T: w : b : a 1
+T: ne : b : h 1
+T: nw : b : h 1
+T: se : b : f 1
+T: sw : b : d 1
+
+T: n : c : h 1
+T: s : c : f 1
+T: e : c : h 1
+T: w : c : b 1
+T: ne : c : h 1
+T: nw : c : h 1
+T: se : c : h 1
+T: sw : c : e 1
+
+T: n : d : a 1
+T: s : d : g 1
+T: e : d : e 1
+T: w : d : h 1
+T: ne : d : b 1
+T: nw : d : h 1
+T: se : d : h 1
+T: sw : d : h 1
+
+T: n : e : b 1
+T: s : e : h 1
+T: e : e : f 1
+T: w : e : d 1
+T: ne : e : c 1
+T: nw : e : a 1
+T: se : e : h 1
+T: sw : e : g 1
+
+T: n : f : c 1
+T: s : f : h 1
+T: e : f : h 1
+T: w : f : e 1
+T: ne : f : h 1
+T: nw : f : b 1
+T: se : f : h 1
+T: sw : f : h 1
+
+T: n : g : d 1
+T: s : g : h 1
+T: e : g : h 1
+T: w : g : h 1
+T: ne : g : e 1
+T: nw : g : h 1
+T: se : g : h 1
+T: sw : g : h 1
+
+# I don't want the drone to fly to h state (which is invalid) so I make it a absorbing state
+T: * : h : h 1
+
+# Observation Probabilities
+# I start with my belief map B0 = (0.125, 0.1875, 0.25, 0.0625, 0.125, 0.1875, 0.0626, 0)
+O: * : a : y 0.125
+O: * : a : n 0.875
+O: * : b : y 0.1875
+O: * : b : n 0.8125
+O: * : c : y 0.25
+O: * : c : n 0.75
+O: * : d : y 0.0625
+O: * : d : n 0.9375
+O: * : e : y 0.125
+O: * : e : n 0.875
+O: * : f : y 0.1875
+O: * : f : n 0.8125
+O: * : g : y 0.0625
+O: * : g : n 0.9375
+O: * : h : y 0
+O: * : h : n 1
+
+# Reward
+R: * : * : * : y 1.0
+R: * : * : * : n 0.0
