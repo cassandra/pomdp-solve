@@ -1,0 +1,72 @@
+From VM Wed Mar 21 05:48:41 2007
+X-VM-v5-Data: ([nil nil nil nil t nil nil nil nil]
+	["1057" "Wednesday" "21" "March" "2007" "00:59:12" "-0400" "Trey Smith" "trey@ri.cmu.edu" "<0E9617FD-7C15-4B2D-8E34-DE27AA80D73C@ri.cmu.edu>" "34" "parser patch" "^From:" nil nil "3" nil nil nil nil nil nil nil nil]
+	nil)
+Return-path: <trey@ri.cmu.edu>
+Envelope-to: arc@cassandra.org
+Delivery-date: Wed, 21 Mar 2007 00:59:07 -0400
+Received: from cassandr by rome.hostgo.com with local-bsmtp (Exim 4.63)
+	(envelope-from <trey@ri.cmu.edu>)
+	id 1HTsuf-0002ZD-4J
+	for arc@cassandra.org; Wed, 21 Mar 2007 00:59:07 -0400
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on rome.hostgo.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.7 required=7.0 tests=BAYES_20 autolearn=ham
+	version=3.1.8
+Received: from smtp.andrew.cmu.edu ([128.2.10.82])
+	by rome.hostgo.com with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.63)
+	(envelope-from <trey@ri.cmu.edu>)
+	id 1HTsue-0002YC-HN
+	for arc@cassandra.org; Wed, 21 Mar 2007 00:59:04 -0400
+Received: from [192.168.2.100] (pool-71-162-23-37.pitbpa.east.verizon.net [71.162.23.37])
+	(user=trey mech=GSSAPI (0 bits))
+	by smtp.andrew.cmu.edu (8.13.6/8.13.6) with ESMTP id l2L4wvGV003050
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <arc@cassandra.org>; Tue, 20 Mar 2007 23:58:59 -0500
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Transfer-Encoding: 7bit
+Message-Id: <0E9617FD-7C15-4B2D-8E34-DE27AA80D73C@ri.cmu.edu>
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.57 on 128.2.10.82
+From: Trey Smith <trey@ri.cmu.edu>
+Subject: parser patch
+Date: Wed, 21 Mar 2007 00:59:12 -0400
+To: Tony Cassandra <arc@cassandra.org>
+
+Hi, Tony-
+
+A user of my ZMDP package noticed that the POMDP model parser (which  
+is just a copy of your parser from pomdp-solve) can't handle  
+scientific notation for floating point values.  I figure that was  
+just a simple oversight, so I patched it to accept scientific notation.
+
+I thought you might be interested in patching your copy of the parser  
+in pomdp-solve as well.  If so, read on for the details.
+
+Cheers,
+-Trey
+
+---------------------------------------------------
+I added the following lines in the character classes section of  
+scanner.l:
+
+ScaleFactor	(("E"|"e")("+"|"-")?{Digit}+)
+RealOpt1        ("."{Digit}*{ScaleFactor}?)
+RealOpt2        (("."{Digit}*)?{ScaleFactor})
+UnsignedReal ({Digit}+({RealOpt1}|{RealOpt2}))
+
+Then in the main section I replaced the old floating point pattern:
+
+   {IntLiteral}"."{IntLiteral}
+
+with the new pattern:
+
+   {UnsignedReal}
+
+Scientific notation is already handled properly by atof(), so no  
+other changes are needed.  Let me know if you find the regexes too  
+obfuscated and I can explain a bit.
+
+

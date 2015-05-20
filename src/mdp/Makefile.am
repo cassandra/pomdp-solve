@@ -30,7 +30,7 @@ else
 endif
 endif
 
-COMMON_SRC = mdp-common.h imm-reward.c imm-reward.h mdp.c mdp.h parse_constant.h parse_err.c parse_err.h parse_hash.c parse_hash.h parser.y scanner.l sparse-matrix.c sparse-matrix.h
+COMMON_SRC = mdp-common.h imm-reward.c imm-reward.h mdp.c mdp.h parse_constant.h parse_err.c parse_err.h parse_hash.c parse_hash.h parser.y scanner.l sparse-matrix.c sparse-matrix.h decision-tree.c decision-tree.h
 
 ############################################################
 #####
