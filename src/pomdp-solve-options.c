@@ -98,7 +98,7 @@ POMDP_SOLVE_OPTS_new( )
 
   strcpy( options->__exec_name__, "pomdp-solve" );
 
-  strcpy( options->__version__, "5.3.1" );
+  strcpy( options->__version__, "5.4" );
 
   options->__error__ = 0;
 
