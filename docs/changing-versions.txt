@@ -1,0 +1,4 @@
+Places that have to change to alter the version number:
+
+configure.ac - 2 places, Lines 5 and 6
+pomdp-solve-options.c: - 1 place, line 101

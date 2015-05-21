@@ -619,7 +619,7 @@ struct PomdpSolveProgOptionsStruct {
   /*
    * What configuration file should be read.
    */
-  char true[MAX_OPT_STRING_LEN];
+  char True[MAX_OPT_STRING_LEN];
 
   /*
    *  When solving using the 'adjustable_epsilon' method of value

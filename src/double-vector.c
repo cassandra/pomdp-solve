@@ -287,6 +287,9 @@ DV_newNode( DoubleVector v, void* attr )
   temp->id = UNINITIALIZED;
   temp->attr = attr;
 
+  // Contributed by Chris Hansely: Added missing initialization
+  temp->next = NULL;
+
   return ( temp );
 }  /* DV_newNode */
 

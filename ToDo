@@ -10,114 +10,6 @@ Problems to add to repository:
 BUGS
 ----------------------
 
-o See compilation errors I got when I first compiled it on a 64bit 
-  Ubuntu 12.04 machine: compilation-errors.2013-09-19
-
-o Reported by Chris Mansley <CMANSLEY@cs.rutgers.edu> on Dec 6, 2011:
-
-There was a bug in your linked list with a node not setting its next
-pointer to NULL. It failed the test suite (with a segmentation fault) on
-Mac OSX 10.6.8. Attached is a patch for the broken code.  -chris
-
-diff --git a/src/double-vector.c b/src/double-vector.c
-index 47cd29c..a662319 100644
---- a/src/double-vector.c
-+++ b/src/double-vector.c
-@@ -285,6 +285,7 @@ DV_newNode( DoubleVector v, void* attr )
- 
-   /* These fields should start out with some default values. */
-   temp->id = UNINITIALIZED;
-+  temp->next = NULL;
-   temp->attr = attr;
- 
-   return ( temp );
-
-o reported by Matthijs Spaan <m.t.j.spaan@tudelft.nl>:
-
-Dear Tony,
-
-how are you doing? I'm not sure you're still actively maintaining your
-pomdp solve code, but in case you do, I ran into a small memory leak in
-lp-interface.c (fix included below).
-
-Just to let you know that the code has been very valuable to us, we've
-been using in the context of optimal Decentralized POMDP solving (for
-which regular POMDP solutions are often used as heuristics).
-
-Do you happen to know whether somebody updated the LP code to interface
-with more recent version of LP-Solve? (we tried compiling it with the
-lp-solve shipped with current Linux versions, but its interface
-apparently has changed).
-
-Cheers,
-Matthijs
-
-@@ -858,6 +858,9 @@
-    if ( lp == NULL )
-      return;
-
-+  // Matthijs: lp->name was allocated but never freed, fixed it
-+  XFREE( lp->name );
-+
-    XFREE( lp->obj );
-    XFREE( lp->x );
-    XFREE( lp->lowbnd );
-
-o Reported by reported by Matthijs Spaan <m.t.j.spaan@tudelft.nl>:
-
-I attached another small patch that you might want to add. We're using some
-of the code inside C++, but there is a parameter somewhere called "true",
-which is ok in C, but not in C++ (as it refers to the boolean value). So I
-replaced it with "True" in the relevant places to make it compile, although
-I did not actually test it.
-
-Patch:
-diff -u -r pomdp-solve-5.3/src//pomdp-solve-options.c /local/mtjspaan/pomdp/madp/trunk/src/libpomdp-solve/src//pomdp-solve-options.c
---- pomdp-solve-5.3/src//pomdp-solve-options.c2005-10-31 01:38:20.000000000 +0100
-+++ /local/mtjspaan/pomdp/madp/trunk/src/libpomdp-solve/src//pomdp-solve-options.c2011-10-20 14:36:10.000000000 +0200
-@@ -140,7 +140,7 @@
-   options->proj_purge = POMDP_SOLVE_OPTS_OPT_PROJ_PURGE_DEFAULT;
-   options->mcgs_traj_length = POMDP_SOLVE_OPTS_OPT_MCGS_TRAJ_LENGTH_DEFAULT;
-   options->epoch_history_window_delta = 0;
--  options->true[0] = '\0';
-+  options->True[0] = '\0';
-   options->epsilon_adjust_factor = 0.0;
-   options->grid_filename[0] = '\0';
-   options->prune_init_rand_points = 0;
-@@ -286,7 +286,7 @@
-   sprintf( str, "%d", options->epoch_history_window_delta );
-   CF_addParam( cfg, POMDP_SOLVE_OPTS_CFG_HISTORY_DELTA_STR, str );
- 
--  sprintf( str, "%s", options->true );
-+  sprintf( str, "%s", options->True );
-   CF_addParam( cfg, POMDP_SOLVE_OPTS_CFG_F_STR, str );
- 
-   sprintf( str, "%.6f", options->epsilon_adjust_factor );
-@@ -780,7 +780,7 @@
- 
-   ret_value = PO_getStringOption( opts,
-                          POMDP_SOLVE_OPTS_ARG_F_STR,
--                         options->true,
-+                         options->True,
-                          NULL,
-                          NULL );
-   if ( ret_value == PO_OPT_PRESENT_ERROR )
-diff -u -r pomdp-solve-5.3/src//pomdp-solve-options.h /local/mtjspaan/pomdp/madp/trunk/src/libpomdp-solve/src//pomdp-solve-options.h
---- pomdp-solve-5.3/src//pomdp-solve-options.h2005-10-31 01:38:20.000000000 +0100
-+++ /local/mtjspaan/pomdp/madp/trunk/src/libpomdp-solve/src//pomdp-solve-options.h2011-10-20 14:35:02.000000000 +0200
-@@ -642,7 +642,8 @@
-   /*
-    * What configuration file should be read.
-    */
--  char true[MAX_OPT_STRING_LEN];
-+  /* Matthijs: changed from "true" to "True" as the former is a reserved keyword in C++. */
-+  char True[MAX_OPT_STRING_LEN];
- 
-   /*
-    *  When solving using the 'adjustable_epsilon' method of value
-
-
-
 o (reported by Pradeep Varakantham at USC) Occasionally, lp-solve is
   returning belief state solutions with negative components.  It
   claims that all variables must be non-negative, so this is curious:
@@ -131,13 +23,6 @@ o (reported by Pradeep Varakantham at USC) Occasionally, lp-solve is
 
   Option #1 is the easiest (code-wise), but I am still thinking about
   how I can justify this.
-
-o The total time computation conversion to hours and minutes is
-  wrong.  e.g.,
-
-    User time = 43 hrs., 0 mins, 648051.29 secs. (= 802851.29 secs)
-    System time = 1 hrs., 51 mins, 58.19 secs. (= 6718.19 secs)
-    Total execution time = 44 hrs., 52 mins, 648049.48 secs. (= 809569.48 secs)
 
 o From data on the tiger problem it seems that there is some gross
   inefficiency in the two-pass algorithm.  It does orders of
@@ -239,6 +124,9 @@ o Make a version where some other separate piece of code can build the
 o Make an option for deterministic domains (maybe just an
   optimization).  Maybe add automated detection of deterministic
   domains
+
+o Make a converter, or natively handle case where observations precede the
+  action on a given epoch (i.e., observe first, then act).
 
 ----------------------
 Documentation Tasks:

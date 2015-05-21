@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT([pomdp-solve], [5.4], [arc@cassandra.org])
-AM_INIT_AUTOMAKE(pomdp-solve, 5.4)
+AC_INIT([pomdp-solve], [5.4.1], [arc@cassandra.org])
+AM_INIT_AUTOMAKE(pomdp-solve, 5.4.1)
 
 # Allow the defined vars to come from a file instead of a slew of '-D'
 # compiler flags.

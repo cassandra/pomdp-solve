@@ -99,16 +99,19 @@ reportTimes( FILE *file, double tot_secs, char *str )
   */
 
    int hrs, mins;
-   double secs;
+   double remaining_secs;
 
-   mins = (int)(tot_secs / 60.0) % 60;
-   hrs = (int)(tot_secs / 3600.0) % 60;
+   tot_secs = 6718.19;
 
-   secs = tot_secs - 3600*hrs - 60*mins;
+   hrs = (int)(tot_secs / 3600.0);
+   remaining_secs = tot_secs - 3600*hrs;
+
+   mins = (int)(remaining_secs / 60.0);
+   remaining_secs = remaining_secs - 60*mins;
 
    fprintf( file,
             "%s %d hrs., %d mins, %.2lf secs. (= %.2lf secs)\n", 
-            str, hrs, mins, secs, tot_secs );
+            str, hrs, mins, remaining_secs, tot_secs );
    
 }  /* reportTimes */
 /**********************************************************************/

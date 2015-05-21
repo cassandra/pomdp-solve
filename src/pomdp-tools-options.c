@@ -87,7 +87,7 @@ POMDP_TOOLS_OPTS_new( )
   options->alpha2[0] = '\0';
   options->alpha1[0] = '\0';
   options->belief[0] = '\0';
-  options->true[0] = '\0';
+  options->True[0] = '\0';
   options->pomdp[0] = '\0';
   options->tool = POMDP_TOOLS_OPTS_OPT_TOOL_DEFAULT;
   options->epsilon = POMDP_TOOLS_OPTS_OPT_EPSILON_DEFAULT;
@@ -128,7 +128,7 @@ POMDP_TOOLS_OPTS_toConfigFile( PomdpToolsProgOptions options )
   sprintf( str, "%s", options->belief );
   CF_addParam( cfg, POMDP_TOOLS_OPTS_CFG_BELIEF_STR, str );
 
-  sprintf( str, "%s", options->true );
+  sprintf( str, "%s", options->True );
   CF_addParam( cfg, POMDP_TOOLS_OPTS_CFG_F_STR, str );
 
   sprintf( str, "%s", options->pomdp );
@@ -234,7 +234,7 @@ POMDP_TOOLS_OPTS_parse( ProgramOptions opts )
 
   ret_value = PO_getStringOption( opts,
                          POMDP_TOOLS_OPTS_ARG_F_STR,
-                         options->true,
+                         options->True,
                          NULL,
                          NULL );
   if ( ret_value == PO_OPT_PRESENT_ERROR )

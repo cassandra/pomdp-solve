@@ -129,7 +129,8 @@ libmdp_a_LIBADD =
 am__objects_1 = libmdp_a-imm-reward.$(OBJEXT) libmdp_a-mdp.$(OBJEXT) \
 	libmdp_a-parse_err.$(OBJEXT) libmdp_a-parse_hash.$(OBJEXT) \
 	libmdp_a-parser.$(OBJEXT) libmdp_a-scanner.$(OBJEXT) \
-	libmdp_a-sparse-matrix.$(OBJEXT)
+	libmdp_a-sparse-matrix.$(OBJEXT) \
+	libmdp_a-decision-tree.$(OBJEXT)
 am_libmdp_a_OBJECTS = $(am__objects_1)
 libmdp_a_OBJECTS = $(am_libmdp_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
@@ -247,17 +248,17 @@ OBJEXT = o
 PACKAGE = pomdp-solve
 PACKAGE_BUGREPORT = arc@cassandra.org
 PACKAGE_NAME = pomdp-solve
-PACKAGE_STRING = pomdp-solve 5.3.1
+PACKAGE_STRING = pomdp-solve 5.4.1
 PACKAGE_TARNAME = pomdp-solve
 PACKAGE_URL = 
-PACKAGE_VERSION = 5.3.1
+PACKAGE_VERSION = 5.4.1
 PATH_SEPARATOR = :
 POW_LIB = 
 RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 5.3.1
+VERSION = 5.4.1
 YACC = byacc
 
 # Need this to have yacc generate a header file which I include in the
@@ -314,7 +315,7 @@ libmdp_a_CFLAGS = -O3
 #libmdp_a_CFLAGS = -g -DDMALLOC
 #libmdp_a_CFLAGS = -g
 #libmdp_a_INCLUDES = -I$(DMALLOC_BASE)/include
-COMMON_SRC = mdp-common.h imm-reward.c imm-reward.h mdp.c mdp.h parse_constant.h parse_err.c parse_err.h parse_hash.c parse_hash.h parser.y scanner.l sparse-matrix.c sparse-matrix.h
+COMMON_SRC = mdp-common.h imm-reward.c imm-reward.h mdp.c mdp.h parse_constant.h parse_err.c parse_err.h parse_hash.c parse_hash.h parser.y scanner.l sparse-matrix.c sparse-matrix.h decision-tree.c decision-tree.h
 
 ############################################################
 #####
@@ -401,6 +402,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/libmdp_a-decision-tree.Po
 include ./$(DEPDIR)/libmdp_a-imm-reward.Po
 include ./$(DEPDIR)/libmdp_a-mdp.Po
 include ./$(DEPDIR)/libmdp_a-parse_err.Po
@@ -520,6 +522,20 @@ libmdp_a-sparse-matrix.obj: sparse-matrix.c
 #	$(AM_V_CC)source='sparse-matrix.c' object='libmdp_a-sparse-matrix.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmdp_a_CFLAGS) $(CFLAGS) -c -o libmdp_a-sparse-matrix.obj `if test -f 'sparse-matrix.c'; then $(CYGPATH_W) 'sparse-matrix.c'; else $(CYGPATH_W) '$(srcdir)/sparse-matrix.c'; fi`
+
+libmdp_a-decision-tree.o: decision-tree.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmdp_a_CFLAGS) $(CFLAGS) -MT libmdp_a-decision-tree.o -MD -MP -MF $(DEPDIR)/libmdp_a-decision-tree.Tpo -c -o libmdp_a-decision-tree.o `test -f 'decision-tree.c' || echo '$(srcdir)/'`decision-tree.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libmdp_a-decision-tree.Tpo $(DEPDIR)/libmdp_a-decision-tree.Po
+#	$(AM_V_CC)source='decision-tree.c' object='libmdp_a-decision-tree.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmdp_a_CFLAGS) $(CFLAGS) -c -o libmdp_a-decision-tree.o `test -f 'decision-tree.c' || echo '$(srcdir)/'`decision-tree.c
+
+libmdp_a-decision-tree.obj: decision-tree.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmdp_a_CFLAGS) $(CFLAGS) -MT libmdp_a-decision-tree.obj -MD -MP -MF $(DEPDIR)/libmdp_a-decision-tree.Tpo -c -o libmdp_a-decision-tree.obj `if test -f 'decision-tree.c'; then $(CYGPATH_W) 'decision-tree.c'; else $(CYGPATH_W) '$(srcdir)/decision-tree.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libmdp_a-decision-tree.Tpo $(DEPDIR)/libmdp_a-decision-tree.Po
+#	$(AM_V_CC)source='decision-tree.c' object='libmdp_a-decision-tree.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmdp_a_CFLAGS) $(CFLAGS) -c -o libmdp_a-decision-tree.obj `if test -f 'decision-tree.c'; then $(CYGPATH_W) 'decision-tree.c'; else $(CYGPATH_W) '$(srcdir)/decision-tree.c'; fi`
 
 .l.c:
 	$(AM_V_LEX)$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

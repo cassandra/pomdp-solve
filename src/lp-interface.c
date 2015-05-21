@@ -858,6 +858,10 @@ LP_freeLP( LP lp )
   if ( lp == NULL )
     return;
   
+  // Contributed by Matthijs Spaan: lp->name was allocated but never freed,
+  // fixed it
+  XFREE( lp->name );
+  
   XFREE( lp->obj );
   XFREE( lp->x );
   XFREE( lp->lowbnd );

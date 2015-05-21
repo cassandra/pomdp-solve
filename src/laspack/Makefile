@@ -235,17 +235,17 @@ OBJEXT = o
 PACKAGE = pomdp-solve
 PACKAGE_BUGREPORT = arc@cassandra.org
 PACKAGE_NAME = pomdp-solve
-PACKAGE_STRING = pomdp-solve 5.3.1
+PACKAGE_STRING = pomdp-solve 5.4.1
 PACKAGE_TARNAME = pomdp-solve
 PACKAGE_URL = 
-PACKAGE_VERSION = 5.3.1
+PACKAGE_VERSION = 5.4.1
 PATH_SEPARATOR = :
 POW_LIB = 
 RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 5.3.1
+VERSION = 5.4.1
 YACC = byacc
 
 # Need this to have yacc generate a header file which I include in the
