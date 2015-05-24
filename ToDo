@@ -79,7 +79,7 @@ o There is a dependency on a symlink from lp_solve_X.Y to lp_solve.
 o On Darwin (Mac) system, I need to run 'ranlin libmdp.a' to create a
   table of contents before it would like.
 
-o Update code to lp_solve 2.3 (or most recent version)
+o Update code to lp_solve 5.5 (or most recent version)
 
 o Scour previous NOTES and correspondence for feedback about porting
   the pomdp-solve code.
