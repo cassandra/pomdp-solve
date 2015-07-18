@@ -167,7 +167,7 @@ struct PomdpFgProgOptionsStruct {
   /*
    * What configuration file should be read.
    */
-  char true[MAX_OPT_STRING_LEN];
+  char True[MAX_OPT_STRING_LEN];
 
   /*
    *  For any functionality that requires random numbers, we want

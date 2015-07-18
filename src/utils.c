@@ -53,6 +53,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "mdp/mdp.h"
@@ -61,6 +62,7 @@
 #include "params.h"
 #include "pomdp.h"
 #include "alpha.h"
+#include "parsimonious.h"
 #include "pg.h"
 #include "belief.h"
 #include "utils.h"
@@ -1213,15 +1215,13 @@ UTIL_relinkPolicyGraph( char *alpha_filename,
 
   if ( sizeAlphaList( alpha_list ) != pg->num_nodes ) {
     fprintf(gStdErrFile, 
-		  "** Error: The pg1 and alpha1 files are not compatible.\n",
-		  pg_filename);
+		  "** Error: The pg1 and alpha1 files are not compatible.\n");
     return;
   }
 
   if ( gNumObservations != pg->num_obs ) {
     fprintf(gStdErrFile, 
-		  "** Error: The pg1 file is not compatible with POMDP file.\n",
-		  pg_filename);
+		  "** Error: The pg1 file is not compatible with POMDP file.\n");
     return;
   }
 

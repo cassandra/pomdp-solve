@@ -490,6 +490,6 @@ extern PomdpSolveParams newPomdpSolveParams(  );
 extern PomdpSolveParams parseCmdLineAndCfgFile( int argc, char **argv );
 
 /* Display to stdout the current program parameters. */
-extern PomdpSolveParams showPomdpSolveParams( PomdpSolveParams params );
+extern void showPomdpSolveParams( PomdpSolveParams params );
 
 #endif

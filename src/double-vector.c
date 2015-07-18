@@ -287,6 +287,9 @@ DV_newNode( DoubleVector v, void* attr )
   temp->id = UNINITIALIZED;
   temp->attr = attr;
 
+  // Contributed by Chris Hansely: Added missing initialization
+  temp->next = NULL;
+
   return ( temp );
 }  /* DV_newNode */
 
@@ -805,7 +808,7 @@ DV_displayList( FILE *file, DoubleVectorList list )
   while( node != NULL ) {
     
     fprintf(file, "<id=%d:", node->id );
-    fprintf(file, " attr=%d", list->attr );
+    fprintf(file, " attr=%p", list->attr );
 
     fprintf ( file, "> " );
 

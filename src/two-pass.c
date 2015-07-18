@@ -68,6 +68,7 @@
 #include "common.h"
 #include "lp-interface.h"
 #include "parsimonious.h"
+#include "neighbor.h"
 #include "two-pass.h"
  
 /**********************************************************************/

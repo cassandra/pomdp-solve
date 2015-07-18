@@ -52,13 +52,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "mdp/mdp.h"
 
 #include "global.h"
 #include "params.h"
+#include "common.h"
 #include "pomdp.h"
 #include "utils.h"
+#include "pg-eval.h"
+#include "lp-interface.h"
 
 #include "pomdp-tools-options.h"
 
@@ -239,7 +243,7 @@ int main( int argc, char **argv )
 	   {
 		fprintf( stderr, "Missing required arguments(s) for '%s'\n",
 			    POMDP_TOOLS_OPTS_Tool_Str[tool_options->tool] );
-		fprintf( stderr, "Need: %s, %s, %s and %s.\n",
+		fprintf( stderr, "Need: %s, %s and %s.\n",
 			    POMDP_TOOLS_OPTS_ARG_ALPHA1_STR,
 			    POMDP_TOOLS_OPTS_ARG_O_STR,
 			    POMDP_TOOLS_OPTS_ARG_STATES_STR );
@@ -263,7 +267,7 @@ int main( int argc, char **argv )
 	   {
 		fprintf( stderr, "Missing required arguments(s) for '%s'\n",
 			    POMDP_TOOLS_OPTS_Tool_Str[tool_options->tool] );
-		fprintf( stderr, "Need: %s, %s, %s and %s.\n",
+		fprintf( stderr, "Need: %s, %s and %s.\n",
 			    POMDP_TOOLS_OPTS_ARG_ALPHA1_STR,
 			    POMDP_TOOLS_OPTS_ARG_O_STR,
 			    POMDP_TOOLS_OPTS_ARG_STATES_STR );

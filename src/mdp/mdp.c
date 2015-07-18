@@ -114,7 +114,7 @@ transformBeliefState( double *pi,
    int i, j, z, cur_state, next_state;
 
    if( gProblemType != POMDP_problem_type )
-      return;
+	return( 0 );
 
    /* zero out all elements since we will acumulate probabilities
       as we loop */
@@ -180,6 +180,7 @@ readMDP( char *filename ) {
 /*
    This routine returns 1 if the file is successfully parsed and 0 if not.
 */
+   extern int readMDPFile( FILE *file );  // From parser.y
 
    FILE *file;
 

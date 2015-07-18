@@ -98,7 +98,7 @@ POMDP_SOLVE_OPTS_new( )
 
   strcpy( options->__exec_name__, "pomdp-solve" );
 
-  strcpy( options->__version__, "5.2" );
+  strcpy( options->__version__, "5.4.1" );
 
   options->__error__ = 0;
 
@@ -138,7 +138,7 @@ POMDP_SOLVE_OPTS_new( )
   options->proj_purge = POMDP_SOLVE_OPTS_OPT_PROJ_PURGE_DEFAULT;
   options->mcgs_traj_length = POMDP_SOLVE_OPTS_OPT_MCGS_TRAJ_LENGTH_DEFAULT;
   options->epoch_history_window_delta = 0;
-  options->true[0] = '\0';
+  options->True[0] = '\0';
   options->epsilon_adjust_factor = 0.0;
   options->prune_init_rand_points = 0;
   options->vi_variation = POMDP_SOLVE_OPTS_OPT_VI_VARIATION_DEFAULT;
@@ -277,7 +277,7 @@ POMDP_SOLVE_OPTS_toConfigFile( PomdpSolveProgOptions options )
   sprintf( str, "%d", options->epoch_history_window_delta );
   CF_addParam( cfg, POMDP_SOLVE_OPTS_CFG_HISTORY_DELTA_STR, str );
 
-  sprintf( str, "%s", options->true );
+  sprintf( str, "%s", options->True );
   CF_addParam( cfg, POMDP_SOLVE_OPTS_CFG_F_STR, str );
 
   sprintf( str, "%.6f", options->epsilon_adjust_factor );
@@ -745,7 +745,7 @@ POMDP_SOLVE_OPTS_parse( ProgramOptions opts )
 
   ret_value = PO_getStringOption( opts,
                          POMDP_SOLVE_OPTS_ARG_F_STR,
-                         options->true,
+                         options->True,
                          NULL,
                          NULL );
   if ( ret_value == PO_OPT_PRESENT_ERROR )

@@ -57,8 +57,8 @@
 #define Error(MSG) { \
   printf( "  ** ERROR ** File: %s function: %s, Line: %d\n     ", \
           __FILE__, __PRETTY_FUNCTION__, __LINE__ ); \
-  printf( MSG ); \
-  printf( "\n" ); \
+  fputs( MSG, stdout );							   \
+  fputs( "\n", stdout );								   \
   error_count++; }
 
 

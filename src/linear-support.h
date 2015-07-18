@@ -112,11 +112,14 @@ extern int gNumVertices;
 /********************   EXTERNAL FUNCTIONS    *************************/
 /**********************************************************************/
 
+extern void initLinSupport();
 
 /* The main incremental pruning algorithm routine for finding the
   Q-function represention for value iteration with POMDPs.  */
 extern AlphaList improveLinSupport( AlphaList **projection,
                                     PomdpSolveParams param );
 
+
+extern void cleanUpLinSupport();
   
 #endif

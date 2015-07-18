@@ -7,6 +7,7 @@
 
 
 %{
+#include <string.h>
 #include "lpkit.h" 
 #include "lpglob.h"
 #include "read.h"
@@ -201,4 +202,5 @@ real_of:            lineair_sum
 }
 		;
 %%
+#include <string.h>
 #include "lex.c"

@@ -72,6 +72,7 @@
 #include "cmd-line.h"
 #include "pomdp.h"
 #include "alpha.h"
+#include "parsimonious.h"
 #include "stats.h"
 #include "lp-interface.h"
 #include "common.h"
@@ -812,7 +813,7 @@ endViEpoch( PomdpSolveParams param )
   } /* switch */
   
 }  /* endViEpoch */
-/**********************************************************************
+/**********************************************************************/
 
 /**********************************************************************/
 /**************     High Level Solution Routines      *****************/
@@ -932,12 +933,13 @@ improveV( AlphaList prev_alpha_list,
   projection = makeAllProjections( prev_alpha_list );
   endContext( param->stat, Context_Projection_build );
   
-
+  /*
   // PBVI:
   printf( "AlphaList:\n" );
   showAlphaList( prev_alpha_list );
   printf( "Projections:\n" );
   showProjections( projection );
+  */
 
   startContext( param->stat, Context_Projection_purge );
   purgeProjections( projection, param );

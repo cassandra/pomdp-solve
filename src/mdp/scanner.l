@@ -160,13 +160,18 @@ Letter [A-Za-z]
 Other [\-\_]
 IntLiteral {Digit}+
 
+ScaleFactor     (("E"|"e")("+"|"-")?{Digit}+)
+RealOpt1        ("."{Digit}*{ScaleFactor}?)
+RealOpt2        (("."{Digit}*)?{ScaleFactor})
+UnsignedReal ({Digit}+({RealOpt1}|{RealOpt2}))
+
 %%
 {IntLiteral} 			{
                                           IntToYylval();
                                           return (INTTOK);  /* Integer Literal */
 					}   
 
-{IntLiteral}"."{IntLiteral}	{
+{UnsignedReal}	{
                                           FloatToYylval();
                                           return (FLOATTOK);  /* Floating Point Literal */
 					}  

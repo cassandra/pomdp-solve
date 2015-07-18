@@ -76,6 +76,8 @@ extern double PGEC_val( PgEvalContext pgec,
 extern int PGE_evaluate( PG pg, PgEvalContext pgec );
 extern void PGE_solutionPrint( PgEvalContext pgec, FILE *file );
 extern void PGE_solutionDisplay( PgEvalContext pgec );
+
+extern void PGE_main( char *pg_filename );
      
 #endif
 

@@ -79,4 +79,10 @@ extern void UTIL_relinkPolicyGraph( char *alpha_filename,
 
 extern void UTIL_doBeliefUpdates();
 
+extern void UTIL_compareAlphaFilesUsingBeliefs( char *alpha1_filename,
+									   char *alpha2_filename,
+									   char *belief_filename,
+									   double epsilon,
+									   char *out_filename  );
+
 #endif

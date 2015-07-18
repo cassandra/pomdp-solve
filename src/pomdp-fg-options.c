@@ -90,7 +90,7 @@ POMDP_FG_OPTS_new( )
   options->save_penultimate = POMDP_FG_OPTS_OPT_SAVE_PENULTIMATE_DEFAULT;
   options->memory_limit = 0;
   options->pomdp_filename[0] = '\0';
-  options->true[0] = '\0';
+  options->True[0] = '\0';
   options->rand_seed[0] = '\0';
   options->save_all = POMDP_FG_OPTS_OPT_SAVE_ALL_DEFAULT;
   options->initial_grid_filename[0] = '\0';
@@ -139,7 +139,7 @@ POMDP_FG_OPTS_toConfigFile( PomdpFgProgOptions options )
   sprintf( str, "%s", options->pomdp_filename );
   CF_addParam( cfg, POMDP_FG_OPTS_CFG_POMDP_STR, str );
 
-  sprintf( str, "%s", options->true );
+  sprintf( str, "%s", options->True );
   CF_addParam( cfg, POMDP_FG_OPTS_CFG_F_STR, str );
 
   sprintf( str, "%s", options->rand_seed );
@@ -298,7 +298,7 @@ POMDP_FG_OPTS_parse( ProgramOptions opts )
 
   ret_value = PO_getStringOption( opts,
                          POMDP_FG_OPTS_ARG_F_STR,
-                         options->true,
+                         options->True,
                          NULL,
                          NULL );
   if ( ret_value == PO_OPT_PRESENT_ERROR )

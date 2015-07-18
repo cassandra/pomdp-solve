@@ -14,7 +14,7 @@
 	
 	* src/: Added XML headers to all 'src' dir source files
 
-	* src/mdp/scaner.l: Using parser.h instead of parser.tab.h
+	* src/mdp/scanner.l: Using parser.h instead of parser.tab.h
 	* src/lp-solve/lex.l: Added includes and extern defs
 
 2004-03-08  Tony Cassandra <arc@cassandra.org>
@@ -158,3 +158,26 @@
 	* testing/Makefile.am: Unit test automake file
 	* testing/main-test.c: Unit test driver program
 	* testing/index-list-test.[ch]: Unit test for index-list.c
+
+2015-05-17  Tony Cassandra <arc@cassandra.org>
+
+     * src/mdp/mdp.c: Fixed missing return value compiler error
+     * src/index-list.c: Fixed missing return value compiler error
+     * (many) Fixed numerous compiler warnings
+
+2015-05-18  Tony Cassandra <arc@cassandra.org>
+
+     * mdp/scanner.l: Added support for scientific notation
+     * mdp/Makefile.am: Added faster immediate reward handling
+     * mdp/imm-reward.c: Added faster immediate reward handling
+     * mdp/decision-tree.h: Added faster immediate reward handling
+     * mdp/decision-tree.c: Added faster immediate reward handling
+
+2015-05-20  Tony Cassandra <arc@cassandra.org>
+
+     * double-vector.c: Added missing "next" initialization
+     * timing.c: Fixed conversion from secs to hours, mins and secs
+     * pomdp-fg-options.[ch]: Changed struct item 'true' to 'True'
+     * pomdp-solve-options.[ch]: Changed struct item 'true' to 'True'
+     * lp-interface.c: Fixed memory leak not freeing all space
+

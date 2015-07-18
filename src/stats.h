@@ -251,5 +251,11 @@ extern void epochStartStats( SolutionStats stat );
 extern void epochEndStats( SolutionStats stat, 
                            int solution_size,
                            double cur_error );
+
+extern void reportStats( SolutionStats stat );
+
+/* Frees the allocated memory for this structure.
+ */
+extern void destroySolutionStats( SolutionStats stat );
   
 #endif

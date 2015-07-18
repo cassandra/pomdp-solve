@@ -152,4 +152,18 @@ extern int initListSimpleQ( AlphaList list,
 extern int shouldTerminateEarly( AlphaList list, 
 						   PomdpSolveParams param );
 
+/* 
+   Changes the obs_source array from pointing at projection nodes to
+   pointing at the actual sources of the projection vectors in the
+   previous iteration's alpha list.  During construction of the Q_a
+   sets we need the obs_source array to point to the projection, but
+   we will be destroying these sets.  However, the projection
+   elements themselves have a pointer into the previous alpha list
+   for which they were created from. Before destroying the projection
+   sets, we want to redirect the choice pointers to their previous
+   alpha list sources.  This is the basis for coming up with the
+   policy graph. 
+*/
+extern void relinkObsSources( AlphaList list );
+
 #endif
