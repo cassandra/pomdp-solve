@@ -377,8 +377,8 @@ void initFiniteGrid( PomdpSolveParams param )
   fflush( param->report_file );
 
   // PBVI:
-  gFiniteGrid = readBeliefList( "facet-test-00.belief", 0 );
-  goto FG_END;
+  //gFiniteGrid = readBeliefList( "facet-test-00.belief", 0 );
+  //goto FG_END;
 
   switch( param->opts->finite_grid_type ) {
     
