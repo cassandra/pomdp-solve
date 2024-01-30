@@ -269,11 +269,13 @@ rm compile depcomp INSTALL install-sh missing mkinstalldirs aclocal.m4 ylwrap
 rm -fr autom4te.cache
 
 autoreconf -i -f -v
+./configure
+make
 
-
-**** get rid of all warnings
-
-
+**** can compile it from distribution on Ubuntu
+**** can compile it from distribution on OS/X
+**** can compile it from repo code on OS/X
+**** get rid of all compiler warnings
 **** clean up files not needed in repo
 make clean
 
@@ -281,7 +283,16 @@ remove all internediate files
 
 git add -i
 
+**** Add license file at top-level
 
+**** DOc updates
+clean all
+how to reconfigure
+how to build
+how to make distribution
+different executables
+etc
 * Adjusting Version NUmber
 
 configure.ac 
+README

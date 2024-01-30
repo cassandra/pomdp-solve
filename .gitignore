@@ -27,6 +27,13 @@ missing
 mkinstalldirs
 ylwrap
 
+# pomdp-solve executables and distribution files
+src/pomdp-fg
+src/pomdp-solve
+src/pomdp-tools
+testing/pomdp-test
+pomdp-solve-*.gz
+
 # Editor-specific files
 .vscode/
 .idea/
