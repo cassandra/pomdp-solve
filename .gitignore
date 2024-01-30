@@ -1,0 +1,13 @@
+*~
+.*
+*#
+
+# Compiled files
+*.o
+*.a
+*.out
+*.exe
+
+# Editor-specific files
+.vscode/
+.idea/
