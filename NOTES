@@ -1,3 +1,4 @@
+** Unknown Date 
 Looking at using autoconf.
 
 Need the file configure.ac as the input file to creating the configure
@@ -19,7 +20,7 @@ The 'ifnames' program wil find al preprocessor vars using in #if,
 
 I also need a Makefile.am for the automake program.
 
-5/13/2003
+** 5/13/2003
 
 The GNU building system enforces specific documentation.  I am adding:
 
@@ -253,3 +254,34 @@ autoconf
 automake --add-missing
 ./configure
 make
+
+** Mon Jan 29 07:22:33 PM CST 2024 *
+
+I have split out the pomdp-solve directory from my personal git repo in preparation for putting this on GitHub.  Before doing that, I need to get it into a compilable state (on GNU/Linux and MacOS/Intel). I also need to clean up the files a bit.
+
+Next compilable, distributed version to be version 5.5.
+
+*** Compiling on GNU/Linux (Ubuntu)
+
+sudo apt-get install autoconf automake libtool
+
+rm compile depcomp INSTALL install-sh missing mkinstalldirs aclocal.m4 ylwrap
+rm -fr autom4te.cache
+
+autoreconf -i -f -v
+
+
+**** get rid of all warnings
+
+
+**** clean up files not needed in repo
+make clean
+
+remove all internediate files
+
+git add -i
+
+
+* Adjusting Version NUmber
+
+configure.ac 

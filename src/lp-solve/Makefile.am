@@ -3,7 +3,7 @@
 # Override this since it seems to want to do -g -O2 all the time whch
 # seems to be the default and which I do not yet know how to change.
 #
-CFLAGS = 
+AM_CFLAGS = 
 
 # Assumed location of dmalloc.h
 #
@@ -11,7 +11,7 @@ DMALLOC_BASE = /usr/local
 
 # Need this to have yacc generate a header file which I include in the
 # scanner.
-YFLAGS = -d
+AM_YFLAGS = -d
 
 lib_LIBRARIES = liblpk.a
 

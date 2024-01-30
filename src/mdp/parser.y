@@ -83,17 +83,6 @@ int minI, maxI;
 int minJ, maxJ;
 int minObs, maxObs;
 
-/*  These variables will keep the intermediate representation for the
-    matrices.  We cannot know how to set up the sparse matrices until
-    all entries are read in, so we must have this intermediate 
-    representation, which will will convert when it has all been read in.
-    We allocate this memory once we know how big they must be and we
-    will free all of this when we convert it to its final sparse format.
-    */
-I_Matrix *IP;   /* For transition matrices. */
-I_Matrix *IR;   /* For observation matrices. */
-I_Matrix **IW;  /* For reward matrices */
-
 /* These variables are used by the parser only, to keep some state
    information. 
 */

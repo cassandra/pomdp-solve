@@ -74,20 +74,23 @@ int gNumObservations = 0;   /* remains zero for MDPs */
 
 /* Intermediate variables */
 
+/*  These variables will keep the intermediate representation for the
+    matrices.  We cannot know how to set up the sparse matrices until
+    all entries are read in, so we must have this intermediate 
+    representation, which will will convert when it has all been read in.
+    We allocate this memory once we know how big they must be and we
+    will free all of this when we convert it to its final sparse format.
+    */
 I_Matrix *IP;  /* Transition Probabilities */
-
 I_Matrix *IR;  /* Observation Probabilities (POMDP only) */
-
 I_Matrix IQ;  /* Immediate action-state pair values (both MDP and POMDP) */
 
 /* Sparse variables */
 
 Matrix *P;  /* Transition Probabilities */
-
 Matrix *R;  /* Observation Probabilities */
-
 Matrix Q;  /* Immediate values for state action pairs.  These are
-	    expectations computed from immediate values. */
+	      expectations computed from immediate values. */
 
 /* Normal variables */
 

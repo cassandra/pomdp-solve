@@ -1,9 +1,9 @@
 # Override this since it seems to want to do -g -O2 all the time whch
 # seems to be the default and which I do not yet know how to change.
 #
-CFLAGS = 
+AM_CFLAGS = 
 
-INCLUDES = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/src
 
 # Assumed location of dmalloc.h
 #

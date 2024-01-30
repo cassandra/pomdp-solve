@@ -32,9 +32,6 @@
    to 0 otherwise. */
 #define HAVE_MALLOC 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
 /* Define to 1 if you have the `memset' function. */
 #define HAVE_MEMSET 1
 
@@ -53,6 +50,9 @@
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -91,7 +91,7 @@
 #define PACKAGE_NAME "pomdp-solve"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "pomdp-solve 5.4.1"
+#define PACKAGE_STRING "pomdp-solve 5.5"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "pomdp-solve"
@@ -100,19 +100,15 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "5.4.1"
+#define PACKAGE_VERSION "5.5"
 
-/* Define as the return type of signal handlers (`int' or `void'). */
-#define RETSIGTYPE void
-
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
-/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
-#define TIME_WITH_SYS_TIME 1
-
 /* Version number of package */
-#define VERSION "5.4.1"
+#define VERSION "5.5"
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */

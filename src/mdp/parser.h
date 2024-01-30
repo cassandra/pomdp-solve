@@ -1,3 +1,6 @@
+#ifndef _yy_defines_h_
+#define _yy_defines_h_
+
 #define INTTOK 1
 #define FLOATTOK 2
 #define COLONTOK 3
@@ -28,10 +31,12 @@
 #endif
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
-typedef union {
+typedef union YYSTYPE {
   Constant_Block *constBlk;
   int i_num;
   double f_num;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;
+
+#endif /* _yy_defines_h_ */

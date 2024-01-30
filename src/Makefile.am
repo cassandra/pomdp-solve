@@ -1,15 +1,15 @@
-INCLUDES = -I$(top_srcdir)/src/mdp -I$(top_srcdir)/src/lp-solve  -I$(top_srcdir)/src/laspack
+AM_CPPFLAGS = -I$(top_srcdir)/src/mdp -I$(top_srcdir)/src/lp-solve  -I$(top_srcdir)/src/laspack
 
 # Override this since it seems to want to do -g -O2 all the time whch
 # seems to be the default and which I do not yet know how to change.
 #
-CFLAGS =
+AM_CFLAGS =
 
 # Assumed location of dmalloc.h
 #
 DMALLOC_BASE = /usr/local
 
-LDFLAGS = -L$(top_builddir)/src/mdp -L$(top_builddir)/src/lp-solve -L$(top_builddir)/src/laspack
+AM_LDFLAGS = -L$(top_builddir)/src/mdp -L$(top_builddir)/src/lp-solve -L$(top_builddir)/src/laspack
 
 COMMON_LIBS = $(top_builddir)/src/mdp/libmdp.a $(top_builddir)/src/lp-solve/liblpk.a $(top_builddir)/src/laspack/liblaspack.a @LEXLIB@
 
