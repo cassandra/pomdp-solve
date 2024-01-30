@@ -83,6 +83,9 @@ int minI, maxI;
 int minJ, maxJ;
 int minObs, maxObs;
 
+extern I_Matrix *IP;   /* For transition matrices. */
+extern I_Matrix *IR;   /* For observation matrices. */
+
 /* These variables are used by the parser only, to keep some state
    information. 
 */
