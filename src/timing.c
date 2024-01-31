@@ -65,8 +65,6 @@ reportTimes( FILE *file, double tot_secs, char *str )
    int hrs, mins;
    double remaining_secs;
 
-   tot_secs = 6718.19;
-
    hrs = (int)(tot_secs / 3600.0);
    remaining_secs = tot_secs - 3600*hrs;
 

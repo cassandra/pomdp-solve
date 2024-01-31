@@ -22,29 +22,16 @@
 
 #line 2 "parser.y"
 /*
-  *****
-  Copyright 1994-1997, Brown University
-  Copyright 1998, 1999, Anthony R. Cassandra
-
-                           All Rights Reserved
-                           
-  Permission to use, copy, modify, and distribute this software and its
-  documentation for any purpose other than its incorporation into a
-  commercial product is hereby granted without fee, provided that the
-  above copyright notice appear in all copies and that both that
-  copyright notice and this permission notice appear in supporting
-  documentation.
-  
-  ANTHONY CASSANDRA DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
-  INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR ANY
-  PARTICULAR PURPOSE.  IN NO EVENT SHALL ANTHONY CASSANDRA BE LIABLE FOR
-  ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-  *****
-
-*/
+ * pomdp-solve
+ *
+ * Copyright © 1998-2003, Anthony R. Cassandra
+ * Copyright © 1994-1997, Brown University
+ *
+ * Licensed under the Creative Commons Attribution-NonCommercial 4.0 
+ * International License (CC BY-NC 4.0).
+ *
+ * See the LICENSE.txt file for details.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -138,14 +125,14 @@ int gTooManyEntries = 0;
 #endif
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
-#line 124 "parser.y"
+#line 111 "parser.y"
 typedef union YYSTYPE {
   Constant_Block *constBlk;
   int i_num;
   double f_num;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 149 "parser.c"
+#line 136 "parser.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -653,7 +640,7 @@ static YYINT  *yylexp = 0;
 
 static YYINT  *yylexemes = 0;
 #endif /* YYBTYACC */
-#line 752 "parser.y"
+#line 739 "parser.y"
 
 /********************************************************************/
 /*              External Routines                                   */
@@ -1495,7 +1482,7 @@ yywrap()
    return 1;
 }
 /************************************************************************/
-#line 1499 "parser.c"
+#line 1486 "parser.c"
 
 /* For use in generated program */
 #define yydepth (int)(yystack.s_mark - yystack.s_base)
@@ -2166,7 +2153,7 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 137 "parser.y"
+#line 124 "parser.y"
 	{ 
 		    /* The preamble is a section of the file which */
 		    /* must come first and whcih contains some global */
@@ -2189,10 +2176,10 @@ case 1:
 
 		    allocateIntermediateMDP();  
 		  }
-#line 2193 "parser.c"
+#line 2180 "parser.c"
 break;
 case 2:
-#line 161 "parser.y"
+#line 148 "parser.y"
 	{ 
 		    /* Some type of algorithms want a place to start */
 		    /* off the problem, especially when doing */
@@ -2207,10 +2194,10 @@ case 2:
 
 		    endStartStates(); 
 		  }
-#line 2211 "parser.c"
+#line 2198 "parser.c"
 break;
 case 3:
-#line 180 "parser.y"
+#line 167 "parser.y"
 	{
 		    /* This is the very last thing we do while */
 		    /* parsing.  Even though the file may conform to */
@@ -2226,17 +2213,17 @@ case 3:
                      checkProbs();
 		     YACCtrace("pomdp_file -> preamble params\n");
                   }
-#line 2230 "parser.c"
+#line 2217 "parser.c"
 break;
 case 4:
-#line 197 "parser.y"
+#line 184 "parser.y"
 	{
 		   YACCtrace("preamble -> preamble param_type\n");
 		}
-#line 2237 "parser.c"
+#line 2224 "parser.c"
 break;
 case 11:
-#line 209 "parser.y"
+#line 196 "parser.y"
 	{
 		  /* The discount factor only makes sense when in the */
 		  /* range 0 to 1, so it is an error to specify */
@@ -2249,32 +2236,32 @@ case 11:
                    discountDefined = 1;
 		   YACCtrace("discount_param -> DISCOUNTTOK COLONTOK number\n");
 	        }
-#line 2253 "parser.c"
+#line 2240 "parser.c"
 break;
 case 12:
-#line 223 "parser.y"
+#line 210 "parser.y"
 	{
                    valuesDefined = 1;
 		   YACCtrace("value_param -> VALUESTOK COLONTOK value_tail\n");
 	        }
-#line 2261 "parser.c"
+#line 2248 "parser.c"
 break;
 case 13:
-#line 236 "parser.y"
+#line 223 "parser.y"
 	{
                    gValueType = REWARD_value_type;
 		}
-#line 2268 "parser.c"
+#line 2255 "parser.c"
 break;
 case 14:
-#line 240 "parser.y"
+#line 227 "parser.y"
 	{
                    gValueType = COST_value_type;
 		}
-#line 2275 "parser.c"
+#line 2262 "parser.c"
 break;
 case 15:
-#line 245 "parser.y"
+#line 232 "parser.y"
 	{ 
 		  /* Since are able to enumerate the states and refer */
 		  /* to them by identifiers, we will need to set the */
@@ -2286,19 +2273,19 @@ case 15:
 		  curMnemonic = nt_state; 
 
 		}
-#line 2290 "parser.c"
+#line 2277 "parser.c"
 break;
 case 16:
-#line 257 "parser.y"
+#line 244 "parser.y"
 	{
                    statesDefined = 1;
                    curMnemonic = nt_unknown;
 		   YACCtrace("state_param -> STATETOK COLONTOK state_tail\n");
 		}
-#line 2299 "parser.c"
+#line 2286 "parser.c"
 break;
 case 17:
-#line 264 "parser.y"
+#line 251 "parser.y"
 	{
 
 		  /*  For the number of states, we can just have a */
@@ -2317,28 +2304,28 @@ case 17:
 
                    XFREE( yystack.l_mark[0].constBlk );
 		}
-#line 2321 "parser.c"
+#line 2308 "parser.c"
 break;
 case 19:
-#line 286 "parser.y"
+#line 273 "parser.y"
 	{
 		  /* See state_param for explanation of this */
 
 		  curMnemonic = nt_action;  
 		}
-#line 2330 "parser.c"
+#line 2317 "parser.c"
 break;
 case 20:
-#line 292 "parser.y"
+#line 279 "parser.y"
 	{
                    actionsDefined = 1;
                    curMnemonic = nt_unknown;
 		   YACCtrace("action_param -> ACTIONTOK COLONTOK action_tail\n");
 		}
-#line 2339 "parser.c"
+#line 2326 "parser.c"
 break;
 case 21:
-#line 299 "parser.y"
+#line 286 "parser.y"
 	{
 
 		  /*  For the number of actions, we can just have a */
@@ -2357,28 +2344,28 @@ case 21:
 
                    XFREE( yystack.l_mark[0].constBlk );
 		}
-#line 2361 "parser.c"
+#line 2348 "parser.c"
 break;
 case 23:
-#line 321 "parser.y"
+#line 308 "parser.y"
 	{ 
 		  /* See state_param for explanation of this */
 
 		  curMnemonic = nt_observation; 
 		}
-#line 2370 "parser.c"
+#line 2357 "parser.c"
 break;
 case 24:
-#line 327 "parser.y"
+#line 314 "parser.y"
 	{
                    observationsDefined = 1;
                    curMnemonic = nt_unknown;
 		   YACCtrace("obs_param -> OBSTOK COLONTOK obs_param_tail\n");
 		}
-#line 2379 "parser.c"
+#line 2366 "parser.c"
 break;
 case 25:
-#line 334 "parser.y"
+#line 321 "parser.y"
 	{
 
 		  /*  For the number of observation, we can just have a */
@@ -2397,10 +2384,10 @@ case 25:
 
                    XFREE( yystack.l_mark[0].constBlk );
 		}
-#line 2401 "parser.c"
+#line 2388 "parser.c"
 break;
 case 27:
-#line 356 "parser.y"
+#line 343 "parser.y"
 	{ 
 		  /* There are a number of different formats for the */
 		  /* start state.  This one is valid for either a */
@@ -2415,10 +2402,10 @@ case 27:
 		  else
 		    setMatrixContext(mc_mdp_start, 0, 0, 0, 0); 
 		}
-#line 2419 "parser.c"
+#line 2406 "parser.c"
 break;
 case 29:
-#line 389 "parser.y"
+#line 376 "parser.y"
 	{
                    int num;
 
@@ -2437,45 +2424,45 @@ case 29:
 		   XFREE( yystack.l_mark[0].constBlk->theValue.theString );
 		   XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2441 "parser.c"
+#line 2428 "parser.c"
 break;
 case 30:
-#line 409 "parser.y"
+#line 396 "parser.y"
 	{ 
 		  setMatrixContext(mc_start_include, 0, 0, 0, 0); 
 		}
-#line 2448 "parser.c"
+#line 2435 "parser.c"
 break;
 case 32:
-#line 415 "parser.y"
+#line 402 "parser.y"
 	{ 
 		  setMatrixContext(mc_start_exclude, 0, 0, 0, 0); 
 		}
-#line 2455 "parser.c"
+#line 2442 "parser.c"
 break;
 case 34:
-#line 422 "parser.y"
+#line 409 "parser.y"
 	{ 
 		  setStartStateUniform(); 
 		}
-#line 2462 "parser.c"
+#line 2449 "parser.c"
 break;
 case 35:
-#line 427 "parser.y"
+#line 414 "parser.y"
 	{
 		  enterStartState( yystack.l_mark[0].i_num );
                 }
-#line 2469 "parser.c"
+#line 2456 "parser.c"
 break;
 case 36:
-#line 431 "parser.y"
+#line 418 "parser.y"
 	{
 		  enterStartState( yystack.l_mark[0].i_num );
                 }
-#line 2476 "parser.c"
+#line 2463 "parser.c"
 break;
 case 40:
-#line 440 "parser.y"
+#line 427 "parser.y"
 	{
 		    /* If there are observation specifications defined,
 		       but no observations listed in the preamble, then
@@ -2501,110 +2488,110 @@ case 40:
 
 		      observationSpecDefined = 1;
 		  }
-#line 2505 "parser.c"
+#line 2492 "parser.c"
 break;
 case 42:
-#line 468 "parser.y"
+#line 455 "parser.y"
 	{
 		   YACCtrace("trans_prob_spec -> TTOK COLONTOK trans_spec_tail\n");
 		}
-#line 2512 "parser.c"
+#line 2499 "parser.c"
 break;
 case 43:
-#line 473 "parser.y"
+#line 460 "parser.y"
 	{ setMatrixContext(mc_trans_single, yystack.l_mark[-4].i_num, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num, 0); }
-#line 2517 "parser.c"
+#line 2504 "parser.c"
 break;
 case 44:
-#line 474 "parser.y"
+#line 461 "parser.y"
 	{
                    enterMatrix( yystack.l_mark[0].f_num );
 		   YACCtrace("trans_spec_tail -> action COLONTOK state COLONTOK state prob \n");
 		}
-#line 2525 "parser.c"
+#line 2512 "parser.c"
 break;
 case 45:
-#line 479 "parser.y"
+#line 466 "parser.y"
 	{ setMatrixContext(mc_trans_row, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num, 0, 0); }
-#line 2530 "parser.c"
+#line 2517 "parser.c"
 break;
 case 46:
-#line 480 "parser.y"
+#line 467 "parser.y"
 	{
 		   YACCtrace("trans_spec_tail -> action COLONTOK state ui_matrix \n");
 		}
-#line 2537 "parser.c"
+#line 2524 "parser.c"
 break;
 case 47:
-#line 483 "parser.y"
+#line 470 "parser.y"
 	{ setMatrixContext(mc_trans_all, yystack.l_mark[0].i_num, 0, 0, 0); }
-#line 2542 "parser.c"
+#line 2529 "parser.c"
 break;
 case 48:
-#line 484 "parser.y"
+#line 471 "parser.y"
 	{
 		   YACCtrace("trans_spec_tail -> action ui_matrix\n");
 		}
-#line 2549 "parser.c"
+#line 2536 "parser.c"
 break;
 case 49:
-#line 489 "parser.y"
+#line 476 "parser.y"
 	{
 		   YACCtrace("obs_prob_spec -> OTOK COLONTOK  obs_spec_tail\n");
 		}
-#line 2556 "parser.c"
+#line 2543 "parser.c"
 break;
 case 50:
-#line 494 "parser.y"
+#line 481 "parser.y"
 	{ setMatrixContext(mc_obs_single, yystack.l_mark[-4].i_num, 0, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num); }
-#line 2561 "parser.c"
+#line 2548 "parser.c"
 break;
 case 51:
-#line 495 "parser.y"
+#line 482 "parser.y"
 	{
                    enterMatrix( yystack.l_mark[0].f_num );
 		   YACCtrace("obs_spec_tail -> action COLONTOK state COLONTOK obs prob \n");
 		}
-#line 2569 "parser.c"
+#line 2556 "parser.c"
 break;
 case 52:
-#line 500 "parser.y"
+#line 487 "parser.y"
 	{ setMatrixContext(mc_obs_row, yystack.l_mark[-2].i_num, 0, yystack.l_mark[0].i_num, 0); }
-#line 2574 "parser.c"
+#line 2561 "parser.c"
 break;
 case 53:
-#line 501 "parser.y"
+#line 488 "parser.y"
 	{
 		   YACCtrace("obs_spec_tail -> action COLONTOK state COLONTOK u_matrix\n");
 		}
-#line 2581 "parser.c"
+#line 2568 "parser.c"
 break;
 case 54:
-#line 504 "parser.y"
+#line 491 "parser.y"
 	{ setMatrixContext(mc_obs_all, yystack.l_mark[0].i_num, 0, 0, 0); }
-#line 2586 "parser.c"
+#line 2573 "parser.c"
 break;
 case 55:
-#line 505 "parser.y"
+#line 492 "parser.y"
 	{
 		   YACCtrace("obs_spec_tail -> action u_matrix\n");
 		}
-#line 2593 "parser.c"
+#line 2580 "parser.c"
 break;
 case 56:
-#line 510 "parser.y"
+#line 497 "parser.y"
 	{
 		   YACCtrace("reward_spec -> RTOK COLONTOK  reward_spec_tail\n");
 		}
-#line 2600 "parser.c"
+#line 2587 "parser.c"
 break;
 case 57:
-#line 517 "parser.y"
+#line 504 "parser.y"
 	{ setMatrixContext(mc_reward_single, yystack.l_mark[-6].i_num, yystack.l_mark[-4].i_num, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num); }
-#line 2605 "parser.c"
+#line 2592 "parser.c"
 break;
 case 58:
-#line 518 "parser.y"
+#line 505 "parser.y"
 	{
                    enterMatrix( yystack.l_mark[0].f_num );
 
@@ -2612,119 +2599,119 @@ case 58:
 		   checkMatrix();  
 		   YACCtrace("reward_spec_tail -> action COLONTOK state COLONTOK state COLONTOK obs number\n");
 		}
-#line 2616 "parser.c"
+#line 2603 "parser.c"
 break;
 case 59:
-#line 526 "parser.y"
+#line 513 "parser.y"
 	{ setMatrixContext(mc_reward_row, yystack.l_mark[-4].i_num, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num, 0); }
-#line 2621 "parser.c"
+#line 2608 "parser.c"
 break;
 case 60:
-#line 527 "parser.y"
+#line 514 "parser.y"
 	{
                    checkMatrix();
 		   YACCtrace("reward_spec_tail -> action COLONTOK state COLONTOK state num_matrix\n");
 		 }
-#line 2629 "parser.c"
+#line 2616 "parser.c"
 break;
 case 61:
-#line 532 "parser.y"
+#line 519 "parser.y"
 	{ setMatrixContext(mc_reward_all, yystack.l_mark[-2].i_num, yystack.l_mark[0].i_num, 0, 0); }
-#line 2634 "parser.c"
+#line 2621 "parser.c"
 break;
 case 62:
-#line 533 "parser.y"
+#line 520 "parser.y"
 	{
                    checkMatrix();
 		   YACCtrace("reward_spec_tail -> action COLONTOK state num_matrix\n");
 		}
-#line 2642 "parser.c"
+#line 2629 "parser.c"
 break;
 case 63:
-#line 539 "parser.y"
+#line 526 "parser.y"
 	{ setMatrixContext(mc_reward_mdp_only, yystack.l_mark[0].i_num, 0, 0, 0); }
-#line 2647 "parser.c"
+#line 2634 "parser.c"
 break;
 case 64:
-#line 540 "parser.y"
+#line 527 "parser.y"
 	{
                    checkMatrix();
 		   YACCtrace("reward_spec_tail -> action num_matrix\n");
                 }
-#line 2655 "parser.c"
+#line 2642 "parser.c"
 break;
 case 65:
-#line 546 "parser.y"
+#line 533 "parser.y"
 	{
                    enterUniformMatrix();
                 }
-#line 2662 "parser.c"
+#line 2649 "parser.c"
 break;
 case 66:
-#line 550 "parser.y"
+#line 537 "parser.y"
 	{
                    enterIdentityMatrix();
                 }
-#line 2669 "parser.c"
+#line 2656 "parser.c"
 break;
 case 67:
-#line 554 "parser.y"
+#line 541 "parser.y"
 	{
                    checkMatrix();
                 }
-#line 2676 "parser.c"
+#line 2663 "parser.c"
 break;
 case 68:
-#line 560 "parser.y"
+#line 547 "parser.y"
 	{
                    enterUniformMatrix();
                 }
-#line 2683 "parser.c"
+#line 2670 "parser.c"
 break;
 case 69:
-#line 564 "parser.y"
+#line 551 "parser.y"
 	{
 		  enterResetMatrix();
 		}
-#line 2690 "parser.c"
+#line 2677 "parser.c"
 break;
 case 70:
-#line 568 "parser.y"
+#line 555 "parser.y"
 	{
                    checkMatrix();
                 }
-#line 2697 "parser.c"
+#line 2684 "parser.c"
 break;
 case 71:
+#line 560 "parser.y"
+	{
+                   enterMatrix( yystack.l_mark[0].f_num );
+                }
+#line 2691 "parser.c"
+break;
+case 72:
+#line 564 "parser.y"
+	{
+                   enterMatrix( yystack.l_mark[0].f_num );
+                }
+#line 2698 "parser.c"
+break;
+case 73:
+#line 569 "parser.y"
+	{
+                   enterMatrix( yystack.l_mark[0].f_num );
+                }
+#line 2705 "parser.c"
+break;
+case 74:
 #line 573 "parser.y"
 	{
                    enterMatrix( yystack.l_mark[0].f_num );
                 }
-#line 2704 "parser.c"
-break;
-case 72:
-#line 577 "parser.y"
-	{
-                   enterMatrix( yystack.l_mark[0].f_num );
-                }
-#line 2711 "parser.c"
-break;
-case 73:
-#line 582 "parser.y"
-	{
-                   enterMatrix( yystack.l_mark[0].f_num );
-                }
-#line 2718 "parser.c"
-break;
-case 74:
-#line 586 "parser.y"
-	{
-                   enterMatrix( yystack.l_mark[0].f_num );
-                }
-#line 2725 "parser.c"
+#line 2712 "parser.c"
 break;
 case 75:
-#line 591 "parser.y"
+#line 578 "parser.y"
 	{
                    if(( yystack.l_mark[0].constBlk->theValue.theInt < 0 ) 
                       || (yystack.l_mark[0].constBlk->theValue.theInt >= gNumStates )) {
@@ -2736,10 +2723,10 @@ case 75:
                       yyval.i_num = yystack.l_mark[0].constBlk->theValue.theInt;
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2740 "parser.c"
+#line 2727 "parser.c"
 break;
 case 76:
-#line 603 "parser.y"
+#line 590 "parser.y"
 	{
                    int num;
                    num = H_lookup( yystack.l_mark[0].constBlk->theValue.theString, nt_state );
@@ -2754,17 +2741,17 @@ case 76:
                    XFREE( yystack.l_mark[0].constBlk->theValue.theString );
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2758 "parser.c"
+#line 2745 "parser.c"
 break;
 case 77:
-#line 618 "parser.y"
+#line 605 "parser.y"
 	{
                    yyval.i_num = WILDCARD_SPEC;
                 }
-#line 2765 "parser.c"
+#line 2752 "parser.c"
 break;
 case 78:
-#line 623 "parser.y"
+#line 610 "parser.y"
 	{
                    yyval.i_num = yystack.l_mark[0].constBlk->theValue.theInt;
                    if(( yystack.l_mark[0].constBlk->theValue.theInt < 0 ) 
@@ -2777,10 +2764,10 @@ case 78:
                       yyval.i_num = yystack.l_mark[0].constBlk->theValue.theInt;
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2781 "parser.c"
+#line 2768 "parser.c"
 break;
 case 79:
-#line 636 "parser.y"
+#line 623 "parser.y"
 	{
                    int num;
                    num = H_lookup( yystack.l_mark[0].constBlk->theValue.theString, nt_action );
@@ -2795,17 +2782,17 @@ case 79:
                    XFREE( yystack.l_mark[0].constBlk->theValue.theString );
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2799 "parser.c"
+#line 2786 "parser.c"
 break;
 case 80:
-#line 651 "parser.y"
+#line 638 "parser.y"
 	{
                    yyval.i_num = WILDCARD_SPEC;
                 }
-#line 2806 "parser.c"
+#line 2793 "parser.c"
 break;
 case 81:
-#line 656 "parser.y"
+#line 643 "parser.y"
 	{
                    if(( yystack.l_mark[0].constBlk->theValue.theInt < 0 ) 
                       || (yystack.l_mark[0].constBlk->theValue.theInt >= gNumObservations )) {
@@ -2817,10 +2804,10 @@ case 81:
                       yyval.i_num = yystack.l_mark[0].constBlk->theValue.theInt;
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2821 "parser.c"
+#line 2808 "parser.c"
 break;
 case 82:
-#line 668 "parser.y"
+#line 655 "parser.y"
 	{
                    int num;
                    num = H_lookup( yystack.l_mark[0].constBlk->theValue.theString, nt_observation );
@@ -2835,31 +2822,31 @@ case 82:
                    XFREE( yystack.l_mark[0].constBlk->theValue.theString );
                    XFREE( yystack.l_mark[0].constBlk );
                }
-#line 2839 "parser.c"
+#line 2826 "parser.c"
 break;
 case 83:
-#line 683 "parser.y"
+#line 670 "parser.y"
 	{
                    yyval.i_num = WILDCARD_SPEC;
                 }
-#line 2846 "parser.c"
+#line 2833 "parser.c"
 break;
 case 84:
-#line 688 "parser.y"
+#line 675 "parser.y"
 	{
                    enterString( yystack.l_mark[0].constBlk );
                 }
-#line 2853 "parser.c"
+#line 2840 "parser.c"
 break;
 case 85:
-#line 692 "parser.y"
+#line 679 "parser.y"
 	{
                    enterString( yystack.l_mark[0].constBlk );
                 }
-#line 2860 "parser.c"
+#line 2847 "parser.c"
 break;
 case 86:
-#line 697 "parser.y"
+#line 684 "parser.y"
 	{
 		  yyval.f_num = yystack.l_mark[0].constBlk->theValue.theInt;
 		  if( curMatrixContext != mc_mdp_start )
@@ -2868,10 +2855,10 @@ case 86:
 				BAD_PROB_VAL, "");
 		  XFREE( yystack.l_mark[0].constBlk );
 		}
-#line 2872 "parser.c"
+#line 2859 "parser.c"
 break;
 case 87:
-#line 706 "parser.y"
+#line 693 "parser.y"
 	{
 		  yyval.f_num = yystack.l_mark[0].constBlk->theValue.theFloat;
 		  if( curMatrixContext == mc_mdp_start )
@@ -2883,10 +2870,10 @@ case 87:
 					 BAD_PROB_VAL, "" );
 		  XFREE( yystack.l_mark[0].constBlk );
 		}
-#line 2887 "parser.c"
+#line 2874 "parser.c"
 break;
 case 88:
-#line 719 "parser.y"
+#line 706 "parser.y"
 	{
                    if( yystack.l_mark[-1].i_num )
                       yyval.f_num = yystack.l_mark[0].constBlk->theValue.theInt * -1.0;
@@ -2894,10 +2881,10 @@ case 88:
                       yyval.f_num = yystack.l_mark[0].constBlk->theValue.theInt;
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2898 "parser.c"
+#line 2885 "parser.c"
 break;
 case 89:
-#line 727 "parser.y"
+#line 714 "parser.y"
 	{
                    if( yystack.l_mark[-1].i_num )
                       yyval.f_num = yystack.l_mark[0].constBlk->theValue.theFloat * -1.0;
@@ -2905,30 +2892,30 @@ case 89:
                       yyval.f_num = yystack.l_mark[0].constBlk->theValue.theFloat;
                    XFREE( yystack.l_mark[0].constBlk );
                 }
-#line 2909 "parser.c"
+#line 2896 "parser.c"
 break;
 case 90:
-#line 736 "parser.y"
+#line 723 "parser.y"
 	{
                    yyval.i_num = 0;
                 }
-#line 2916 "parser.c"
+#line 2903 "parser.c"
 break;
 case 91:
-#line 740 "parser.y"
+#line 727 "parser.y"
 	{
                    yyval.i_num = 1;
                 }
-#line 2923 "parser.c"
+#line 2910 "parser.c"
 break;
 case 92:
-#line 744 "parser.y"
+#line 731 "parser.y"
 	{
                    yyval.i_num = 0;
                 }
-#line 2930 "parser.c"
+#line 2917 "parser.c"
 break;
-#line 2932 "parser.c"
+#line 2919 "parser.c"
     default:
         break;
     }

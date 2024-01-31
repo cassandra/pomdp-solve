@@ -454,32 +454,20 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-/*  scanner.l
+/* scanner.l
 
-  *****
-  Copyright 1994-1997, Brown University
-  Copyright 1998, 1999, Anthony R. Cassandra
-
-                           All Rights Reserved
-                           
-  Permission to use, copy, modify, and distribute this software and its
-  documentation for any purpose other than its incorporation into a
-  commercial product is hereby granted without fee, provided that the
-  above copyright notice appear in all copies and that both that
-  copyright notice and this permission notice appear in supporting
-  documentation.
-  
-  ANTHONY CASSANDRA DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
-  INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR ANY
-  PARTICULAR PURPOSE.  IN NO EVENT SHALL ANTHONY CASSANDRA BE LIABLE FOR
-  ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-  *****
-
-  This module contains the patterns and actions needed by the scanner
-  generator "LEX".  
+   pomdp-solve
+ 
+   Copyright © 1998-2003, Anthony R. Cassandra
+   Copyright © 1994-1997, Brown University
+   
+   Licensed under the Creative Commons Attribution-NonCommercial 4.0 
+   International License (CC BY-NC 4.0).
+   
+   See the LICENSE.txt file for details.
+   
+   This module contains the patterns and actions needed by the scanner
+   generator "LEX".  
 */
 
 #include <stdio.h>
@@ -607,9 +595,9 @@ CheckReserved() {
 
 }  /* CheckReserved */
 /**********************************************************************/
-#line 611 "scanner.c"
+#line 599 "scanner.c"
 /************************* Character Classes  *******************************/
-#line 613 "scanner.c"
+#line 601 "scanner.c"
 
 #define INITIAL 0
 
@@ -826,9 +814,9 @@ YY_DECL
 		}
 
 	{
-#line 168 "scanner.l"
+#line 156 "scanner.l"
 
-#line 832 "scanner.c"
+#line 820 "scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -887,7 +875,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 169 "scanner.l"
+#line 157 "scanner.l"
 {
                                           IntToYylval();
                                           return (INTTOK);  /* Integer Literal */
@@ -895,7 +883,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 174 "scanner.l"
+#line 162 "scanner.l"
 {
                                           FloatToYylval();
                                           return (FLOATTOK);  /* Floating Point Literal */
@@ -903,7 +891,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 179 "scanner.l"
+#line 167 "scanner.l"
 {
                                   int tok_val;
                                   tok_val = CheckReserved();
@@ -917,63 +905,63 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 190 "scanner.l"
+#line 178 "scanner.l"
 ;   /* Comment: No action */
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 193 "scanner.l"
+#line 181 "scanner.l"
 {         
                                    return (ASTERICKTOK);
                                 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 196 "scanner.l"
+#line 184 "scanner.l"
 {         
                                    return (MINUSTOK);
                                 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 199 "scanner.l"
+#line 187 "scanner.l"
 {         
                                     return (PLUSTOK);
                                 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 202 "scanner.l"
+#line 190 "scanner.l"
 {         
                                     return (COLONTOK);
                                 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 206 "scanner.l"
+#line 194 "scanner.l"
 ; /* Spacedelimiter: No action */ 
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 208 "scanner.l"
+#line 196 "scanner.l"
 ; /* Tab delimiter: No action */
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 210 "scanner.l"
+#line 198 "scanner.l"
 ; /* Carriage return: No action */
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 212 "scanner.l"
+#line 200 "scanner.l"
 {  
                                     currentLineNumber++; /* Newline delimiter */
                                 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 217 "scanner.l"
+#line 205 "scanner.l"
 { 
                                   
                                   ERR_enter("Scanner<yylex>",currentLineNumber,
@@ -982,10 +970,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 230 "scanner.l"
+#line 218 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 989 "scanner.c"
+#line 977 "scanner.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1990,4 +1978,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 230 "scanner.l"
+#line 218 "scanner.l"
