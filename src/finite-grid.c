@@ -408,7 +408,7 @@ void initFiniteGrid( PomdpSolveParams param )
   // PBVI:
  FG_END:
 
-
+  
   fprintf( param->report_file, "done.]\n"  );
 
   fprintf( param->report_file, 
@@ -416,11 +416,11 @@ void initFiniteGrid( PomdpSolveParams param )
 		 sizeBeliefList(gFiniteGrid)  );
   
   if ( param->opts->finite_grid_save ) {
-
+    
     sprintf( belief_filename, "%s.belief", param->opts->prefix_str );
     saveBeliefList( gFiniteGrid, belief_filename );
     fprintf( param->report_file, 
-		   "    Grid saved to %s.\n", belief_filename );
+	     "    Grid saved to %s.\n", belief_filename );
     
   } /* if saving belief list */
 

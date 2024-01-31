@@ -165,7 +165,7 @@ ConfigFile
 POMDP_SOLVE_OPTS_toConfigFile( PomdpSolveProgOptions options )
 {
   ConfigFile cfg;
-  char str[256];
+  char str[1096];
 
   cfg = CF_new();
 

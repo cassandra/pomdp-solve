@@ -97,7 +97,7 @@ void
 initPomdpSolve( PomdpSolveParams param ) 
 {
   char msg[MAX_MSG_LENGTH];
-  
+
   /* We need to do this first, since there are other things to come
      which need to know the POMDP parameters (or at least the sizes
      of the states, action, observation, etc. Will also do the

@@ -34,6 +34,7 @@
 #include "lpglob.h"
 #include <string.h>
 #include <limits.h>
+#include "read.h"
 
 short            *relat;
 int              Verbose;
@@ -58,7 +59,7 @@ int yywrap () { return 1; }
 /*
  * errorhandeling routine for yyparse()
  */
-void yyerror(char *string)
+void yyerror(const char *string)
 {
   fprintf(stderr, "PARSING ERROR: %s on line %d, quiting\n", string, yylineno);
   exit(EXIT_FAILURE);
@@ -571,7 +572,7 @@ lprec *read_lp_file(FILE *input, short verbose, nstring lp_name)
   Maximise = TRUE;  
   yyparse();
   fclose(input);
-  
+
   CALLOC(lp, 1);
 
   Rows--;

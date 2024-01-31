@@ -193,7 +193,7 @@ CL_addFlag( CommandLine cmd_line, char* dashed_flag )
     out of space, etc.)
    */
 
-  char err_str[256];
+  char err_str[1096];
 
   if (( cmd_line == NULL ) || ( dashed_flag == NULL ))
     {
@@ -239,7 +239,7 @@ CL_addArgOption( CommandLine cmd_line,
     name too long, out of space, etc.)
    */
   int aa_ret;
-  char err_str[256];
+  char err_str[1096];
 
    if (( cmd_line == NULL ) 
 	  || ( dashed_opt == NULL )
@@ -291,7 +291,7 @@ CL_addArgProper( CommandLine cmd_line, char* value )
     Returns 1 if successful and 0 if there was an error (bad args,
     name too long, out of space, etc.)
    */
-  char err_str[256];
+  char err_str[1096];
 
   if (( cmd_line == NULL ) || ( value == NULL ))
     {

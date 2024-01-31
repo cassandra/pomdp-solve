@@ -276,6 +276,23 @@ make
 **** can compile it from distribution on OS/X
 **** can compile it from repo code on OS/X
 **** get rid of all compiler warnings
+**** BUG: Time report issue
+
+Epoch: 476...9 vectors in 0.00 secs. (1.39 total) (err=2.75e-11)
+Epoch: 477...9 vectors in 0.00 secs. (1.39 total) (err=2.61e-11)
+++++++++++++++++++++++++++++++++++++++++
+Solution found.  See file:
+	../examples/pomdp-files/tiger.95-866438.alpha
+	../examples/pomdp-files/tiger.95-866438.pg
+++++++++++++++++++++++++++++++++++++++++
+
+>>>> HERE
+
+User time = 1 hrs., 51 mins, 58.19 secs. (= 6718.19 secs)
+System time = 1 hrs., 51 mins, 58.19 secs. (= 6718.19 secs)
+Total execution time = 1 hrs., 51 mins, 58.19 secs. (= 6718.19 secs)
+
+
 **** clean up files not needed in repo
 make clean
 

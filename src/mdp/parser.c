@@ -1397,7 +1397,7 @@ void
 checkProbs() {
    int a,i,j,obs;
    double sum;
-   char str[40];
+   char str[512];
 
    
    for( a = 0; a < gNumActions; a++ )

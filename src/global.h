@@ -100,7 +100,7 @@
 /* When using strings as temporary space for holding messages to be
    printed, define the string to be of this length. Shouldn't need it
    larger than this, but if so, feel free to increase this. */
-#define MAX_MSG_LENGTH               80
+#define MAX_MSG_LENGTH               1096
 
 /* For places where we statically allocate filename character arrays,
    use this for the length. */
