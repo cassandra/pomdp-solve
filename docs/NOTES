@@ -272,7 +272,3 @@ autoreconf -i -f -v
 ./configure
 make
 
-* Adjusting Version NUmber
-
-configure.ac 
-README

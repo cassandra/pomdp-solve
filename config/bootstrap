@@ -1,5 +1,7 @@
 #! /bin/sh
 
+# Not sure this is needed anymore as of Jan 2024)
+
 ##set -x
 
 echo "Running 'aclocal' ..."

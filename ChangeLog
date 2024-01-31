@@ -181,3 +181,13 @@
      * pomdp-solve-options.[ch]: Changed struct item 'true' to 'True'
      * lp-interface.c: Fixed memory leak not freeing all space
 
+2024-01-29  Tony Cassandra <arc@cassandra.org>
+
+     * Updated to latest autoconf tools
+
+2024-01-30  Tony Cassandra <arc@cassandra.org>
+
+     * Updated to remove newer C compiler warnings
+     * Updated from bespoke license to Creative Commons license
+
+
