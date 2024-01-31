@@ -25,6 +25,7 @@ To verify it builds and you are able to run it:
 ```
 ./src/pomdp-solve -pomdp examples/pomdp-files/tiger.95.POMDP
 ```
+After a few hundred iterations, it should converge and produce a final answer consisting of nine alpha vectors.
 
 ## Contents
 
@@ -42,4 +43,4 @@ To verify it builds and you are able to run it:
 
 ## License
 
-This software is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). See the [LICENSE](LICENSE.txt) file for details.
+This software is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). See the [LICENSE](LICENSE.md) file for details.

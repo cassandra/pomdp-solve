@@ -168,7 +168,7 @@ configure:4735: $? = 0
 configure:4748: result: none needed
 configure:4778: checking for library containing yywrap
 configure:4808: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/X11/ld: /tmp/ccTc9iPb.o: in function `main':
+/usr/bin/X11/ld: /tmp/ccoKlj4w.o: in function `main':
 /home/arc/proj/pomdp-solve/conftest.c:19: undefined reference to `yywrap'
 collect2: error: ld returned 1 exit status
 configure:4808: $? = 1

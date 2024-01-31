@@ -2,3 +2,4 @@
 
 SUBDIRS = src testing
 
+EXTRA_DIST = examples/pomdp-files/tiger.95.POMDP 
