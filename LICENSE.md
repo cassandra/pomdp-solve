@@ -1,6 +1,6 @@
 # License
 
-**Copyright © 1998-2003, Anthony R. Cassandra**  
+**Copyright © 1998-2024, Anthony R. Cassandra**  
 **Copyright © 1994-1997, Brown University**
 
 **Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)**

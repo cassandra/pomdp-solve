@@ -3,8 +3,8 @@ Last modified: 10/9/2004
 Problems to add to repository:
   Zhang's maze (same as 35 state below?)
   Hauskrecht's maze20 (if not already there)
-  35 state Zhanag and Zhang maze
-  tag domain from pineau 2003
+  35 state Zhang and Zhang maze
+  tag domain from Pineau 2003
 
 ----------------------
 BUGS
@@ -466,7 +466,7 @@ Algorithm Tasks:
 ----------------------
 
 o Look at papers and code on grid-based stuff: Spaan and Vlassis (and
-  related work they cite.
+  related work they cite.)
   
 o Create a variation of an MDP where we assume that all are always
   likely, thought mostly with a very small probability.  We could then

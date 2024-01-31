@@ -13,6 +13,8 @@ Software for performing value iteration on partially observable Markov decision 
 
 This is a POMDP solver that implements a number of different algorithms. Most of these are variations of exact solutions, though there is also support for aproximate finite grid solving.
 
+More information and documentation can be found on the [POMDP Org Site](https://pomdp.org/code/).
+
 ## Getting Started
 
 If you just want to compile and verify you can run the code, first build the executable with:
@@ -25,7 +27,21 @@ To verify it builds and you are able to run it:
 ```
 ./src/pomdp-solve -pomdp examples/pomdp-files/tiger.95.POMDP
 ```
-After a few hundred iterations, it should converge and produce a final answer consisting of nine alpha vectors.
+After a few hundred iterations, it should converge and produce a final answer consisting of nine alpha vectors. e.g.,
+```
+...
+Epoch: 475...9 vectors in 0.00 secs. (1.33 total) (err=2.89e-11)
+Epoch: 476...9 vectors in 0.00 secs. (1.33 total) (err=2.75e-11)
+Epoch: 477...9 vectors in 0.00 secs. (1.33 total) (err=2.61e-11)
+++++++++++++++++++++++++++++++++++++++++
+Solution found.  See file:
+	examples/pomdp-files/tiger.95-950858.alpha
+	examples/pomdp-files/tiger.95-950858.pg
+++++++++++++++++++++++++++++++++++++++++
+User time = 0 hrs., 0 mins, 1.31 secs. (= 1.31 secs)
+System time = 0 hrs., 0 mins, 0.02 secs. (= 0.02 secs)
+Total execution time = 0 hrs., 0 mins, 1.33 secs. (= 1.33 secs)
+```
 
 ## Contents
 

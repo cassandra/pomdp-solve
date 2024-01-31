@@ -1,3 +1,4 @@
+ToDo Items for Finite Grid Algorithm
 
 o First get sequential version going, annoted with @parallel all
   places ripe for parallelization.
