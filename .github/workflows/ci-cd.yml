@@ -27,9 +27,16 @@ jobs:
         run: |
           ./testing/pomdp-test
 
+      - name: Extract version from source code
+        id: version
+        run: |
+          version=$(grep -o 'VERSION "[^"]*"' src/version.h | cut -d'"' -f2)
+          echo "::set-output name=version::$version"
+	
       - name: Create Release with Executable
         uses: softprops/action-gh-release@v1
         with:
           files: src/pomdp-solve
+          tag_name: ${{ steps.version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,4 @@
 Places that have to change to alter the version number:
 
-configure.ac - 1 place, Lines 5
-pomdp-solve-options.c: - 1 place, line 62
-README.md - 1 place, header
+src/version.h  - 1 place, line 1
+configure.ac   - 1 place, line 5

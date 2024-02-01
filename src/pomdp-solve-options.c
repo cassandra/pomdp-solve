@@ -22,6 +22,7 @@
 #include <math.h>
 #include <limits.h>
 
+#include "version.h"
 #include "pomdp-solve-options.h"
 
 /*
@@ -59,7 +60,7 @@ POMDP_SOLVE_OPTS_new( )
 
   strcpy( options->__exec_name__, "pomdp-solve" );
 
-  strcpy( options->__version__, "5.5" );
+  strcpy( options->__version__, VERSION );
 
   options->__error__ = 0;
 
