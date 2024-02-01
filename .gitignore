@@ -8,25 +8,6 @@
 *.out
 *.exe
 
-# Autoconf: ignore auto-generated files
-config.log
-config.status
-autom4te.cache/**
-aclocal.m4
-Makefile.in
-m4/
-
-# Automake: symlinks
-config.guess
-config.sub
-compile
-depcomp
-INSTALL
-install-sh
-missing
-mkinstalldirs
-ylwrap
-
 # pomdp-solve executables and distribution files
 src/pomdp-fg
 src/pomdp-solve
