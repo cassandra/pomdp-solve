@@ -8,6 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      releases: write
+
+
+
+
     
     steps:
       - name: Checkout code
@@ -31,12 +42,12 @@ jobs:
         id: version
         run: |
           version=$(grep -o 'VERSION "[^"]*"' src/version.h | cut -d'"' -f2)
-          echo "::set-output name=version::$version"
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Create Release with Executable
         uses: softprops/action-gh-release@v1
         with:
           files: src/pomdp-solve
-          tag_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
