@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Release
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
         run: |
           version=$(grep -o 'VERSION "[^"]*"' src/version.h | cut -d'"' -f2)
           echo "::set-output name=version::$version"
-	
+
       - name: Create Release with Executable
         uses: softprops/action-gh-release@v1
         with:
