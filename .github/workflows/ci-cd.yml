@@ -8,17 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      releases: write
-
-
-
-
     
     steps:
       - name: Checkout code
