@@ -1,0 +1,35 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf automake libtool
+
+      - name: Configure and build
+        run: |
+          ./configure
+          make
+
+      - name: Run tests
+        run: |
+          ./testing/pomdp-test
+
+      - name: Create Release with Executable
+        uses: softprops/action-gh-release@v1
+        with:
+          files: src/pomdp-solve
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
