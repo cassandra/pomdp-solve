@@ -50,8 +50,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            src/pomdp-solve-ubuntu-latest.bin
-            src/pomdp-solve-macos-latest.bin
+            src/pomdp-solve-Linux.bin
+            src/pomdp-solve-macOS.bin
           tag_name: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
