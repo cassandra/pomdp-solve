@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+      - '**' # Allows the workflow to run on all branches
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     
     steps:
       - name: Checkout code
@@ -15,8 +19,12 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y autoconf automake libtool
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            sudo apt-get update
+            sudo apt-get install -y autoconf automake libtool
+          elif [ "${{ runner.os }}" = "macOS" ]; then
+            brew install autoconf automake libtool
+          fi
 
       - name: Configure and build
         run: |
@@ -27,6 +35,10 @@ jobs:
         run: |
           ./testing/pomdp-test
 
+      - name: Rename executable based on OS / architecture
+        run: |
+          mv src/pomdp-solve src/pomdp-solve-${{ runner.os }}.bin
+
       - name: Extract version from source code
         id: version
         run: |
@@ -34,9 +46,12 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Create Release with Executable
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v1
         with:
-          files: src/pomdp-solve
+          files: |
+            src/pomdp-solve-ubuntu-latest.bin
+            src/pomdp-solve-macos-latest.bin
           tag_name: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
