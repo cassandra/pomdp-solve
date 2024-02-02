@@ -7,6 +7,7 @@ Software for performing value iteration on partially observable Markov decision 
 - [About](#about)
 - [Getting Started](#getting-started)
 - [Contents](#contents)
+- [Related Sites](#related-sites)
 - [License](#license)
 
 ## About
@@ -57,6 +58,11 @@ Total execution time = 0 hrs., 0 mins, 1.33 secs. (= 1.33 secs)
 
 * `./testing` : This directory has some test cases used by the auto-test executable. It contains some POMDP files as well as some finite and infinite horizon value functions and policy graphs. 
 
+## Related Sites
+
+* The [POMDP Home Page](https://pomdp.org) has much more information about POMDPs and this code.
+* An R interface to this program is available in the package [pomdp](https://github.com/mhahsler/pomdp).
+ 
 ## License
 
 This software is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). See the [LICENSE](LICENSE.md) file for details.
