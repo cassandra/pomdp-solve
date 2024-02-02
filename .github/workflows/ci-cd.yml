@@ -47,7 +47,7 @@ jobs:
       - name: Create Release with Executable
         uses: softprops/action-gh-release@v1
         with:
-	  files: |
+          files: |
             src/pomdp-solve-ubuntu-latest.bin
             src/pomdp-solve-macos-latest.bin
           tag_name: ${{ env.VERSION }}
