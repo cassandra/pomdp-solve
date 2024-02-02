@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - '**' # Allows the workflow to run on all branches
 
 jobs:
   build:
@@ -45,6 +46,7 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Create Release with Executable
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v1
         with:
           files: |
