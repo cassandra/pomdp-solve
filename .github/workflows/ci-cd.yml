@@ -37,7 +37,7 @@ jobs:
       - name: Rename executable based on OS / architecture
         run: |
           mv src/pomdp-solve src/pomdp-solve-${{ runner.os }}.bin
-	  
+
       - name: Extract version from source code
         id: version
         run: |
